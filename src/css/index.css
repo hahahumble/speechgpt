@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide vertical scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Change the color of Tippy */
+.tippy-tooltip {
+  background-color: #4b5563;
+  /*border-radius: 20px;*/
+  /*color: #1f2937;*/
+  /* font medium */
+  font-weight: 500;
+}
+
+/* Change the color of arrow */
+.tippy-tooltip[data-placement^='bottom'] > .tippy-arrow {
+  border-bottom-color: #4b5563;
+}
+
+select {
+  appearance: none; /* remove default arrow */
+  padding-right: 1.5em; /* add space for the custom arrow */
+  background: url('../assets/arrow-down.svg') no-repeat right 0.5em center/1em auto;
+  background-size: 1.2em; /* adjust arrow size */
+}
+
+/* Markdown */
+.markdown-content {
+}
+
+.markdown-content {
+  width: 100%;
+  max-width: 100%;
+  word-break: break-word;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.markdown-content > h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.markdown-content > h2 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.markdown-content > h3 {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.markdown-content > h4 {
+  font-size: 1.125rem;
+}
+
+.markdown-content > p {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.25rem;
+}
+
+.markdown-content > p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content > .li-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.markdown-content .img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.markdown-content .img:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.markdown-content .tag-span {
+  display: inline-block;
+  width: auto;
+  color: #1e88e5;
+  cursor: pointer;
+}
+
+.markdown-content .link {
+  color: #1e88e5;
+  cursor: pointer;
+  text-decoration: underline;
+  word-break: break-all;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.markdown-content .link:hover {
+  opacity: 0.8;
+}
+
+.markdown-content .link code {
+  text-decoration: underline;
+}
+
+.markdown-content .ol-block,
+.markdown-content .ul-block,
+.markdown-content .todo-block {
+  flex-shrink: 0;
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: right;
+  width: 1.75rem;
+  margin-right: 0.0625rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.markdown-content .ol-block {
+  opacity: 0.8;
+  padding-right: 0.25rem;
+  margin-top: 0.0625rem;
+}
+
+.markdown-content .ul-block {
+  text-align: center;
+  margin-top: 0.0625rem;
+}
+
+.markdown-content .todo-block {
+  width: 1rem;
+  height: 1rem;
+  line-height: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  font-size: 1.125rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: opacity 0.15s ease-in-out;
+}
+
+.markdown-content .todo-block:hover {
+  opacity: 0.8;
+}
+
+.markdown-content pre {
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  background-color: #f5f5f5;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.markdown-content pre code {
+  display: block;
+}
+
+.markdown-content pre:hover .codeblock-copy-btn {
+  display: flex;
+}
+
+.markdown-content .codeblock-copy-btn {
+  appearance: none;
+  display: none;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: 2px solid currentColor;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.markdown-content code {
+  word-break: break-all;
+  background-color: #f5f5f5;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.125rem;
+  font-size: 0.875rem;
+  font-family: monospace;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+.markdown-content table {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d1d5db;
+}
+
+.markdown-content table th {
+  padding: 0.25rem 1rem;
+  text-align: center;
+  border: 1px solid #d1d5db;
+}
+
+.markdown-content table td {
+  padding: 0.25rem 1rem;
+  text-align: center;
+  border: 1px solid #d1d5db;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid currentColor;
+  padding-left: 0.5rem;
+  color: #6b7280;
+}
+
+.markdown-content hr {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  border: 1px solid #d1d5db;
+}
