@@ -99,6 +99,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
           helpText={i18n.t('setting.synthesis.synthesis-service-tooltip') as string}
           options={speechSynthesisServices}
           value={speech.service}
+          selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
           onChange={e => setSpeech({ ...speech, service: e })}
         />
         {speech.service === 'Amazon Polly' && (
