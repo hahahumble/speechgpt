@@ -16,7 +16,6 @@ function LanguageSelector() {
     if (locale == '') {
       const browserLanguage = navigator.language.split(/[-_]/)[0];
       setLocale(browserLanguage);
-    } else {
     }
     i18n.changeLanguage(locale);
   }, [locale]);
