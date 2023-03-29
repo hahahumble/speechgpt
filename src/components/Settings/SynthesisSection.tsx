@@ -13,7 +13,6 @@ import {
   amazonPollyEngines,
   amazonPollyLanguages,
   speechSynthesisSystemLanguages,
-  speechSynthesisServices,
   awsRegions,
   azureRegions,
   azureSpeechSynthesisLanguagesLocale,
@@ -22,18 +21,26 @@ import PollyVoice from './PollyVoice';
 import AzureTtsVoice from './azureTtsVoice';
 import { useTranslation } from 'react-i18next';
 
+import {browserName, isMobile} from 'react-device-detect';
+import WarningIcon from "../Icons/WarningIcon";
+
 interface SynthesisSectionProps {}
 
 const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
   const { key, setKey, speech, setSpeech } = useGlobalStore();
-
   const { i18n } = useTranslation();
 
-  checkSpeechSupport();
+  const speechSynthesisServices =
+    isMobile ? ['Azure TTS', 'Amazon Polly'] : ['System', 'Azure TTS', 'Amazon Polly'];
 
-  function checkSpeechSupport() {
-    return 'speechSynthesis' in window;
-  }
+  useEffect(() => {
+    // Set synthesis service to system if browser is mobile
+    if (isMobile) {
+      if (speech.service === 'System') {
+        setSpeech({ ...speech, service: 'Azure TTS' });
+      }
+    }
+  }, []);
 
   function getSystemLanguageCode(language: string) {
     return Object.keys(speechSynthesisSystemLanguages).find(
@@ -94,6 +101,14 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
     <div className="flex flex-col space-y-2 overflow-y-scroll sm:py-6 sm:max-h-96 w-full max-h-[32rem] pb-5">
       <SettingTitle text={i18n.t('setting.synthesis.service') as string} />
       <SettingGroup>
+        {isMobile && (
+          <div className="flex flex-row items-center">
+            <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
+            <div className="text-gray-600 text-left">
+              {i18n.t('setting.synthesis.mobile-not-supported') as string}
+            </div>
+          </div>
+        )}
         <SettingSelect
           text={i18n.t('setting.synthesis.synthesis-service') as string}
           helpText={i18n.t('setting.synthesis.synthesis-service-tooltip') as string}

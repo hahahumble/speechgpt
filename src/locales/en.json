@@ -74,11 +74,13 @@
       "voice-id": "Voice ID",
       "voice-id-tooltip": "The voice used to synthesize speech",
       "polly-standard-not-supported": "The selected language is not supported by Amazon Polly Standard TTS",
-      "polly-neural-not-supported": "The selected language is not supported by Amazon Polly Neural TTS"
+      "polly-neural-not-supported": "The selected language is not supported by Amazon Polly Neural TTS",
+      "mobile-not-supported": "Currently, mobile devices are not supported for builtin speech synthesis"
     },
     "recognition": {
       "title": "Recognition",
-      "browser-not-supported": "Currently, only Chrome is supported for browser voice recognition",
+      "browser-not-supported": "Currently, only Chrome is supported for builtin voice recognition",
+      "mobile-not-supported": "Currently, mobile devices are not supported for builtin voice recognition",
       "service": "Service",
       "recognition-service": "Speech Recognition Service",
       "recognition-service-tooltip": "The service used to recognize speech",

@@ -10,12 +10,11 @@ import SettingSwitch from './base/SettingSwitch';
 import {
   awsRegions,
   azureRegions,
-  speechSynthesisServices,
   azureSpeechRecognitionLanguagesLocale,
   speechRecognitionSystemLanguagesLocale,
 } from '../../constants/data';
 
-import { browserName } from 'react-device-detect';
+import { browserName, isMobile } from 'react-device-detect';
 
 import { useGlobalStore } from '../../store/module';
 import WarningIcon from '../Icons/WarningIcon';
@@ -30,8 +29,8 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
     browserName === 'Chrome' ? ['System', 'Azure Speech to Text'] : ['Azure Speech to Text'];
 
   useEffect(() => {
-    // Set voice service to system if browser is chrome
-    if (browserName === 'Chrome') {
+    // Set voice service to system if browser is chrome or mobile
+    if (browserName === 'Chrome' || isMobile) {
     } else {
       if (voice.service === 'System') {
         setVoice({ ...voice, service: 'Azure Speech to Text' });
@@ -67,11 +66,19 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
     <div className="flex flex-col space-y-2 overflow-y-scroll sm:py-6 sm:max-h-96 w-full max-h-[32rem] pb-5">
       <SettingTitle text={i18n.t('setting.recognition.service') as string} />
       <SettingGroup>
-        {browserName !== 'Chrome' && (
+        {browserName !== 'Chrome' && !isMobile && (
           <div className="flex flex-row items-center">
             <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
             <div className="text-gray-600 text-left">
               {i18n.t('setting.recognition.browser-not-supported') as string}
+            </div>
+          </div>
+        )}
+        {isMobile && (
+          <div className="flex flex-row items-center">
+            <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
+            <div className="text-gray-600 text-left">
+              {i18n.t('setting.recognition.mobile-not-supported') as string}
             </div>
           </div>
         )}

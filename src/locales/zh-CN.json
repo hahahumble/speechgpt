@@ -74,11 +74,13 @@
       "voice-id": "语音 ID",
       "voice-id-tooltip": "用于指定特定的语音",
       "polly-standard-not-supported": "Polly 标准版不支持此语言",
-      "polly-neural-not-supported": "Polly 神经版不支持此语言"
+      "polly-neural-not-supported": "Polly 神经版不支持此语言",
+      "mobile-not-supported": "目前，移动端不支持浏览器语音合成"
     },
     "recognition": {
       "title": "语音识别",
       "browser-not-supported": "目前，只有 Chrome 支持浏览器语音识别",
+      "mobile-not-supported": "目前，移动端不支持浏览器语音识别",
       "service": "服务",
       "recognition-service": "语音识别服务",
       "recognition-service-tooltip": "识别语音使用的服务",
