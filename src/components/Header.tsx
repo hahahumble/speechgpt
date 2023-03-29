@@ -5,7 +5,7 @@ import SpeechGPTIcon from './Icons/SpeechGPTIcon';
 
 function Header() {
   return (
-    <div className="flex flex-col sm:mt-20 sticky pt-16">
+    <div className="flex flex-col sm:pt-20 sticky pt-16">
       <SpeechGPTIcon className="w-16 h-16 ml-2 sm:w-24 sm:h-24" />
       <div className="flex flex-row py-2 justify-between items-center w-full">
         <div className="text-2xl font-bold text-left bg-gray-100 text-gray-800">
