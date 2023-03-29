@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const globalSlice = createSlice({
   name: 'global',
   initialState: {
-    locale: navigator.language || '',
+    locale: navigator.language.split(/[-_]/)[0] || '',
     appearance: 'system',
     key: {
       openaiApiKey: '',

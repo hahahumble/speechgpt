@@ -19,7 +19,7 @@ function deepMerge(obj1: any, obj2: any) {
 }
 
 const defaultGlobalState = {
-  locale: navigator.language || '',
+  locale: navigator.language.split(/[-_]/)[0] || '',
   appearance: 'system',
   key: {
     openaiApiKey: '',

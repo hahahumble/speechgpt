@@ -17,7 +17,9 @@ function LanguageSelector() {
       const browserLanguage = navigator.language.split(/[-_]/)[0];
       setLocale(browserLanguage);
     }
-    i18n.changeLanguage(locale);
+    setTimeout(() => {
+      i18n.changeLanguage(locale);
+    }, 100);
   }, [locale]);
 
   const languages: LanguageOption[] = [
