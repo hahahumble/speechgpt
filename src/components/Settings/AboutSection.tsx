@@ -34,7 +34,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
       <SettingGroup>
         <div className={' text-left ml-0.5 text-gray-700'}>
           Website:{' '}
-          <a href="https://speechgpt.com" className="inline underline hover:text-indigo-600">
+          <a href="https://speechgpt.app" className="inline underline hover:text-indigo-600">
             https://speechgpt.app
           </a>
           <br />
