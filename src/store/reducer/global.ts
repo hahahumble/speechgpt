@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const globalSlice = createSlice({
   name: 'global',
   initialState: {
-    locale: '',
+    locale: navigator.language || '',
     appearance: 'system',
     key: {
       openaiApiKey: '',
