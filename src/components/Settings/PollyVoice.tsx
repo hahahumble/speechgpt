@@ -17,15 +17,18 @@ const PollyVoice = () => {
 
   const languageCode = speech.pollyLanguage;
 
-  // when the language is changed, reset the voice to the default
   useEffect(() => {
     if (pollyStandardSupportedLanguages.includes(languageCode)) {
-      setSpeech({
-        ...speech,
-        pollyVoice: pollyStandardVoices[languageCode][0],
-      });
+      if (!pollyStandardVoices[languageCode].includes(speech.pollyVoice)) {
+        setSpeech({
+          ...speech,
+          pollyVoice: pollyStandardVoices[languageCode][0],
+        });
+      }
     } else if (pollyNeuralSupportedLanguages.includes(languageCode)) {
-      setSpeech({ ...speech, pollyVoice: pollyNeuralVoices[languageCode][0] });
+      if (!pollyNeuralVoices[languageCode].includes(speech.pollyVoice)) {
+        setSpeech({...speech, pollyVoice: pollyNeuralVoices[languageCode][0]});
+      }
     }
   }, [languageCode]);
 
