@@ -13,10 +13,12 @@ const azureTtsVoice = () => {
   const languageCode = speech.azureLanguage;
 
   useEffect(() => {
-    setSpeech({
-      ...speech,
-      azureVoice: azureSpeechSynthesisVoices[languageCode][0],
-    });
+    if (!azureSpeechSynthesisVoices[languageCode].includes(speech.azureVoice)) {
+      setSpeech({
+        ...speech,
+        azureVoice: azureSpeechSynthesisVoices[languageCode][0],
+      });
+    }
   }, [languageCode]);
 
   return (
