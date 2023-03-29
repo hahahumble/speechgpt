@@ -188,7 +188,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
               onChange={e => setSpeech({ ...speech, systemRate: e })}
               min={'0.5'}
               max={'2'}
-              step={'0.1'}
+              step={'0.05'}
             />
             <SettingSlider
               text={i18n.t('setting.synthesis.pitch') as string}
@@ -197,7 +197,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
               onChange={e => setSpeech({ ...speech, systemPitch: e })}
               min={'0.5'}
               max={'2'}
-              step={'0.1'}
+              step={'0.05'}
             />
           </SettingGroup>
 
