@@ -29,16 +29,6 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
     browserName !== 'Chrome' || isMobile ? ['Azure Speech to Text'] : ['System', 'Azure Speech to Text'];
 
   useEffect(() => {
-    // Set voice service to system if browser is chrome or mobile
-    if (browserName === 'Chrome' || isMobile) {
-    } else {
-      if (voice.service === 'System') {
-        setVoice({ ...voice, service: 'Azure Speech to Text' });
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (!key.azureRegion) {
       setKey({ ...key, azureRegion: azureRegions[0] });
     }

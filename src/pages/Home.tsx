@@ -2,8 +2,13 @@ import React from 'react';
 import Content from '../components/Content';
 import { Toaster } from 'react-hot-toast';
 import * as Notify from '../components/Notification';
+import { browserName, isMobile } from "react-device-detect";
+import {useGlobalStore} from "../store/module";
+
 
 function Home() {
+  const { speech, setSpeech, voice, setVoice } = useGlobalStore();
+
   const notifyDict = {
     clearedNotify: Notify.clearedNotify,
     copiedNotify: Notify.copiedNotify,
@@ -20,6 +25,16 @@ function Home() {
     awsErrorNotify: Notify.awsErrorNotify,
     emptyAzureKeyNotify: Notify.emptyAzureKeyNotify,
   };
+
+  if (isMobile || browserName !== 'Chrome') {
+    if (voice.service === 'System') {
+      setVoice({ ...voice, service: 'Azure Speech to Text' });
+    }
+
+    if (isMobile && speech.service === 'System') {
+      setSpeech({ ...speech, service: 'Azure TTS' });
+    }
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">

@@ -33,15 +33,6 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
   const speechSynthesisServices =
     isMobile ? ['Azure TTS', 'Amazon Polly'] : ['System', 'Azure TTS', 'Amazon Polly'];
 
-  useEffect(() => {
-    // Set synthesis service to system if browser is mobile
-    if (isMobile) {
-      if (speech.service === 'System') {
-        setSpeech({ ...speech, service: 'Azure TTS' });
-      }
-    }
-  }, []);
-
   function getSystemLanguageCode(language: string) {
     return Object.keys(speechSynthesisSystemLanguages).find(
       key => speechSynthesisSystemLanguages[key] === language
