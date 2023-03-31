@@ -9,26 +9,28 @@ interface BrowserSpeechToTextProps {
   notify: any;
 }
 
+const SpeechRecognition =
+  ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) &&
+  ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+
+const globalRecognition = SpeechRecognition ? new SpeechRecognition() : null;
+
 const BrowserSpeechToText: React.FC<BrowserSpeechToTextProps> = ({
-  isListening,
-  language,
-  setIsListening,
-  setTranscript,
-  notify,
-}) => {
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+                                                                   isListening,
+                                                                   language,
+                                                                   setIsListening,
+                                                                   setTranscript,
+                                                                   notify,
+                                                                 }) => {
+  const [recognition, setRecognition] = useState<SpeechRecognition | null>(globalRecognition);
 
   useEffect(() => {
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const SpeechRecognition =
-        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      const recognizer = new SpeechRecognition();
+    if (recognition) {
+      recognition.interimResults = true;
+      recognition.continuous = true;
+      recognition.lang = language;
 
-      recognizer.interimResults = true;
-      recognizer.continuous = true;
-      recognizer.lang = language;
-
-      recognizer.onresult = (event: SpeechRecognitionEvent) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         let currentTranscript = '';
 
         for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -36,24 +38,19 @@ const BrowserSpeechToText: React.FC<BrowserSpeechToTextProps> = ({
           const text = result[0].transcript;
 
           if (result.isFinal) {
-            // setTranscript((prevTranscript: string) => prevTranscript + ' ' + text);
             setTranscript(text);
           } else {
             currentTranscript += text;
           }
         }
-        // console.log('Current Transcript:', currentTranscript);
       };
 
       // @ts-ignore
-      recognizer.onerror = (event: SpeechRecognitionError) => {
+      recognition.onerror = (event: SpeechRecognitionError) => {
         console.log('Error:', event.error);
         notify.errorBuiltinSpeechRecognitionNotify();
-        // onToggleListening();
         setIsListening(false);
       };
-
-      setRecognition(recognizer);
     } else {
       console.log('SpeechRecognition API is not supported in this browser');
       notify.errorBuiltinSpeechRecognitionNotify();
@@ -64,7 +61,7 @@ const BrowserSpeechToText: React.FC<BrowserSpeechToTextProps> = ({
         recognition.stop();
       }
     };
-  }, [isListening, language]);
+  }, [isListening, language, recognition]);
 
   useEffect(() => {
     if (isListening) {

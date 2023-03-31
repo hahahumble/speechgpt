@@ -37,7 +37,7 @@ You can utilize this app to improve your language speaking skills or simply have
     - Go to Settings and navigate to the Chat section.
     - Set the OpenAI API Key.
     - If you don't have an OpenAI API Key, follow this tutorial on [how to get an OpenAI API Key](https://www.windowscentral.com/software-apps/how-to-get-an-openai-api-key).
-2. Set up Azure Speech Services(optional)
+2. Set up Azure Speech Services (optional)
     - Go to Settings and navigate to the Synthesis section.
     - Change the Speech Synthesis Service to Azure TTS.
     - Set the Azure Region and Azure Access Key.
