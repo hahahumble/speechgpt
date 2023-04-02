@@ -68,5 +68,17 @@ Code formatting(Using Prettier)
 yarn format
 ```
 
+##  Build and Run With Docker
+1. Build the image.
+```bash
+docker build -t speechgpt .
+```
+2. Run the container.
+```bash
+docker run -d -p 8080:80 --name=speechgpt speechgpt
+```
+3. Visit http://localhost:8080/.
+4. Enjoy!
+
 ## License
 This project is licensed under the terms of the [MIT license](/LICENSE).
