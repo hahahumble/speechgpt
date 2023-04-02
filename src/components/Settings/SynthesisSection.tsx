@@ -20,8 +20,8 @@ import PollyVoice from './PollyVoice';
 import AzureTtsVoice from './azureTtsVoice';
 import { useTranslation } from 'react-i18next';
 
-import {browserName, isMobile} from 'react-device-detect';
-import WarningIcon from "../Icons/WarningIcon";
+import { browserName, isMobile } from 'react-device-detect';
+import WarningIcon from '../Icons/WarningIcon';
 
 interface SynthesisSectionProps {}
 
@@ -29,8 +29,9 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
   const { key, setKey, speech, setSpeech } = useGlobalStore();
   const { i18n } = useTranslation();
 
-  const speechSynthesisServices =
-    isMobile ? ['Azure TTS', 'Amazon Polly'] : ['System', 'Azure TTS', 'Amazon Polly'];
+  const speechSynthesisServices = isMobile
+    ? ['Azure TTS', 'Amazon Polly']
+    : ['System', 'Azure TTS', 'Amazon Polly'];
 
   function getSystemLanguageCode(language: string) {
     return Object.keys(speechSynthesisSystemLanguages).find(

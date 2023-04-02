@@ -25,7 +25,9 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
   const { i18n } = useTranslation();
   const { key, setKey, voice, setVoice } = useGlobalStore();
   const voiceServices =
-    browserName !== 'Chrome' || isMobile ? ['Azure Speech to Text'] : ['System', 'Azure Speech to Text'];
+    browserName !== 'Chrome' || isMobile
+      ? ['Azure Speech to Text']
+      : ['System', 'Azure Speech to Text'];
 
   useEffect(() => {
     if (!key.azureRegion) {

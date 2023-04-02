@@ -27,7 +27,7 @@ const PollyVoice = () => {
       }
     } else if (pollyNeuralSupportedLanguages.includes(languageCode)) {
       if (!pollyNeuralVoices[languageCode].includes(speech.pollyVoice)) {
-        setSpeech({...speech, pollyVoice: pollyNeuralVoices[languageCode][0]});
+        setSpeech({ ...speech, pollyVoice: pollyNeuralVoices[languageCode][0] });
       }
     }
   }, [languageCode]);

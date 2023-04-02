@@ -48,22 +48,22 @@ You can utilize this app to improve your language speaking skills or simply have
     - If you don't have an AWS Access Key, follow this tutorial on [how to create an IAM user in AWS](https://www.techtarget.com/searchcloudcomputing/tutorial/Step-by-step-guide-on-how-to-create-an-IAM-user-in-AWS).
 
 ## Development
-1. Install dependencies
+1. Install dependencies.
 ```bash
 yarn
 ```
 
-2. Start development server
+2. Start development server.
 ```bash
 yarn dev
 ```
 
-3. Build for production
+3. Build for production.
 ```bash
 yarn build
 ```
 
-Code formatting(Using Prettier)
+Code formatting(Using Prettier).
 ```bash
 yarn format
 ```
@@ -77,7 +77,7 @@ docker build -t speechgpt .
 ```bash
 docker run -d -p 8080:80 --name=speechgpt speechgpt
 ```
-3. Visit http://localhost:8080/.
+3. Visit `http://localhost:8080/`.
 4. Enjoy!
 
 ## License

@@ -16,12 +16,12 @@ const SpeechRecognition =
 const globalRecognition = SpeechRecognition ? new SpeechRecognition() : null;
 
 const BrowserSpeechToText: React.FC<BrowserSpeechToTextProps> = ({
-                                                                   isListening,
-                                                                   language,
-                                                                   setIsListening,
-                                                                   setTranscript,
-                                                                   notify,
-                                                                 }) => {
+  isListening,
+  language,
+  setIsListening,
+  setTranscript,
+  notify,
+}) => {
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(globalRecognition);
 
   useEffect(() => {

@@ -8,7 +8,7 @@
 }
 
 /* Change the color of Tippy */
-.tippy-box[data-theme~="light"] {
+.tippy-box[data-theme~='light'] {
   background-color: #4b5563;
   /*border-radius: 20px;*/
   /*color: #1f2937;*/

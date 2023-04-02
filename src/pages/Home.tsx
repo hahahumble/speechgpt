@@ -2,9 +2,8 @@ import React from 'react';
 import Content from '../components/Content';
 import { Toaster } from 'react-hot-toast';
 import * as Notify from '../components/Notification';
-import { browserName, isMobile } from "react-device-detect";
-import {useGlobalStore} from "../store/module";
-
+import { browserName, isMobile } from 'react-device-detect';
+import { useGlobalStore } from '../store/module';
 
 function Home() {
   const { speech, setSpeech, voice, setVoice } = useGlobalStore();

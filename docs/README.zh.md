@@ -67,7 +67,7 @@ yarn build
 yarn format
 ```
 
-##  使用Docker进行构建和运行
+##  使用 Docker 进行构建和运行
 1. 构建镜像
 ```bash
 docker build -t speechgpt .
@@ -76,7 +76,7 @@ docker build -t speechgpt .
 ```bash
 docker run -d -p 8080:80 --name=speechgpt speechgpt
 ```
-3. 访问 http://localhost:8080/
+3. 访问 `http://localhost:8080/`
 4. 尽情享用！
 
 ## 许可
