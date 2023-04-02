@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { MoonIcon, SunIcon, ComputerDesktopIcon, CheckIcon } from '@heroicons/react/20/solid';
 import { Menu } from '@headlessui/react';
 import DropdownMenu from './base/DropdownMenu';
-import Tippy from '@tippy.js/react';
+import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useTranslation } from 'react-i18next';
 import { useGlobalStore } from '../store/module';
@@ -65,8 +65,9 @@ function AppearanceSelector() {
       duration={0}
       hideOnClick={true}
       trigger={'mouseenter'}
+      theme={'light'}
     >
-      <Menu.Button className="text-gray-500 w-10 h-10 justify-center items-center flex flex-row flex text-sm rounded-md focus:outline-none hover:bg-gray-200 active:bg-gray-300">
+      <Menu.Button className="text-gray-500 w-10 h-10 justify-center items-center flex flex-row text-sm rounded-md focus:outline-none hover:bg-gray-200 active:bg-gray-300">
         {appearanceOptions.find(option => option.key === appearance)?.icon}
       </Menu.Button>
     </Tippy>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import 'tippy.js/dist/tippy.css';
 import SettingTitle from './base/SettingTitle';
 import SettingDivider from './base/SettingDivider';
 import SettingSelect from './base/SettingSelect';

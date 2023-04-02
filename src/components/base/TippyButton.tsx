@@ -1,4 +1,4 @@
-import Tippy from '@tippy.js/react';
+import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 interface TippyButtonProps {
@@ -19,6 +19,7 @@ function TippyButton(props: TippyButtonProps) {
           duration={0}
           hideOnClick={true}
           trigger={'mouseenter'}
+          theme={'light'}
         >
           <button
             className={`font-bold py-2 px-2 rounded-md flex flex-row justify-center ${props.style}`}
