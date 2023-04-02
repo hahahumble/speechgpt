@@ -8,7 +8,7 @@
 }
 
 /* Change the color of Tippy */
-.tippy-tooltip {
+.tippy-box[data-theme~="light"] {
   background-color: #4b5563;
   /*border-radius: 20px;*/
   /*color: #1f2937;*/
@@ -17,7 +17,7 @@
 }
 
 /* Change the color of arrow */
-.tippy-tooltip[data-placement^='bottom'] > .tippy-arrow {
+.tippy-box[data-theme~='light'][data-placement^='bottom'] > .tippy-arrow::before {
   border-bottom-color: #4b5563;
 }
 

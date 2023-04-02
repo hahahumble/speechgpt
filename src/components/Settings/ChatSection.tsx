@@ -1,5 +1,4 @@
 import React from 'react';
-import 'tippy.js/dist/tippy.css';
 import SettingTextArea from './base/SettingTextArea';
 import SettingDivider from './base/SettingDivider';
 import SettingTitle from './base/SettingTitle';
