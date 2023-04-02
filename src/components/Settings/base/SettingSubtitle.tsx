@@ -1,5 +1,5 @@
 import React from 'react';
-import Tippy from '@tippy.js/react';
+import Tippy from '@tippyjs/react';
 import HelpIcon from '../../Icons/HelpIcon';
 
 interface SettingSubtitleProps {
@@ -19,6 +19,7 @@ function SettingSubtitle({ text, helpText }: SettingSubtitleProps) {
             duration={0}
             hideOnClick={true}
             trigger={'mouseenter'}
+            theme={'light'}
           >
             <div>
               <HelpIcon className="w-4 h-4 mt-0.5 text-gray-400" />
