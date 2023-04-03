@@ -74,7 +74,7 @@ docker build -t speechgpt .
 ```
 2. 运行容器
 ```bash
-docker run -d -p 8080:80 --name=speechgpt speechgpt
+docker run -d -p 8080:8080 --name=speechgpt speechgpt
 ```
 3. 访问 `http://localhost:8080/`
 4. 尽情享用！
