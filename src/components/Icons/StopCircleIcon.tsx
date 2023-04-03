@@ -19,8 +19,8 @@ const StopCircleIcon: React.FC<StopCircleIconProps> = ({ className, strokeWidth 
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      <path d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+      <circle cx="12" cy="12" r="10" />
+      <rect x="9" y="9" width="6" height="6" />
     </svg>
   );
 };
