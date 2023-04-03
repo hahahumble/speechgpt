@@ -27,7 +27,7 @@ function SettingSelect({
         options={options}
         value={value}
         onChange={onChange}
-        className={`w-40 mr-0.5 ${className}`}
+        className={`w-40 mx-0.5 ${className}`}
       />
     </div>
   );
