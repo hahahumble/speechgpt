@@ -114,6 +114,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
               text={i18n.t('setting.synthesis.aws-region') as string}
               options={awsRegions}
               value={key.awsRegion}
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
               onChange={e => setKey({ ...key, awsRegion: e })}
             />
             <SettingInput
@@ -140,7 +141,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
               text={i18n.t('setting.synthesis.azure-region') as string}
               options={azureRegions}
               value={key.azureRegion}
-              className={'min-w-min pr-8'}
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
               onChange={e => setKey({ ...key, azureRegion: e })}
             />
             <SettingInput
@@ -162,9 +163,9 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
           <SettingGroup>
             <SettingSelect
               text={i18n.t('setting.synthesis.language') as string}
-              className="min-w-min pr-8"
               options={systemLanguages.map(language => speechSynthesisSystemLanguages[language])}
               value={speechSynthesisSystemLanguages[speech.systemLanguage]}
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
               onChange={e =>
                 setSpeech({
                   ...speech,
@@ -201,6 +202,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
               options={filteredVoices.map(voice => voice.name)}
               value={speech.systemVoice}
               className="w-56 pr-8"
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
               onChange={e => setSpeech({ ...speech, systemVoice: e })}
             />
           </SettingGroup>
