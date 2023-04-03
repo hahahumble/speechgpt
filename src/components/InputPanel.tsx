@@ -5,6 +5,7 @@ import WaitingIcon from './Icons/WaitingIcon';
 import StartCircleIcon from './Icons/StartCircleIcon';
 import StopCircleIcon from './Icons/StopCircleIcon';
 import { useTranslation } from 'react-i18next';
+import SpinnerIcon from "./Icons/SpinnerIcon";
 
 interface InputPanelProps {
   status: string;
@@ -40,7 +41,7 @@ function InputPanel({
       return (
         <button
           type="button"
-          className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-l from-orange-600 to-red-600 hover:bg-red-700 hover:from-orange-700 hover:to-red-700 transition-colors duration-300"
+          className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-l from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 active:from-orange-800 active:to-red-800 transition-colors duration-300"
           onClick={startRecording}
         >
           <StartCircleIcon className="h-5 w-5" />
@@ -63,7 +64,7 @@ function InputPanel({
           type="button"
           className="relative flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-l from-gray-500 to-slate-600 hover:cursor-wait"
         >
-          <WaitingIcon className="h-5 w-5 animate-spin" />
+          <SpinnerIcon className="h-5 w-5 animate-spin " />
           <div>{i18n.t('common.connecting')}</div>
         </button>
       );
@@ -71,7 +72,7 @@ function InputPanel({
       return (
         <button
           type="button"
-          className="relative flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-l from-gray-500 to-slate-600 hover:bg-gray-600 hover:from-gray-600 hover:to-slate-700 transition-colors duration-300"
+          className="relative flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-l from-gray-500 to-slate-600 hover:from-gray-600 hover:to-slate-700 active:from-gray-700 active:to-slate-800 transition-colors duration-300"
           onClick={stopRecording}
         >
           <StopCircleIcon className="h-5 w-5" />
@@ -96,7 +97,7 @@ function InputPanel({
       return (
         <button
           type="button"
-          className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 hover:bg-green-600 hover:from-indigo-600 hover:to-purple-600 transition-colors duration-300"
+          className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-700 active:from-indigo-700 active:to-purple-800 transition-colors duration-300"
           onClick={handleSend}
         >
           <SendIcon className="h-5 w-5" />
@@ -110,7 +111,7 @@ function InputPanel({
           className="flex flex-row items-center space-x-2 cursor-wait rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 transition-colors duration-300"
           onClick={handleSend}
         >
-          <WaitingIcon className="h-5 w-5 animate-spin" />
+          <SpinnerIcon className="h-5 w-5 animate-spin " />
           <div>{i18n.t('common.waiting')}</div>
         </button>
       );
