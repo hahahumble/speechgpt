@@ -20,15 +20,27 @@ const ChatSection: React.FC<ChatSectionProps> = ({}) => {
   return (
     <div className="pb-5 flex flex-col space-y-2 overflow-y-scroll sm:py-6 sm:max-h-96 w-full max-h-[32rem]">
       <SettingTitle text={i18n.t('setting.chat.openai') as string} />
-      <SettingInput
-        text={i18n.t('setting.chat.openai-api-key') as string}
-        id={'openai-api'}
-        type={'text'}
-        value={key.openaiApiKey}
-        onChange={e => setKey({ ...key, openaiApiKey: e })}
-        placeholder={i18n.t('setting.chat.api-key') as string}
-        className={''}
-      />
+      <SettingGroup>
+        <SettingInput
+          text={i18n.t('setting.chat.openai-api-key') as string}
+          id={'openai-api'}
+          type={'text'}
+          value={key.openaiApiKey}
+          onChange={e => setKey({ ...key, openaiApiKey: e })}
+          placeholder={i18n.t('setting.chat.api-key') as string}
+          className={''}
+        />
+        <SettingInput
+          text={i18n.t('setting.chat.openai-host') as string}
+          helpText={i18n.t('setting.chat.openai-host-tooltip') as string}
+          id={'openai-host'}
+          type={'text'}
+          value={key.openaiHost}
+          onChange={e => setKey({ ...key, openaiHost: e })}
+          placeholder={i18n.t('setting.chat.default-host-address') as string}
+          className={''}
+        />
+      </SettingGroup>
 
       <SettingDivider />
       <SettingTitle text={i18n.t('setting.chat.default-value') as string} />

@@ -143,7 +143,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
-      sendRequest(conversationsToSent, key.openaiApiKey, (data: any) => {
+      sendRequest(conversationsToSent, key.openaiApiKey, key.openaiHost, (data: any) => {
         setStatus('idle');
         if (data) {
           if ('error' in data) {

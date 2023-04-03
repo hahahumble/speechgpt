@@ -24,6 +24,7 @@ const defaultGlobalState = {
   key: {
     openaiApiKey: '',
     openaiModel: '',
+    openaiHost: '',
     awsRegion: '',
     awsKeyId: '',
     awsKey: '',

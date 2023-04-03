@@ -8,6 +8,7 @@ export const globalSlice = createSlice({
     key: {
       openaiApiKey: '',
       openaiModel: '',
+      openaiHost: '',
       awsRegion: '',
       awsKeyId: '',
       awsKey: '',

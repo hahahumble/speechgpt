@@ -35,8 +35,11 @@
     "chat": {
       "title": "对话",
       "api-key": "API Key",
+      "default-host-address": "chat.openai.com",
       "openai": "OpenAI",
       "openai-api-key": "OpenAI API 密钥",
+      "openai-host": "OpenAI API 地址",
+      "openai-host-tooltip": "用于连接 OpenAI API 的地址",
       "default-value": "默认值",
       "system-role": "系统角色",
       "system-role-tooltip": "系统在对话中的角色",

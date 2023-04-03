@@ -35,8 +35,11 @@
     "chat": {
       "title": "Chat",
       "api-key": "API Key",
+      "default-host-address": "chat.openai.com",
       "openai": "OpenAI",
       "openai-api-key": "OpenAI API Key",
+      "openai-host": "OpenAI Host",
+      "openai-host-tooltip": "Host address for connecting to the OpenAI API",
       "default-value": "Default Value",
       "system-role": "System Role",
       "system-role-tooltip": "The role of the system in the chat",
