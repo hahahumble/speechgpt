@@ -121,7 +121,7 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
           <SettingSelect
             text={i18n.t('setting.recognition.language') as string}
             className={'w-56 pr-8'}
-            selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+            // selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
             options={Object.values(azureSpeechRecognitionLanguagesLocale)}
             value={azureSpeechRecognitionLanguagesLocale[voice.azureLanguage]}
             onChange={e => setVoice({ ...voice, azureLanguage: getAzureLanguageCode(e) })}
