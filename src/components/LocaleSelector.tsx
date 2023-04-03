@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import 'tippy.js/dist/tippy.css';
 import { useGlobalStore } from '../store/module';
@@ -24,6 +24,7 @@ function LanguageSelector() {
 
   const languages: LanguageOption[] = [
     { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
     { code: 'zh', name: '中文' },
   ];
 
