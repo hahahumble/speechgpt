@@ -57,7 +57,7 @@ function SettingDialog({ open, onClose }: SettingDialogProps) {
             setSelected={setSelected}
           />
         </div>
-        <div className="bg-gray-100 w-44 py-6 hidden sm:block min-w-44">
+        <div className="bg-gray-100 w-60 py-6 hidden sm:block min-w-60">
           <SettingSelector
             selected={selected}
             onSelect={setSelected}

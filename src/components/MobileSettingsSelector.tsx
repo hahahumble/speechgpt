@@ -14,7 +14,7 @@ export default function MobileSettingsSelector({
   setSelected,
 }: MobileSettingsSelectorProps) {
   return (
-    <div className="w-36">
+    <div className="w-44">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-gray-100 hover:bg-gray-200 hover:cursor-pointer py-1.5 pl-3 pr-10 text-left focus:outline-none focus-visible:border-gray-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm transition duration-150 ease-in-out">
