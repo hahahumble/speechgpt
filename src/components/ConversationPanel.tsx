@@ -6,9 +6,10 @@ import CopyIcon from './Icons/CopyIcon';
 import { Element } from 'react-scroll';
 import React from 'react';
 import { marked } from '../helpers/markdown';
+import { Chat } from '../db/chat';
 
 interface ConversationPanelProps {
-  conversations: { content: string; role: 'user' | 'assistant' }[];
+  conversations: Chat[];
   deleteContent: (index: number) => void;
   copyContentToClipboard: (content: string) => void;
 }
@@ -18,7 +19,7 @@ function ConversationPanel({
   deleteContent,
   copyContentToClipboard,
 }: ConversationPanelProps) {
-  function ChatIcon({ role }: { role: 'user' | 'assistant' }) {
+  function ChatIcon({ role }: { role: 'user' | 'assistant'|"system" }) {
     if (role === 'user') {
       return (
         <div className="flex-shrink-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-8 w-8 rounded-full" />

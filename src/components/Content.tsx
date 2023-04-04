@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,useMemo } from 'react';
 
 import sendRequest from '../apis/openai';
 import SettingDialog from './Settings/SettingDialog';
@@ -18,6 +18,9 @@ import {
 
 import AzureSpeechToText from './AzureSpeechToText';
 import BrowserSpeechToText from './BrowserSpeechToText';
+//add live indedDb
+import { db } from "../db";
+import { useLiveQuery } from 'dexie-react-hooks';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
 
@@ -29,8 +32,14 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   const { key, chat, speech, voice } = useGlobalStore();
 
   const [sendMessages, setSendMessages] = useState<boolean>(false);
-  const [conversations, setConversations] = useState<any[]>([]); // conversations to display
-
+  const list =useLiveQuery(
+    () =>
+      db.chat.toArray(),
+    [] 
+  );
+  const conversations = useMemo(()=>{
+    return list?.map(l=>({role:l.role,content:l.content}))||[]
+  },[list])
   const [input, setInput] = useState<string>(chat.defaultPrompt);
   const [response, setResponse] = useState<string>(''); // openai response
 
@@ -122,10 +131,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
-      setConversations(prevConversations => [
-        ...prevConversations,
-        { role: 'assistant', content: response },
-      ]);
+      
+      db.chat.add({ role: 'assistant', content: response });
       generateSpeech(response).then();
     }
   }, [response]);
@@ -143,7 +150,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
-      sendRequest(conversationsToSent, key.openaiApiKey, key.openaiHost, (data: any) => {
+      sendRequest(conversationsToSent as any, key.openaiApiKey, key.openaiHost, (data: any) => {
         setStatus('idle');
         if (data) {
           if ('error' in data) {
@@ -172,8 +179,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       return;
     }
     const input_json = { role: 'user', content: input };
+    db.chat.add(input_json);
     setSendMessages(!sendMessages);
-    setConversations(prevConversations => [...prevConversations, input_json]);
+    
     setInput('');
     focusInput();
   };
@@ -186,7 +194,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       } else {
         const input_json = { role: 'user', content: input };
         setSendMessages(!sendMessages);
-        setConversations(prevConversations => [...prevConversations, input_json]);
+        db.chat.add(input_json);
+     
         setInput('');
         focusInput();
       }
@@ -198,7 +207,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   };
 
   const clearConversation = () => {
-    setConversations([]);
+    
+    db.chat.clear();
     setInput(chat.defaultPrompt);
     setStatus('idle');
     stopSpeechSynthesis();
@@ -218,12 +228,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     notify.copiedNotify();
   }
 
-  function deleteContent(index: number) {
-    setConversations(prevConversations => {
-      const newConversations = [...prevConversations];
-      newConversations.splice(index, 1);
-      return newConversations;
-    });
+  function deleteContent(key: number) {
+    db.chat.delete(key)
     notify.deletedNotify();
   }
 
