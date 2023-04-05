@@ -178,6 +178,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     focusInput();
   };
 
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = async event => {
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault(); // Prevents Enter key from submitting form
@@ -190,10 +192,18 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         setInput('');
         focusInput();
       }
-      // Handle form submission here
     } else if (event.keyCode === 13 && event.shiftKey) {
       event.preventDefault(); // Prevents Shift+Enter from creating a new line
-      setInput(input + '\n');
+      const cursorPosition = event.currentTarget.selectionStart;
+      setInput(input.slice(0, cursorPosition) + '\n' + input.slice(cursorPosition));
+
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.selectionStart = cursorPosition + 1;
+          inputRef.current.selectionEnd = cursorPosition + 1;
+          inputRef.current.scrollTop = inputRef.current.scrollHeight;
+        }
+      }, 0);
     }
   };
 
@@ -204,8 +214,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     stopSpeechSynthesis();
     notify.resetNotify();
   };
-
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   function focusInput() {
     (inputRef.current as HTMLInputElement | null)?.focus();
