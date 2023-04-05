@@ -52,7 +52,8 @@
       "temperature": "Temperature",
       "temperature-tooltip": "The higher the temperature, the more diverse the response, but it may be less relevant",
       "maximum-messages": "Maximum Messages Used",
-      "maximum-messages-tooltip": "This will improve the accuracy of replies, but will use more Tokens"
+      "maximum-messages-tooltip": "This will improve the accuracy of replies, but will use more Tokens",
+      "already-set-environment-variable": "OpenAI API key has been set in the environment variable"
     },
     "synthesis": {
       "title": "Synthesis",
@@ -78,7 +79,9 @@
       "voice-id-tooltip": "The voice used to synthesize speech",
       "polly-standard-not-supported": "The selected language is not supported by Amazon Polly Standard TTS",
       "polly-neural-not-supported": "The selected language is not supported by Amazon Polly Neural TTS",
-      "mobile-not-supported": "Currently, mobile devices are not supported for builtin speech synthesis"
+      "mobile-not-supported": "Currently, mobile devices are not supported for builtin speech synthesis",
+      "azure-already-set-environment-variable": "Azure access key has been set in the environment variable",
+      "polly-already-set-environment-variable": "AWS access key has been set in the environment variable"
     },
     "recognition": {
       "title": "Recognition",
@@ -95,7 +98,8 @@
       "continuous": "Continuous Recognition",
       "continuous-tooltip": "Whether to keep recognizing speech after system response",
       "start-time": "Start Time",
-      "start-time-tooltip": "The time when the recognition starts after system response"
+      "start-time-tooltip": "The time when the recognition starts after system response",
+      "azure-already-set-environment-variable": "Azure access key has been set in the environment variable"
     },
     "about": {
       "title": "About",

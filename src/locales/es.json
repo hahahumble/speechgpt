@@ -53,7 +53,8 @@
       "temperature": "Temperatura",
       "temperature-tooltip": "Cuanto mayor es la temperatura, más diversa es la respuesta, pero puede ser menos relevante",
       "maximum-messages": "Mensajes máximos",
-      "maximum-messages-tooltip": "Esto mejorará la precisión de las respuestas, pero utilizará más tokens."
+      "maximum-messages-tooltip": "Esto mejorará la precisión de las respuestas, pero utilizará más tokens.",
+      "already-set-environment-variable": "OpenAI API key has been set in the environment variable"
     },
     "synthesis": {
       "title": "Síntesis",
@@ -79,7 +80,9 @@
       "voice-id-tooltip": "La voz utilizada para sintetizar el habla",
       "polly-standard-not-supported": "El idioma seleccionado no es compatible con Amazon Polly Standard TTS",
       "polly-neural-not-supported": "El idioma seleccionado no es compatible con Amazon Polly Neural TTS",
-      "mobile-not-supported": "Actualmente, los dispositivos móviles no son compatibles con la síntesis de voz integrada."
+      "mobile-not-supported": "Actualmente, los dispositivos móviles no son compatibles con la síntesis de voz integrada.",
+      "azure-already-set-environment-variable": "Azure access key has been set in the environment variable",
+      "polly-already-set-environment-variable": "AWS access key has been set in the environment variable"
     },
     "recognition": {
       "title": "Reconocimiento",
@@ -96,13 +99,14 @@
       "continuous": "Reconocimiento continuo",
       "continuous-tooltip": "Si se debe seguir reconociendo el habla tras la respuesta del sistema",
       "start-time": "Cronómetro de inicio",
-      "start-time-tooltip": "Momento en que se inicia el reconocimiento tras la respuesta del sistema"
+      "start-time-tooltip": "Momento en que se inicia el reconocimiento tras la respuesta del sistema",
+      "azure-already-set-environment-variable": "Azure access key has been set in the environment variable"
     },
     "about": {
       "title": "Acerca de",
       "link": "Enlace",
       "version": "Versión",
-      "about-text": "SpeechGPT es una aplicación web que te permite conversar con ChatGPT.<br/><br/>Puedes utilizar esta aplicación para mejorar tus habilidades lingüísticas o simplemente divertirte conversando con ChatGPT."
+      "about-text": "SpeechGPT es una aplicación web que te permite conversar con ChatGPT.<br/>Puedes utilizar esta aplicación para mejorar tus habilidades lingüísticas o simplemente divertirte conversando con ChatGPT."
     }
   },
   "tips": {
