@@ -6,6 +6,9 @@ import SettingGroup from './base/SettingGroup';
 import SettingInput from './base/SettingInput';
 import SettingSlider from './base/SettingSlider';
 import SettingSwitch from './base/SettingSwitch';
+import SettingCheckText from './base/SettingCheckText';
+import SettingWarningText from './base/SettingWarningText';
+
 import {
   awsRegions,
   azureRegions,
@@ -14,10 +17,9 @@ import {
 } from '../../constants/data';
 
 import { browserName, isMobile } from 'react-device-detect';
-
 import { useGlobalStore } from '../../store/module';
-import WarningIcon from '../Icons/WarningIcon';
 import { useTranslation } from 'react-i18next';
+import { existEnvironmentVariable } from '../../helpers/utils';
 
 interface RecognitionSectionProps {}
 
@@ -58,20 +60,12 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
       <SettingTitle text={i18n.t('setting.recognition.service') as string} />
       <SettingGroup>
         {browserName !== 'Chrome' && !isMobile && (
-          <div className="flex flex-row items-center">
-            <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
-            <div className="text-gray-600 text-left">
-              {i18n.t('setting.recognition.browser-not-supported') as string}
-            </div>
-          </div>
+          <SettingWarningText
+            text={i18n.t('setting.recognition.browser-not-supported') as string}
+          />
         )}
         {isMobile && (
-          <div className="flex flex-row items-center">
-            <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
-            <div className="text-gray-600 text-left">
-              {i18n.t('setting.recognition.mobile-not-supported') as string}
-            </div>
-          </div>
+          <SettingWarningText text={i18n.t('setting.recognition.mobile-not-supported') as string} />
         )}
         <SettingSelect
           text={i18n.t('setting.recognition.recognition-service') as string}
@@ -84,22 +78,34 @@ const RecognitionSection: React.FC<RecognitionSectionProps> = ({}) => {
         />
         {voice.service === 'Azure Speech to Text' && (
           <>
-            <SettingSelect
-              text={i18n.t('setting.recognition.azure-region') as string}
-              options={azureRegions}
-              value={key.azureRegion}
-              className={'min-w-min pr-8'}
-              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
-              onChange={e => setKey({ ...key, azureRegion: e })}
-            />
-            <SettingInput
-              text={i18n.t('setting.recognition.azure-access-key') as string}
-              id={'azure-access-key'}
-              type={'text'}
-              value={key.azureKey}
-              placeholder={i18n.t('setting.recognition.azure-access-key-placeholder') as string}
-              onChange={e => setKey({ ...key, azureKey: e })}
-            />
+            {existEnvironmentVariable('AZURE_REGION') && existEnvironmentVariable('AZURE_KEY') ? (
+              <SettingCheckText
+                text={
+                  i18n.t('setting.recognition.azure-already-set-environment-variable') as string
+                }
+              />
+            ) : (
+              <>
+                <SettingSelect
+                  text={i18n.t('setting.recognition.azure-region') as string}
+                  options={azureRegions}
+                  value={key.azureRegion}
+                  className={'min-w-min pr-8'}
+                  selectClassName={
+                    'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'
+                  }
+                  onChange={e => setKey({ ...key, azureRegion: e })}
+                />
+                <SettingInput
+                  text={i18n.t('setting.recognition.azure-access-key') as string}
+                  id={'azure-access-key'}
+                  type={'text'}
+                  value={key.azureKey}
+                  placeholder={i18n.t('setting.recognition.azure-access-key-placeholder') as string}
+                  onChange={e => setKey({ ...key, azureKey: e })}
+                />
+              </>
+            )}
           </>
         )}
       </SettingGroup>

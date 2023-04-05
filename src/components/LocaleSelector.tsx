@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import 'tippy.js/dist/tippy.css';
 import { useGlobalStore } from '../store/module';

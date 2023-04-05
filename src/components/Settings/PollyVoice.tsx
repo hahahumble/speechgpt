@@ -18,14 +18,20 @@ const PollyVoice = () => {
   const languageCode = speech.pollyLanguage;
 
   useEffect(() => {
-    if (pollyStandardSupportedLanguages.includes(languageCode)) {
+    if (
+      pollyStandardSupportedLanguages.includes(languageCode) &&
+      speech.pollyEngine === 'Standard'
+    ) {
       if (!pollyStandardVoices[languageCode].includes(speech.pollyVoice)) {
         setSpeech({
           ...speech,
           pollyVoice: pollyStandardVoices[languageCode][0],
         });
       }
-    } else if (pollyNeuralSupportedLanguages.includes(languageCode)) {
+    } else if (
+      pollyNeuralSupportedLanguages.includes(languageCode) &&
+      speech.pollyEngine === 'Neural'
+    ) {
       if (!pollyNeuralVoices[languageCode].includes(speech.pollyVoice)) {
         setSpeech({ ...speech, pollyVoice: pollyNeuralVoices[languageCode][0] });
       }

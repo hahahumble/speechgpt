@@ -5,7 +5,7 @@ import WaitingIcon from './Icons/WaitingIcon';
 import StartCircleIcon from './Icons/StartCircleIcon';
 import StopCircleIcon from './Icons/StopCircleIcon';
 import { useTranslation } from 'react-i18next';
-import SpinnerIcon from "./Icons/SpinnerIcon";
+import SpinnerIcon from './Icons/SpinnerIcon';
 
 interface InputPanelProps {
   status: string;

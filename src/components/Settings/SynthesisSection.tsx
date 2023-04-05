@@ -5,8 +5,10 @@ import SettingSelect from './base/SettingSelect';
 import SettingGroup from './base/SettingGroup';
 import SettingInput from './base/SettingInput';
 import SettingSlider from './base/SettingSlider';
-
-import { useGlobalStore } from '../../store/module';
+import SettingCheckText from './base/SettingCheckText';
+import PollyVoice from './PollyVoice';
+import AzureTtsVoice from './azureTtsVoice';
+import SettingWarningText from './base/SettingWarningText';
 
 import {
   amazonPollyEngines,
@@ -16,12 +18,10 @@ import {
   azureRegions,
   azureSpeechSynthesisLanguagesLocale,
 } from '../../constants/data';
-import PollyVoice from './PollyVoice';
-import AzureTtsVoice from './azureTtsVoice';
+import { useGlobalStore } from '../../store/module';
 import { useTranslation } from 'react-i18next';
-
 import { browserName, isMobile } from 'react-device-detect';
-import WarningIcon from '../Icons/WarningIcon';
+import { existEnvironmentVariable } from '../../helpers/utils';
 
 interface SynthesisSectionProps {}
 
@@ -93,12 +93,7 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
       <SettingTitle text={i18n.t('setting.synthesis.service') as string} />
       <SettingGroup>
         {isMobile && (
-          <div className="flex flex-row items-center">
-            <WarningIcon className="inline-block w-6 h-6 mr-3 text-gray-600" />
-            <div className="text-gray-600 text-left">
-              {i18n.t('setting.synthesis.mobile-not-supported') as string}
-            </div>
-          </div>
+          <SettingWarningText text={i18n.t('setting.synthesis.mobile-not-supported') as string} />
         )}
         <SettingSelect
           text={i18n.t('setting.synthesis.synthesis-service') as string}
@@ -110,48 +105,72 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
         />
         {speech.service === 'Amazon Polly' && (
           <>
-            <SettingSelect
-              text={i18n.t('setting.synthesis.aws-region') as string}
-              options={awsRegions}
-              value={key.awsRegion}
-              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
-              onChange={e => setKey({ ...key, awsRegion: e })}
-            />
-            <SettingInput
-              text={i18n.t('setting.synthesis.aws-access-key-id') as string}
-              id={'aws-access-key-id'}
-              type={'text'}
-              value={key.awsKeyId}
-              placeholder={i18n.t('setting.synthesis.aws-access-key-id-placeholder') as string}
-              onChange={e => setKey({ ...key, awsKeyId: e })}
-            />
-            <SettingInput
-              text={i18n.t('setting.synthesis.aws-secret-access-key') as string}
-              id={'aws-secret-access-key'}
-              type={'text'}
-              value={key.awsKey}
-              placeholder={i18n.t('setting.synthesis.aws-secret-access-key-placeholder') as string}
-              onChange={e => setKey({ ...key, awsKey: e })}
-            />
+            {existEnvironmentVariable('AWS_REGION') &&
+            existEnvironmentVariable('AWS_ACCESS_KEY_ID') &&
+            existEnvironmentVariable('AWS_ACCESS_KEY') ? (
+              <SettingCheckText
+                text={i18n.t('setting.synthesis.polly-already-set-environment-variable') as string}
+              />
+            ) : (
+              <>
+                <SettingSelect
+                  text={i18n.t('setting.synthesis.aws-region') as string}
+                  options={awsRegions}
+                  value={key.awsRegion}
+                  selectClassName={
+                    'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'
+                  }
+                  onChange={e => setKey({ ...key, awsRegion: e })}
+                />
+                <SettingInput
+                  text={i18n.t('setting.synthesis.aws-access-key-id') as string}
+                  id={'aws-access-key-id'}
+                  type={'text'}
+                  value={key.awsKeyId}
+                  placeholder={i18n.t('setting.synthesis.aws-access-key-id-placeholder') as string}
+                  onChange={e => setKey({ ...key, awsKeyId: e })}
+                />
+                <SettingInput
+                  text={i18n.t('setting.synthesis.aws-secret-access-key') as string}
+                  id={'aws-secret-access-key'}
+                  type={'text'}
+                  value={key.awsKey}
+                  placeholder={
+                    i18n.t('setting.synthesis.aws-secret-access-key-placeholder') as string
+                  }
+                  onChange={e => setKey({ ...key, awsKey: e })}
+                />
+              </>
+            )}
           </>
         )}
         {speech.service === 'Azure TTS' && (
           <>
-            <SettingSelect
-              text={i18n.t('setting.synthesis.azure-region') as string}
-              options={azureRegions}
-              value={key.azureRegion}
-              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
-              onChange={e => setKey({ ...key, azureRegion: e })}
-            />
-            <SettingInput
-              text={i18n.t('setting.synthesis.azure-access-key') as string}
-              id={i18n.t('setting.synthesis.azure-access-key-placeholder') as string}
-              type={'text'}
-              value={key.azureKey}
-              placeholder={'Azure Access Key'}
-              onChange={e => setKey({ ...key, azureKey: e })}
-            />
+            {existEnvironmentVariable('AZURE_REGION') && existEnvironmentVariable('AZURE_KEY') ? (
+              <SettingCheckText
+                text={i18n.t('setting.synthesis.azure-already-set-environment-variable') as string}
+              />
+            ) : (
+              <>
+                <SettingSelect
+                  text={i18n.t('setting.synthesis.azure-region') as string}
+                  options={azureRegions}
+                  value={key.azureRegion}
+                  selectClassName={
+                    'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'
+                  }
+                  onChange={e => setKey({ ...key, azureRegion: e })}
+                />
+                <SettingInput
+                  text={i18n.t('setting.synthesis.azure-access-key') as string}
+                  id={i18n.t('setting.synthesis.azure-access-key-placeholder') as string}
+                  type={'text'}
+                  value={key.azureKey}
+                  placeholder={'Azure Access Key'}
+                  onChange={e => setKey({ ...key, azureKey: e })}
+                />
+              </>
+            )}
           </>
         )}
       </SettingGroup>
