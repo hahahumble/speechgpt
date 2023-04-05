@@ -52,7 +52,8 @@
       "temperature": "思维发散程度",
       "temperature-tooltip": "思维发散程度越高，回复越多样化，但可能不太相关",
       "maximum-messages": "连续对话次数",
-      "maximum-messages-tooltip": "这将提高回复的准确性，但会使用更多的 Token"
+      "maximum-messages-tooltip": "这将提高回复的准确性，但会使用更多的 Token",
+      "already-set-environment-variable": "已在环境变量中设置 OpenAI API 密钥"
     },
     "synthesis": {
       "title": "语音合成",
@@ -78,7 +79,9 @@
       "voice-id-tooltip": "用于指定特定的语音",
       "polly-standard-not-supported": "Polly 标准版不支持此语言",
       "polly-neural-not-supported": "Polly 神经版不支持此语言",
-      "mobile-not-supported": "目前，移动端不支持浏览器语音合成"
+      "mobile-not-supported": "目前，移动端不支持浏览器语音合成",
+      "azure-already-set-environment-variable": "已在环境变量中设置 Azure 密钥",
+      "polly-already-set-environment-variable": "已在环境变量中设置 AWS 密钥"
     },
     "recognition": {
       "title": "语音识别",
@@ -95,7 +98,8 @@
       "continuous": "持续识别",
       "continuous-tooltip": "系统回复后，继续识别用户的输入",
       "start-time": "开始时间",
-      "start-time-tooltip": "系统回复后，开始识别的时间"
+      "start-time-tooltip": "系统回复后，开始识别的时间",
+      "azure-already-set-environment-variable": "已在环境变量中设置 Azure 密钥"
     },
     "about": {
       "title": "关于",

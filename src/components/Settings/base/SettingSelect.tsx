@@ -21,7 +21,7 @@ function SettingSelect({
   selectClassName,
 }: SettingSelectProps) {
   return (
-    <div className={`flex flex-row justify-between ${selectClassName}`}>
+    <div className={`flex flex-row justify-between items-center ${selectClassName}`}>
       <SettingSubtitle text={text} helpText={helpText} />
       <Select
         options={options}
