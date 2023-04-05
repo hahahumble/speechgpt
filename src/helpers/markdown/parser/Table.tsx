@@ -5,9 +5,7 @@ import { inlineElementParserList } from '.';
 export const TABLE_REG = /^ *\|(.+)\n *\|( *[-:]+ *\|)+( *\n *\|(.+))*\|? *$/;
 
 const parseTableContent = (content: string, delimiter: RegExp) => {
-  return content
-    .split(delimiter)
-    .map((cell) => cell.trim());
+  return content.split(delimiter).map(cell => cell.trim());
 };
 
 const renderer = (rawStr: string) => {
@@ -21,32 +19,30 @@ const renderer = (rawStr: string) => {
   const alignmentRow = tableRows[1];
   const dataRows = tableRows.slice(2);
 
-  const headerCells = parseTableContent(headerRow, /\|/).filter((cell) => cell !== '');
-  const alignments = parseTableContent(alignmentRow, /\|/).filter((cell) => cell !== '');
+  const headerCells = parseTableContent(headerRow, /\|/).filter(cell => cell !== '');
+  const alignments = parseTableContent(alignmentRow, /\|/).filter(cell => cell !== '');
 
   const header = (
     <thead>
-    <tr>
-      {headerCells.map((cell, index) => (
-        <th key={index}>{marked(cell, [], inlineElementParserList)}</th>
-      ))}
-    </tr>
+      <tr>
+        {headerCells.map((cell, index) => (
+          <th key={index}>{marked(cell, [], inlineElementParserList)}</th>
+        ))}
+      </tr>
     </thead>
   );
 
   const body = (
     <tbody>
-    {dataRows.map((row, rowIndex) => (
-      <tr key={rowIndex}>
-        {parseTableContent(row, /\|/)
-          .filter((cell) => cell !== '')
-          .map((cell, cellIndex) => (
-            <td key={cellIndex}>
-              {marked(cell, [], inlineElementParserList)}
-            </td>
-          ))}
-      </tr>
-    ))}
+      {dataRows.map((row, rowIndex) => (
+        <tr key={rowIndex}>
+          {parseTableContent(row, /\|/)
+            .filter(cell => cell !== '')
+            .map((cell, cellIndex) => (
+              <td key={cellIndex}>{marked(cell, [], inlineElementParserList)}</td>
+            ))}
+        </tr>
+      ))}
     </tbody>
   );
 
