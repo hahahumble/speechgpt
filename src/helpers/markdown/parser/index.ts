@@ -18,12 +18,14 @@ import Blockquote from './Blockquote';
 import HorizontalRules from './HorizontalRules';
 import Strikethrough from './Strikethrough';
 import Heading from './Heading';
+import Table from "./Table";
 
 export { TAG_REG } from './Tag';
 export { LINK_REG } from './Link';
 
 // The order determines the order of execution.
 export const blockElementParserList = [
+  Table,
   Br,
   CodeBlock,
   Blockquote,
