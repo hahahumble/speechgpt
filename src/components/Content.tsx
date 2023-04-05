@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState,useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 
 import sendRequest from '../apis/openai';
 import SettingDialog from './Settings/SettingDialog';
@@ -19,7 +19,7 @@ import {
 import AzureSpeechToText from './AzureSpeechToText';
 import BrowserSpeechToText from './BrowserSpeechToText';
 //add live indedDb
-import { db } from "../db";
+import { db } from '../db';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
@@ -32,14 +32,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   const { key, chat, speech, voice } = useGlobalStore();
 
   const [sendMessages, setSendMessages] = useState<boolean>(false);
-  const list =useLiveQuery(
-    () =>
-      db.chat.toArray(),
-    [] 
-  );
-  const conversations = useMemo(()=>{
-    return list?.map(l=>({role:l.role,content:l.content}))||[]
-  },[list])
+  const list = useLiveQuery(() => db.chat.toArray(), []);
+  const conversations = useMemo(() => {
+    return list?.map(l => ({ role: l.role, content: l.content })) || [];
+  }, [list]);
   const [input, setInput] = useState<string>(chat.defaultPrompt);
   const [response, setResponse] = useState<string>(''); // openai response
 
@@ -131,14 +127,15 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
-      
+      setSendMessages(!sendMessages);
+
       db.chat.add({ role: 'assistant', content: response });
       generateSpeech(response).then();
     }
   }, [response]);
 
   useEffect(() => {
-    if (conversations.length > 0) {
+    if (conversations.length > 0 && sendMessages) {
       setStatus('waiting');
       let conversationsToSent = conversations;
       if (!chat.useAssistant) {
@@ -172,16 +169,15 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         setStatus('idle');
       });
     }
-  }, [sendMessages]);
+  }, [sendMessages, conversations]);
 
   const handleSend = async () => {
     if (input.length === 0 || status === 'waiting' || status === 'speaking') {
       return;
     }
     const input_json = { role: 'user', content: input };
-    db.chat.add(input_json);
     setSendMessages(!sendMessages);
-    
+    db.chat.add(input_json);
     setInput('');
     focusInput();
   };
@@ -195,7 +191,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         const input_json = { role: 'user', content: input };
         setSendMessages(!sendMessages);
         db.chat.add(input_json);
-     
+
         setInput('');
         focusInput();
       }
@@ -207,7 +203,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   };
 
   const clearConversation = () => {
-    
     db.chat.clear();
     setInput(chat.defaultPrompt);
     setStatus('idle');
@@ -229,7 +224,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   }
 
   function deleteContent(key: number) {
-    db.chat.delete(key)
+    db.chat.delete(key);
     notify.deletedNotify();
   }
 
