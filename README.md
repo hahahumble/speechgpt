@@ -47,6 +47,23 @@ You can utilize this app to improve your language speaking skills or simply have
     - Set the AWS Region, AWS Access Key ID, and Secret Access Key (the Access Key should have the AmazonPollyFullAccess policy).
     - If you don't have an AWS Access Key, follow this tutorial on [how to create an IAM user in AWS](https://www.techtarget.com/searchcloudcomputing/tutorial/Step-by-step-guide-on-how-to-create-an-IAM-user-in-AWS).
 
+
+## Deploy with Vercel
+
+The following variables are optional: 
+
+- VITE_OPENAI_HOST
+- VITE_AWS_REGION
+- VITE_AWS_ACCESS_KEY_ID
+- VITE_AWS_ACCESS_KEY
+- VITE_AZURE_REGION
+- VITE_AZURE_KEY
+
+If you do not want to provide a value, use REPLACE_WITH_YOUR_OWN.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhahahumble%2Fspeechgpt&env=VITE_OPENAI_API_KEY,VITE_OPENAI_HOST,VITE_AWS_REGION,VITE_AWS_ACCESS_KEY_ID,VITE_AWS_ACCESS_KEY,VITE_AZURE_REGION,VITE_AZURE_KEY&envDescription=The%20following%20variables%20are%20optional%3A%20VITE_OPENAI_HOST%2C%20VITE_AWS_REGION%2C%20VITE_AWS_ACCESS_KEY_ID%2C%20VITE_AWS_ACCESS_KEY%2C%20VITE_AZURE_REGION%2C%20VITE_AZURE_KEY.%0AIf%20you%20do%20not%20want%20to%20provide%20a%20value%2C%20use%20REPLACE_WITH_YOUR_OWN.&project-name=speechgpt&repository-name=speechgpt)
+
+
 ## Development
 1. Install dependencies.
 ```bash
