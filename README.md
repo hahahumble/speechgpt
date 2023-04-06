@@ -68,43 +68,27 @@ Code formatting(Using Prettier).
 yarn format
 ```
 
-##  Build and Run With Docker
-1. Build the image.
+## Deployment
+
+### Deploying with Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhahahumble%2Fspeechgpt&env=VITE_OPENAI_API_KEY,VITE_OPENAI_HOST,VITE_AWS_REGION,VITE_AWS_ACCESS_KEY_ID,VITE_AWS_ACCESS_KEY,VITE_AZURE_REGION,VITE_AZURE_KEY&envDescription=If%20you%20do%20not%20want%20to%20provide%20a%20value%2C%20use%20REPLACE_WITH_YOUR_OWN.&project-name=speechgpt&repository-name=speechgpt)
+
+###  Deploying with Docker
+
+1. Build the Docker image.
 ```bash
 docker build -t speechgpt .
 ```
-2. Run the container.
+
+2. Run the Docker container.
 ```bash
 docker run -d -p 8080:8080 --name=speechgpt speechgpt
 ```
-3. Visit `http://localhost:8080/`.
+
+3. Visit `http://localhost:8080/` to access the application.
+
 4. Enjoy!
-
-or run with a public docker image
-```
-docker run -d -p 8080:8080 --name=speechgpt belm/speechgpt
-```
-
-## nginx proxy config
-```
-server {
-    listen       80;
-    server_name  your domain name;
-
-    location / {
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_pass http://localhost:8080;
-	proxy_set_header Connection '';
-        proxy_http_version 1.1;
-        chunked_transfer_encoding off;
-        proxy_buffering off;
-        proxy_cache off;
-    }
-}
-```
 
 ## License
 This project is licensed under the terms of the [MIT license](/LICENSE).
