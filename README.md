@@ -80,5 +80,31 @@ docker run -d -p 8080:8080 --name=speechgpt speechgpt
 3. Visit `http://localhost:8080/`.
 4. Enjoy!
 
+or run with a public docker image
+```
+docker run -d -p 8080:8080 --name=speechgpt belm/speechgpt
+```
+
+## nginx proxy config
+```
+server {
+    listen       80;
+    server_name  your domain name;
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://localhost:8080;
+	      proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
+    }
+}
+```
+
 ## License
 This project is licensed under the terms of the [MIT license](/LICENSE).
