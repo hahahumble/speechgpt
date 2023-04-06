@@ -75,14 +75,17 @@ yarn format
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhahahumble%2Fspeechgpt&env=VITE_OPENAI_API_KEY,VITE_OPENAI_HOST,VITE_AWS_REGION,VITE_AWS_ACCESS_KEY_ID,VITE_AWS_ACCESS_KEY,VITE_AZURE_REGION,VITE_AZURE_KEY&envDescription=If%20you%20do%20not%20want%20to%20provide%20a%20value%2C%20use%20REPLACE_WITH_YOUR_OWN.&project-name=speechgpt&repository-name=speechgpt)
 
 ###  Deploying with Docker
+
 1. Build the Docker image.
 ```bash
 docker build -t speechgpt .
 ```
+
 2. Run the Docker container.
 ```bash
 docker run -d -p 8080:8080 --name=speechgpt speechgpt
 ```
+
 3. Visit `http://localhost:8080/` to access the application.
 
 4. Enjoy!
