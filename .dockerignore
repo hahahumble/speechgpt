@@ -1,0 +1,13 @@
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.settings
+**/.vscode
+**/.idea
+**/dist
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+**/yarn-error.log
+LICENSE
+README.md
