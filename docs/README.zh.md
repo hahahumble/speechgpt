@@ -67,17 +67,35 @@ yarn build
 yarn format
 ```
 
-##  使用 Docker 进行构建和运行
-1. 构建镜像
+## 部署
+### 使用 Vercel 部署
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhahahumble%2Fspeechgpt&env=VITE_OPENAI_API_KEY,VITE_OPENAI_HOST,VITE_AWS_REGION,VITE_AWS_ACCESS_KEY_ID,VITE_AWS_ACCESS_KEY,VITE_AZURE_REGION,VITE_AZURE_KEY&envDescription=If%20you%20do%20not%20want%20to%20provide%20a%20value%2C%20use%20REPLACE_WITH_YOUR_OWN.&project-name=speechgpt&repository-name=speechgpt)
+
+### 使用 Docker 部署
+1. 拉取 Docker 镜像
+```bash
+docker pull hahahumble/speechgpt
+```
+
+2. 运行 Docker 容器
+```bash
+docker run -d -p 8080:8080 --name speechgpt hahahumble/speechgpt
+```
+
+3. 访问 `http://localhost:8080/`
+
+### 构建和运行 Docker 镜像
+1. 构建 Docker 镜像
 ```bash
 docker build -t speechgpt .
 ```
-2. 运行容器
+
+2. 运行 Docker 容器
 ```bash
 docker run -d -p 8080:8080 --name=speechgpt speechgpt
 ```
+
 3. 访问 `http://localhost:8080/`
-4. 尽情享用！
 
 ## 许可
 本项目根据 [MIT 许可证](/LICENSE) 的条款进行许可。
