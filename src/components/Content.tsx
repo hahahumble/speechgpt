@@ -35,7 +35,6 @@ const useIsMount = () => {
   return isMountRef.current;
 };
 
-
 const Content: React.FC<ContentProps> = ({ notify }) => {
   const { key, chat, speech, voice } = useGlobalStore();
 
@@ -45,7 +44,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     return list?.map(l => ({ role: l.role, content: l.content, id: l.id })) || [];
   }, [list]);
 
-  const [input, setInput] = useState<string>("");
+  const [input, setInput] = useState<string>('');
   const [response, setResponse] = useState<string>(''); // openai response
 
   const [openSetting, setOpenSetting] = useState<boolean>(false);
@@ -166,7 +165,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   useEffect(() => {
     if (conversations.length > 0 && sendMessages) {
       setStatus('waiting');
-      let conversationsToSent:any = conversations;
+      let conversationsToSent: any = conversations;
       if (!chat.useAssistant) {
         conversationsToSent = conversations.filter(
           conversation => conversation.role === 'user' || conversation.role === 'system'
@@ -179,13 +178,12 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
       sendRequest(conversationsToSent as any, key.openaiApiKey, key.openaiHost, (data: any) => {
-
-      const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
-        ? getEnvironmentVariable('OPENAI_API_KEY')
-        : key.openaiApiKey;
-      const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
-        ? getEnvironmentVariable('OPENAI_HOST')
-        : key.openaiHost;
+        const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
+          ? getEnvironmentVariable('OPENAI_API_KEY')
+          : key.openaiApiKey;
+        const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
+          ? getEnvironmentVariable('OPENAI_HOST')
+          : key.openaiHost;
         setStatus('idle');
         if (data) {
           if ('error' in data) {
@@ -207,7 +205,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         setStatus('idle');
       });
     }
-  }, [ conversations]);
+  }, [conversations]);
 
   const handleSend = async () => {
     if (input.length === 0 || status === 'waiting' || status === 'speaking') {
