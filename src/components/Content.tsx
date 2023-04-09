@@ -16,8 +16,6 @@ import {
   resumeSpeechSynthesis,
 } from '../utils/speechSynthesis';
 
-
-//add live indedDb
 import { db } from '../db';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useGlobalStore } from '../store/module';
@@ -29,15 +27,25 @@ interface ContentProps {
   notify: any;
 }
 
+const useIsMount = () => {
+  const isMountRef = useRef(true);
+  useEffect(() => {
+    isMountRef.current = false;
+  }, []);
+  return isMountRef.current;
+};
+
+
 const Content: React.FC<ContentProps> = ({ notify }) => {
   const { key, chat, speech, voice } = useGlobalStore();
 
   const [sendMessages, setSendMessages] = useState<boolean>(false);
   const list = useLiveQuery(() => db.chat.toArray(), []);
   const conversations = useMemo(() => {
-    return list?.map(l => ({ role: l.role, content: l.content })) || [];
+    return list?.map(l => ({ role: l.role, content: l.content, id: l.id })) || [];
   }, [list]);
-  const [input, setInput] = useState<string>(chat.defaultPrompt);
+
+  const [input, setInput] = useState<string>("");
   const [response, setResponse] = useState<string>(''); // openai response
 
   const [openSetting, setOpenSetting] = useState<boolean>(false);
@@ -54,6 +62,17 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   const [transcript, setTranscript] = useState('');
   // speech to text listening status
   const [isListening, setIsListening] = useState(false);
+
+  const isMount = useIsMount();
+
+  useEffect(() => {
+    if (isMount) {
+    } else {
+      if (conversations.length === 0) {
+        setInput(chat.defaultPrompt);
+      }
+    }
+  }, [conversations]);
 
   const generateSpeech = async (text: string) => {
     if (disableSpeaker) {
@@ -138,8 +157,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
-      setSendMessages(!sendMessages);
-
+      setSendMessages(false);
       db.chat.add({ role: 'assistant', content: response });
       generateSpeech(response).then();
     }
@@ -149,8 +167,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (conversations.length > 0 && sendMessages) {
       setStatus('waiting');
       let conversationsToSent:any = conversations;
+      conversationsToSent = conversationsToSent.map((conversation: any) => {
+        return { role: conversation.role, content: conversation.content };
+      });
       if (!chat.useAssistant) {
-        // if `useAssistant` is false, remove assistant's conversation
         conversationsToSent = conversations.filter(
           conversation => conversation.role === 'user' || conversation.role === 'system'
         );
@@ -187,14 +207,14 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         setStatus('idle');
       });
     }
-  }, [sendMessages, conversations]);
+  }, [ conversations]);
 
   const handleSend = async () => {
     if (input.length === 0 || status === 'waiting' || status === 'speaking') {
       return;
     }
     const input_json = { role: 'user', content: input };
-    setSendMessages(!sendMessages);
+    setSendMessages(true);
     db.chat.add(input_json);
     setInput('');
     focusInput();
@@ -209,7 +229,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         return;
       } else {
         const input_json = { role: 'user', content: input };
-        setSendMessages(!sendMessages);
+        setSendMessages(true);
         db.chat.add(input_json);
 
         setInput('');
