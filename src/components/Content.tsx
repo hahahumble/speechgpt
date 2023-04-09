@@ -167,14 +167,14 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (conversations.length > 0 && sendMessages) {
       setStatus('waiting');
       let conversationsToSent:any = conversations;
-      conversationsToSent = conversationsToSent.map((conversation: any) => {
-        return { role: conversation.role, content: conversation.content };
-      });
       if (!chat.useAssistant) {
         conversationsToSent = conversations.filter(
           conversation => conversation.role === 'user' || conversation.role === 'system'
         );
       }
+      conversationsToSent = conversationsToSent.map((conversation: any) => {
+        return { role: conversation.role, content: conversation.content };
+      });
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
