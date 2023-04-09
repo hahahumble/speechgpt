@@ -10,7 +10,7 @@ import { Chat } from '../db/chat';
 
 interface ConversationPanelProps {
   conversations: Chat[];
-  deleteContent: (index: number) => void;
+  deleteContent: (index: any) => void;
   copyContentToClipboard: (content: string) => void;
 }
 
@@ -36,7 +36,7 @@ function ConversationPanel({
       {conversations.length === 0 && <Tips />}
       {conversations.map((conversation, index) => (
         <div
-          key={index}
+          key={conversation.id}
           className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
         >
           <ChatIcon role={conversation.role} />
@@ -53,7 +53,7 @@ function ConversationPanel({
             {/*/>*/}
             <TippyButton
               onClick={() => {
-                deleteContent(index);
+                deleteContent(conversation.id);
               }}
               tooltip="Delete"
               icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
