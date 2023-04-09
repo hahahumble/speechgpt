@@ -52,6 +52,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (disableSpeaker) {
       return;
     }
+    stopSpeechSynthesis();
     setStatus('speaking');
     setFinished(false);
 
@@ -387,6 +388,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           conversations={conversations}
           copyContentToClipboard={copyContentToClipboard}
           deleteContent={deleteContent}
+          generateSpeech={generateSpeech}
         />
       </div>
       <div className="">

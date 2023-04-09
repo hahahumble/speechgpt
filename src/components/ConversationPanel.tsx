@@ -11,12 +11,14 @@ interface ConversationPanelProps {
   conversations: { content: string; role: 'user' | 'assistant' }[];
   deleteContent: (index: number) => void;
   copyContentToClipboard: (content: string) => void;
+  generateSpeech: (content: string) => void;
 }
 
 function ConversationPanel({
   conversations,
   deleteContent,
   copyContentToClipboard,
+  generateSpeech,
 }: ConversationPanelProps) {
   function ChatIcon({ role }: { role: 'user' | 'assistant' }) {
     if (role === 'user') {
@@ -42,21 +44,22 @@ function ConversationPanel({
           <div className="py-1 text-gray-800 markdown-content">
             {marked(conversation.content ?? '')}
           </div>
-          <div className="absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex flex-row space-x-1">
-            {/*<TippyButton*/}
-            {/*  onClick={() => {*/}
-            {/*  }}*/}
-            {/*  tooltip="Speak"*/}
-            {/*  icon={<SpeakerIcon className="w-4 h-4 text-gray-500"/>}*/}
-            {/*  style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"*/}
-            {/*/>*/}
+          <div className="absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex flex-row">
+            <TippyButton
+              onClick={() => {
+                generateSpeech(conversation.content);
+              }}
+              tooltip="Speak"
+              icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm hover:opacity-90"
+            />
             <TippyButton
               onClick={() => {
                 deleteContent(index);
               }}
               tooltip="Delete"
               icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm hover:opacity-90"
             />
             <TippyButton
               onClick={() => {
@@ -64,7 +67,7 @@ function ConversationPanel({
               }}
               tooltip="Copy"
               icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm hover:opacity-90"
             />
           </div>
         </div>

@@ -83,6 +83,9 @@ export function speechSynthesis({
 
       // Add the 'error' event listener to reject the Promise
       utterance.addEventListener('error', error => {
+        if (error.error === 'interrupted') {
+          return;
+        }
         notify.errorBuiltinSpeechSynthesisNotify();
         reject(error);
       });
