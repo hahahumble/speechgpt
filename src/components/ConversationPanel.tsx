@@ -7,18 +7,23 @@ import { Element } from 'react-scroll';
 import React from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
+import { useTranslation } from 'react-i18next';
 
 interface ConversationPanelProps {
   conversations: Chat[];
   deleteContent: (index: any) => void;
   copyContentToClipboard: (content: string) => void;
+  generateSpeech: (content: string) => void;
 }
 
 function ConversationPanel({
   conversations,
   deleteContent,
   copyContentToClipboard,
+  generateSpeech,
 }: ConversationPanelProps) {
+  const { i18n } = useTranslation();
+
   function ChatIcon({ role }: { role: 'user' | 'assistant' | 'system' }) {
     if (role === 'user') {
       return (
@@ -43,29 +48,30 @@ function ConversationPanel({
           <div className="py-1 text-gray-800 markdown-content">
             {marked(conversation.content ?? '')}
           </div>
-          <div className="absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex flex-row space-x-1">
-            {/*<TippyButton*/}
-            {/*  onClick={() => {*/}
-            {/*  }}*/}
-            {/*  tooltip="Speak"*/}
-            {/*  icon={<SpeakerIcon className="w-4 h-4 text-gray-500"/>}*/}
-            {/*  style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"*/}
-            {/*/>*/}
+          <div className="absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex flex-row space-x-0.5">
+            <TippyButton
+              onClick={() => {
+                generateSpeech(conversation.content);
+              }}
+              tooltip={i18n.t('common.replay') as string}
+              icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
+            />
             <TippyButton
               onClick={() => {
                 deleteContent(conversation.id);
               }}
-              tooltip="Delete"
+              tooltip={i18n.t('common.delete') as string}
               icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
             />
             <TippyButton
               onClick={() => {
                 copyContentToClipboard(conversation.content);
               }}
-              tooltip="Copy"
+              tooltip={i18n.t('common.copy') as string}
               icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-50 hover:opacity-90"
+              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
             />
           </div>
         </div>

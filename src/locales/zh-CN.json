@@ -20,7 +20,10 @@
     "status": "状态",
     "waiting": "等待中",
     "pause-speaking": "暂停播放",
-    "resume-speaking": "继续播放"
+    "resume-speaking": "继续播放",
+    "copy": "复制",
+    "delete": "删除",
+    "replay": "重放"
   },
   "appearance": {
     "light": "浅色主题",
