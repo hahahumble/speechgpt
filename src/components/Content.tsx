@@ -216,7 +216,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     setSendMessages(true);
     db.chat.add(input_json);
     setInput('');
-    focusInput();
+    // focusInput();
   };
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -232,7 +232,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         db.chat.add(input_json);
 
         setInput('');
-        focusInput();
+        // focusInput();
       }
     } else if (event.keyCode === 13 && event.shiftKey) {
       event.preventDefault(); // Prevents Shift+Enter from creating a new line
@@ -312,7 +312,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   function clearInput() {
     setInput('');
-    focusInput();
+    // focusInput();
   }
 
   function pauseSpeaking() {
@@ -335,7 +335,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   function startRecording() {
     setStatus('recording');
-    focusInput();
+    // focusInput();
   }
 
   function stopRecording() {
