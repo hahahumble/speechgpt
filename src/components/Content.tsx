@@ -20,6 +20,7 @@ import { db } from '../db';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useGlobalStore } from '../store/module';
 import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/utils';
+import { isMobile } from 'react-device-detect';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
 
@@ -216,7 +217,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     setSendMessages(true);
     db.chat.add(input_json);
     setInput('');
-    focusInput();
+    if (!isMobile) {
+      focusInput();
+    }
   };
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -232,7 +235,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         db.chat.add(input_json);
 
         setInput('');
-        focusInput();
+        if (!isMobile) {
+          focusInput();
+        }
       }
     } else if (event.keyCode === 13 && event.shiftKey) {
       event.preventDefault(); // Prevents Shift+Enter from creating a new line
@@ -312,7 +317,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   function clearInput() {
     setInput('');
-    focusInput();
+    if (!isMobile) {
+      focusInput();
+    }
   }
 
   function pauseSpeaking() {
@@ -335,7 +342,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
   function startRecording() {
     setStatus('recording');
-    focusInput();
+    if (!isMobile) {
+      focusInput();
+    }
   }
 
   function stopRecording() {
