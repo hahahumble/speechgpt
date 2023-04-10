@@ -20,7 +20,10 @@
     "status": "Estado",
     "waiting": "Esperando",
     "pause-speaking": "Pausar hablado",
-    "resume-speaking": "Reanudar hablado"
+    "resume-speaking": "Reanudar hablado",
+    "copy": "Copy",
+    "delete": "Delete",
+    "replay": "Replay"
   },
   "appearance": {
     "light": "Modo claro",

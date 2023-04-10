@@ -20,7 +20,10 @@
     "status": "Status",
     "waiting": "Waiting",
     "pause-speaking": "Pause Speaking",
-    "resume-speaking": "Resume Speaking"
+    "resume-speaking": "Resume Speaking",
+    "copy": "Copy",
+    "delete": "Delete",
+    "replay": "Replay"
   },
   "appearance": {
     "light": "Light Theme",
