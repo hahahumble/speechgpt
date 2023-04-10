@@ -7,7 +7,7 @@ import { Element } from 'react-scroll';
 import React from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 interface ConversationPanelProps {
   conversations: Chat[];

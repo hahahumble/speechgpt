@@ -3,7 +3,7 @@ import React from 'react';
 import Home from './pages/Home';
 import { initialGlobalState } from './store/module';
 import NotFound from './pages/NotFound';
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github.css';
 
 function App() {
   initialGlobalState();
