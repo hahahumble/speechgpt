@@ -179,13 +179,13 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
-      sendRequest(conversationsToSent as any, key.openaiApiKey, key.openaiHost, (data: any) => {
-        const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
-          ? getEnvironmentVariable('OPENAI_API_KEY')
-          : key.openaiApiKey;
-        const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
-          ? getEnvironmentVariable('OPENAI_HOST')
-          : key.openaiHost;
+      const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
+        ? getEnvironmentVariable('OPENAI_API_KEY')
+        : key.openaiApiKey;
+      const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
+        ? getEnvironmentVariable('OPENAI_HOST')
+        : key.openaiHost;
+      sendRequest(conversationsToSent as any, openaiApiKey, openaiApiHost, (data: any) => {
         setStatus('idle');
         if (data) {
           if ('error' in data) {
