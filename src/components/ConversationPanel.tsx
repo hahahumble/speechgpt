@@ -4,7 +4,7 @@ import SpeakerIcon from './Icons/SpeakerIcon';
 import TrashIcon from './Icons/TrashIcon';
 import CopyIcon from './Icons/CopyIcon';
 import { Element } from 'react-scroll';
-import React from 'react';
+import React, { useState } from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,13 @@ function ConversationPanel({
   generateSpeech,
 }: ConversationPanelProps) {
   const { i18n } = useTranslation();
+  const [isHidden, setIsHidden] = useState(false);
+  const handleMouseUp = () => {
+    setIsHidden(window.getSelection()?.toString().length !== 0)
+  }
+  const handleMouseDown = () => {
+    setIsHidden(true);
+  }
 
   function ChatIcon({ role }: { role: 'user' | 'assistant' | 'system' }) {
     if (role === 'user') {
@@ -43,19 +50,24 @@ function ConversationPanel({
         <div
           key={conversation.id}
           className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
-        >
+          >
           <ChatIcon role={conversation.role} />
-          <div className="py-1 text-gray-800 markdown-content">
+          <div className="py-1 text-gray-800 markdown-content"
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleMouseDown}
+            onTouchEnd={handleMouseUp}
+          >
             {marked(conversation.content ?? '')}
           </div>
-          <div className="absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex flex-row space-x-0.5">
+          <div className={`absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex-row space-x-0.5 ${isHidden ? "hidden" : "flex"}`}>
             <TippyButton
               onClick={() => {
                 generateSpeech(conversation.content);
               }}
               tooltip={i18n.t('common.replay') as string}
               icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
+              style="bg-gray-100 active:bg-gray-300 rounded-sm"
             />
             <TippyButton
               onClick={() => {
@@ -63,7 +75,7 @@ function ConversationPanel({
               }}
               tooltip={i18n.t('common.delete') as string}
               icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
+              style="bg-gray-100 active:bg-gray-300 rounded-sm"
             />
             <TippyButton
               onClick={() => {
@@ -71,7 +83,7 @@ function ConversationPanel({
               }}
               tooltip={i18n.t('common.copy') as string}
               icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 hover:bg-gray-100 active:bg-gray-300 rounded-sm opacity-40 hover:opacity-90"
+              style="bg-gray-100 active:bg-gray-300 rounded-sm"
             />
           </div>
         </div>
