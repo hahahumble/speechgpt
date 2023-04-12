@@ -50,13 +50,13 @@ function ConversationPanel({
         <div
           key={conversation.id}
           className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onTouchStart={handleMouseDown}
-          onTouchEnd={handleMouseUp}
           >
           <ChatIcon role={conversation.role} />
           <div className="py-1 text-gray-800 markdown-content"
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleMouseDown}
+            onTouchEnd={handleMouseUp}
           >
             {marked(conversation.content ?? '')}
           </div>
