@@ -31,6 +31,18 @@ export const invalidOpenAiKeyNotify = () => {
   });
 };
 
+export const invalidOpenAiRequestNotify = () => {
+  toast.error(i18next.t('notification.invalid-openai-request') as string, {
+    style: notificationStyle,
+  });
+};
+
+export const invalidOpenAiModelNotify = () => {
+  toast.error(i18next.t('notification.invalid-openai-model') as string, {
+    style: notificationStyle,
+  });
+};
+
 export const openAiErrorNotify = () => {
   toast.error(i18next.t('notification.openai-error') as string, {
     style: notificationStyle,
