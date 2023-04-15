@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
+import { azureSynthesisErrorNotify } from '../components/Notification';
 
 const textToSpeech = async (
   subscriptionKey: string,
@@ -7,35 +8,25 @@ const textToSpeech = async (
   voiceName: string,
   language: string
 ) => {
-  const request: AxiosRequestConfig = {
-    method: 'POST',
-    url: `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`,
-    headers: {
-      'Content-Type': 'application/ssml+xml',
-      'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
-      Authorization: `Bearer ${await getAccessToken(subscriptionKey, region)}`,
+  console.time('azure synthesis')
+  const speechConfig = sdk.SpeechConfig.fromSubscription(subscriptionKey, region);
+  speechConfig.speechRecognitionLanguage = language;
+  speechConfig.speechSynthesisVoiceName = voiceName;
+  const player = new sdk.SpeakerAudioDestination();
+  const audioConfig = sdk.AudioConfig.fromSpeakerOutput(player);
+  const speechSynthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
+  speechSynthesizer.speakTextAsync(
+    text,
+    result => {
+      console.timeEnd('azure synthesis')
+      speechSynthesizer.close();
     },
-    data: `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${language}'><voice name='${voiceName}'>${text}</voice></speak>`,
-    responseType: 'arraybuffer',
-  };
-
-  const response = await axios(request);
-
-  return new Blob([response.data], { type: 'audio/wav' });
+    error => {
+      console.log(error);
+      azureSynthesisErrorNotify();
+      speechSynthesizer.close();
+    }
+  );
+  return player;
 };
-
-const getAccessToken = async (subscriptionKey: string, region: string) => {
-  const request: AxiosRequestConfig = {
-    method: 'POST',
-    url: `https://${region}.api.cognitive.microsoft.com/sts/v1.0/issueToken`,
-    headers: {
-      'Ocp-Apim-Subscription-Key': subscriptionKey,
-    },
-  };
-
-  const response = await axios(request);
-
-  return response.data;
-};
-
 export default textToSpeech;

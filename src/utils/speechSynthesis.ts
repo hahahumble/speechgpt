@@ -1,6 +1,6 @@
 import generateSpeechUrl from '../apis/amazonPolly';
 import textToSpeech from '../apis/azureTTS';
-
+import { SpeakerAudioDestination} from 'microsoft-cognitiveservices-speech-sdk'
 interface SpeechSynthesisOptions {
   text: string;
   service: 'System' | 'Amazon Polly' | 'Azure TTS';
@@ -26,7 +26,7 @@ interface getPollyVoicesOptions {
 
 const synthesis = window.speechSynthesis;
 let pollyAudio: HTMLAudioElement | null = null;
-let azureAudio: HTMLAudioElement | null = null;
+let azureAudio: SpeakerAudioDestination | null = null;
 
 async function getPollyVoices({
   text,
@@ -130,17 +130,11 @@ export function speechSynthesis({
         break;
       case 'Azure TTS':
         textToSpeech(secretAccessKey || '', region || 'eastus', text, voiceName, language)
-          .then(audioBlob => {
-            azureAudio = new Audio(URL.createObjectURL(audioBlob));
-            azureAudio.play().then(() => {
-              // resolve();
-            });
-            azureAudio.onended = () => {
+          .then(player => {
+            azureAudio = player;
+            player.onAudioEnd = () => {
               resolve();
-            };
-            azureAudio.onerror = error => {
-              reject(error);
-            };
+            }
           })
           .catch(error => {
             console.error(error);
@@ -164,7 +158,7 @@ export function stopSpeechSynthesis() {
   }
   if (azureAudio) {
     azureAudio.pause();
-    azureAudio.currentTime = 0;
+    azureAudio.close();
   }
 }
 
@@ -192,6 +186,6 @@ export function resumeSpeechSynthesis() {
     pollyAudio.play();
   }
   if (azureAudio) {
-    azureAudio.play();
+    azureAudio.resume();
   }
 }
