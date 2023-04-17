@@ -55,6 +55,12 @@ export const deletedNotify = () => {
   });
 };
 
+export const cannotBeEmptyNotify = () => {
+  toast.error(i18next.t('notification.cannot-be-empty') as string, {
+    style: notificationStyle,
+  });
+};
+
 // Builtin services
 export const errorBuiltinSpeechRecognitionNotify = () => {
   toast.error(i18next.t('notification.builtin-recognition-error') as string, {
