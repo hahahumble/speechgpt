@@ -11,7 +11,18 @@ class ChatDB extends Dexie {
         ++id
         `,
     });
+
+    this.version(3).stores({
+      chat: `
+        ++id,
+        sessionId
+        `,
+    });
+  }
+
+  async deleteChatsBySessionId(sessionId: string): Promise<void> {
+    await this.chat.where('sessionId').equals(sessionId).delete();
   }
 }
 
-export const db = new ChatDB();
+export const chatDB = new ChatDB();
