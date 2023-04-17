@@ -8,6 +8,7 @@ import ButtonGroup from './ButtonGroup';
 import InputPanel from './InputPanel';
 import AzureSpeechToText from './AzureSpeechToText';
 import BrowserSpeechToText from './BrowserSpeechToText';
+import AssemblyAISpeechToText from './AssemblyAISpeechToText'
 
 import {
   speechSynthesis,
@@ -395,12 +396,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     <div className="w-160 flex flex-col h-full justify-between pb-3 dark:bg-gray-900">
       <SettingDialog open={openSetting} onClose={() => setOpenSetting(false)} />
       {voice.service == 'System' && (
-        <BrowserSpeechToText
+        <AssemblyAISpeechToText
           isListening={isListening}
-          language={voice.systemLanguage}
           setIsListening={setIsListening}
           setTranscript={setTranscript}
-          notify={notify}
         />
       )}
       {voice.service == 'Azure Speech to Text' && (

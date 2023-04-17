@@ -27,6 +27,9 @@ function Record({
     useSpeechToText({
       continuous: true,
       useLegacyResults: false,
+      useOnlyGoogleCloud: true,
+      crossBrowser: true,
+      googleApiKey: "AIzaSyAWJBm8k08r-SU1DAlThOsQgMTofZxRUdA",
       speechRecognitionProperties: {
         lang: language,
       },
