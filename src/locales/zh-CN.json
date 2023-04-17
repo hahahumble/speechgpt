@@ -8,6 +8,8 @@
     "enable-microphone": "启用麦克风",
     "disable-speaker": "禁用扬声器",
     "enable-speaker": "启用扬声器",
+    "conversations": "对话",
+    "conversations-list": "对话列表",
     "language": "语言",
     "reset-conversation": "重置对话",
     "clear-input": "清空输入",
@@ -33,6 +35,20 @@
   "language": {
     "en": "English",
     "zh": "简体中文"
+  },
+  "conversations": {
+    "new": "新的对话",
+    "new-conversation": "New Conversation",
+    "no-match": "没有找到匹配的对话",
+    "search": "搜索",
+    "message": "条消息",
+    "messages": "条消息",
+    "delete": "删除",
+    "confirm": "确认",
+    "like": "星标",
+    "unlike": "取消星标",
+    "edit": "编辑",
+    "save": "保存"
   },
   "setting": {
     "chat": {
@@ -132,6 +148,7 @@
     "empty-azure-key": "Azure 访问密钥不能为空",
     "azure-synthesis-error": "Azure 语音合成错误",
     "azure-recognition-error": "Azure 语音识别错误",
-    "polly-synthesis-error": "Amazon Polly 语音合成错误"
+    "polly-synthesis-error": "Amazon Polly 语音合成错误",
+    "cannot-be-empty": "不能为空"
   }
 }

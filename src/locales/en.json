@@ -8,6 +8,8 @@
     "enable-microphone": "Enable Microphone",
     "disable-speaker": "Disable Speaker",
     "enable-speaker": "Enable Speaker",
+    "conversations": "Conversations",
+    "conversations-list": "Conversations List",
     "language": "Language",
     "reset-conversation": "Reset Conversation",
     "clear-input": "Clear Input",
@@ -33,6 +35,20 @@
   "language": {
     "en": "English",
     "zh": "简体中文"
+  },
+  "conversations": {
+    "new": "Create New",
+    "new-conversation": "New Conversation",
+    "no-match": "No matching conversations found",
+    "search": "Search",
+    "message": "Message",
+    "messages": "Messages",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "like": "Like",
+    "unlike": "Unlike",
+    "edit": "Edit",
+    "save": "Save"
   },
   "setting": {
     "chat": {
@@ -132,6 +148,7 @@
     "empty-azure-key": "You don't have provided an Azure Access Key",
     "azure-synthesis-error": "There was an error with Azure speech synthesis",
     "azure-recognition-error": "There was an error with Azure speech recognition",
-    "polly-synthesis-error": "There was an error with Amazon Polly speech synthesis"
+    "polly-synthesis-error": "There was an error with Amazon Polly speech synthesis",
+    "cannot-be-empty": "This field cannot be empty"
   }
 }
