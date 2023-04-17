@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
 import { useTranslation } from 'react-i18next';
+import { useSessionStore } from '../store/module';
 
 interface ConversationPanelProps {
   conversations: Chat[];
@@ -31,6 +32,8 @@ function ConversationPanel({
     setIsHidden(true);
   };
 
+  const { currentSessionId } = useSessionStore();
+
   function ChatIcon({ role }: { role: 'user' | 'assistant' | 'system' }) {
     if (role === 'user') {
       return (
@@ -43,56 +46,65 @@ function ConversationPanel({
     }
   }
 
+  function isConversationEmpty() {
+    return (
+      conversations.length === 0 ||
+      conversations.filter(conversation => conversation.sessionId === currentSessionId).length === 0
+    );
+  }
+
   return (
     <Element name="messages" className="flex-grow border border-gray-300 rounded-lg p-4 mb-4">
-      {conversations.length === 0 && <Tips />}
-      {conversations.map((conversation, index) => (
-        <div
-          key={conversation.id}
-          className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
-        >
-          <ChatIcon role={conversation.role} />
+      {isConversationEmpty() && <Tips />}
+      {conversations
+        .filter(conversation => conversation.sessionId === currentSessionId)
+        .map((conversation, index) => (
           <div
-            className="py-1 text-gray-800 markdown-content"
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onTouchStart={handleMouseDown}
-            onTouchEnd={handleMouseUp}
+            key={conversation.id}
+            className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
           >
-            {marked(conversation.content ?? '')}
-          </div>
-          <div
+            <ChatIcon role={conversation.role} />
+            <div 
+              className="py-1 text-gray-800 markdown-content"
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onTouchStart={handleMouseDown}
+              onTouchEnd={handleMouseUp}
+            >
+              {marked(conversation.content ?? '')}
+            </div>
+            <div
             className={`absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex-row space-x-0.5 ${
               isHidden ? 'hidden' : 'flex'
             }`}
-          >
-            <TippyButton
-              onClick={() => {
-                generateSpeech(conversation.content);
-              }}
-              tooltip={i18n.t('common.replay') as string}
-              icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 active:bg-gray-300 rounded-sm"
-            />
-            <TippyButton
-              onClick={() => {
-                deleteContent(conversation.id);
-              }}
-              tooltip={i18n.t('common.delete') as string}
-              icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 active:bg-gray-300 rounded-sm"
-            />
-            <TippyButton
-              onClick={() => {
-                copyContentToClipboard(conversation.content);
-              }}
-              tooltip={i18n.t('common.copy') as string}
-              icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
-              style="bg-gray-100 active:bg-gray-300 rounded-sm"
-            />
+            >              
+              <TippyButton
+                onClick={() => {
+                  generateSpeech(conversation.content);
+                }}
+                tooltip={i18n.t('common.replay') as string}
+                icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
+                style="bg-gray-100 active:bg-gray-300 rounded-sm"
+              />
+              <TippyButton
+                onClick={() => {
+                  deleteContent(conversation.id);
+                }}
+                tooltip={i18n.t('common.delete') as string}
+                icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
+                style="bg-gray-100 active:bg-gray-300 rounded-sm"
+              />
+              <TippyButton
+                onClick={() => {
+                  copyContentToClipboard(conversation.content);
+                }}
+                tooltip={i18n.t('common.copy') as string}
+                icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
+                style="bg-gray-100 active:bg-gray-300 rounded-sm"
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </Element>
   );
 }
