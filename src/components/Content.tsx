@@ -216,23 +216,35 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
         ? getEnvironmentVariable('OPENAI_HOST')
         : key.openaiHost;
-      sendRequest(conversationsToSent as any, openaiApiKey, openaiApiHost, (data: any) => {
-        setStatus('idle');
-        if (data) {
-          if ('error' in data) {
-            if (data.error.code === 'invalid_api_key') {
-              notify.invalidOpenAiKeyNotify();
-            } else if (data.error.type === 'invalid_request_error') {
-              notify.invalidOpenAiRequestNotify();
-            } else {
-              notify.openAiErrorNotify();
-            }
-          }
-          setResponse(data.choices[0].message.content);
-          console.log('Response: ' + data.choices[0].message.content);
+      const openaiApiModel = existEnvironmentVariable('OPENAI_MODEL')
+        ? getEnvironmentVariable('OPENAI_MODEL')
+        : key.openaiModel;
+      sendRequest(
+        conversationsToSent as any,
+        openaiApiKey,
+        openaiApiHost,
+        openaiApiModel,
+        (data: any) => {
           setStatus('idle');
+          if (data) {
+            if ('error' in data) {
+              console.log(data.error.code);
+              if (data.error.code === 'invalid_api_key') {
+                notify.invalidOpenAiKeyNotify();
+              } else if (data.error.code === 'model_not_found') {
+                notify.invalidOpenAiModelNotify();
+              } else if (data.error.type === 'invalid_request_error') {
+                notify.invalidOpenAiRequestNotify();
+              } else {
+                notify.openAiErrorNotify();
+              }
+            }
+            setResponse(data.choices[0].message.content);
+            console.log('Response: ' + data.choices[0].message.content);
+            setStatus('idle');
+          }
         }
-      }).catch(err => {
+      ).catch(err => {
         console.log(err);
         notify.networkErrorNotify();
         setStatus('idle');

@@ -11,8 +11,19 @@ import SettingCheckText from './base/SettingCheckText';
 import { useGlobalStore } from '../../store/module';
 import { useTranslation } from 'react-i18next';
 import { existEnvironmentVariable } from '../../helpers/utils';
+import { azureRegions } from '../../constants/data';
+import SettingSelect from './base/SettingSelect';
 
 interface ChatSectionProps {}
+
+const openaiModels = [
+  'gpt-3.5-turbo',
+  'gpt-3.5-turbo-0301', // deprecated on June 1st, 2023
+  'gpt-4',
+  'gpt-4-0314', // deprecated on June 14th, 2023
+  'gpt-4-32k',
+  'gpt-4-32k-0314', // deprecated on June 14th, 2023
+];
 
 const ChatSection: React.FC<ChatSectionProps> = ({}) => {
   const { key, setKey, chat, setChat } = useGlobalStore();
@@ -47,6 +58,14 @@ const ChatSection: React.FC<ChatSectionProps> = ({}) => {
               onChange={e => setKey({ ...key, openaiHost: e })}
               placeholder={i18n.t('setting.chat.default-host-address') as string}
               className={''}
+            />
+            <SettingSelect
+              text={i18n.t('setting.chat.openai-model') as string}
+              options={openaiModels}
+              value={key.openaiModel}
+              className={'min-w-min pr-8'}
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+              onChange={e => setKey({ ...key, openaiModel: e })}
             />
           </>
         )}
