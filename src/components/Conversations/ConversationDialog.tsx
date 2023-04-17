@@ -87,7 +87,7 @@ function ConversationDialog({ open, onClose, notify }: ConversationDialogProps) 
                 </div>
                 <input
                   type="text"
-                  className="w-48 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-base text-gray-700 py-1.5 px-3 border-2 shadow-sm block border-gray-200 rounded-md"
+                  className="w-36 pl-10 pr-3 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-base text-gray-700 py-1.5 px-3 border-2 shadow-sm block border-gray-200 rounded-md"
                   placeholder={i18n.t('conversations.search') + '...'}
                   value={searchValue}
                   onChange={handleSearchChange}

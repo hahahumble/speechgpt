@@ -106,7 +106,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
 
   return (
     <div
-      className={`group relative w-full border h-16 rounded-lg flex flex-col justify-center px-4 hover:bg-gray-100 hover:cursor-pointer ${
+      className={`group relative border h-16 rounded-lg flex flex-col justify-center px-4 hover:bg-gray-100 hover:cursor-pointer ${
         currentSessionId === id ? 'border-purple-500 border-2' : ''
       }`}
       onClick={onClick}
