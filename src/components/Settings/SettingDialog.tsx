@@ -40,7 +40,7 @@ function SettingDialog({ open, onClose }: SettingDialogProps) {
   ];
 
   return (
-    <BaseDialog open={open} onClose={onClose}>
+    <BaseDialog open={open} onClose={onClose} className="w-180">
       <div className="absolute sm:top-5 sm:right-6 top-6 right-4">
         <TippyButton
           tooltip=""
