@@ -113,7 +113,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     >
       {isEditing ? (
         <input
-          className="self-start text-gray-700 bg-transparent border-none focus:ring-0 w-72 pl-1"
+          className="self-start text-gray-700 bg-transparent border-none focus:ring-0 w-52 sm:w-72 pl-1"
           value={currentTitle}
           onChange={handleTitleChange}
           onKeyDown={handleKeyDown}
@@ -126,7 +126,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
       ) : (
         <div className="self-start text-left flex items-center">
           {liked && <StarIcon className="w-4 h-4 text-yellow-500 mr-1.5 flex-nowrap" />}
-          <div className="text-gray-700 truncate group-hover:w-80 w-96">{currentTitle}</div>
+          <div className="text-gray-700 truncate w-56 sm:w-72">{currentTitle}</div>
         </div>
       )}
       <div className="flex flex-row justify-between text-gray-500 text-sm">
