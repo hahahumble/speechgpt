@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Home from './pages/Home';
-import { initialGlobalState } from './store/module';
+import { initialGlobalState, initialSessionState } from './store/module';
 import NotFound from './pages/NotFound';
 import 'highlight.js/styles/github.css';
 
 function App() {
   initialGlobalState();
+  initialSessionState();
   return (
     <Router>
       <Routes>
