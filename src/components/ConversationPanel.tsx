@@ -64,7 +64,7 @@ function ConversationPanel({
             className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
           >
             <ChatIcon role={conversation.role} />
-            <div 
+            <div
               className="py-1 text-gray-800 markdown-content"
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
@@ -74,10 +74,10 @@ function ConversationPanel({
               {marked(conversation.content ?? '')}
             </div>
             <div
-            className={`absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex-row space-x-0.5 ${
-              isHidden ? 'hidden' : 'flex'
-            }`}
-            >              
+              className={`absolute right-2 top-2 group-hover:opacity-100 opacity-0 transition-colors duration-100 flex-row space-x-0.5 ${
+                isHidden ? 'hidden' : 'flex'
+              }`}
+            >
               <TippyButton
                 onClick={() => {
                   generateSpeech(conversation.content);

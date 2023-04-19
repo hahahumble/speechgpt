@@ -51,7 +51,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
       <SettingDivider />
       <SettingTitle text={i18n.t('setting.about.version') as string} />
       <SettingGroup>
-        <div className={'flex space-y-2 text-left ml-0.5 text-gray-700'}>Version: v0.4.0</div>
+        <div className={'flex space-y-2 text-left ml-0.5 text-gray-700'}>Version: v0.4.1</div>
       </SettingGroup>
     </div>
   );
