@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
+import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/utils';
 
 interface AzureSpeechToTextProps {
   subscriptionKey: string;
@@ -10,6 +11,7 @@ interface AzureSpeechToTextProps {
   setIsListening: (update: ((prevIsListening: boolean) => boolean) | boolean) => void;
   setWaiting: (update: ((prevWaiting: boolean) => boolean) | boolean) => void;
   notify: any;
+  accessCode: string;
 }
 
 const AzureSpeechToText: React.FC<AzureSpeechToTextProps> = ({
@@ -21,6 +23,7 @@ const AzureSpeechToText: React.FC<AzureSpeechToTextProps> = ({
   setTranscript,
   setWaiting,
   notify,
+  accessCode,
 }) => {
   const [recognizer, setRecognizer] = useState<sdk.SpeechRecognizer | null>(null);
 
@@ -37,6 +40,13 @@ const AzureSpeechToText: React.FC<AzureSpeechToTextProps> = ({
   }, [isListening]);
 
   const startSpeechRecognition = () => {
+    if (accessCode !== getEnvironmentVariable('ACCESS_CODE')) {
+      notify.invalidAccessCodeNotify();
+      setIsListening(false);
+      setWaiting(false);
+      return;
+    }
+
     setWaiting(true);
 
     if (subscriptionKey === '' || region === '') {

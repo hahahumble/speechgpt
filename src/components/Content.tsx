@@ -109,6 +109,13 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (disableSpeaker) {
       return;
     }
+    if (existEnvironmentVariable('ACCESS_CODE')) {
+      const accessCode = getEnvironmentVariable('ACCESS_CODE');
+      if (accessCode !== key.accessCode) {
+        notify.invalidAccessCodeNotify();
+        return;
+      }
+    }
     stopSpeechSynthesis();
     setStatus('speaking');
     setFinished(false);
@@ -219,6 +226,16 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       const openaiApiModel = existEnvironmentVariable('OPENAI_MODEL')
         ? getEnvironmentVariable('OPENAI_MODEL')
         : key.openaiModel;
+
+      if (existEnvironmentVariable('ACCESS_CODE')) {
+        const accessCode = getEnvironmentVariable('ACCESS_CODE');
+        if (accessCode !== key.accessCode) {
+          notify.invalidAccessCodeNotify();
+          setStatus('idle');
+          return;
+        }
+      }
+
       sendRequest(
         conversationsToSent as any,
         openaiApiKey,
@@ -465,6 +482,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           setTranscript={setTranscript}
           setWaiting={setWaiting}
           notify={notify}
+          accessCode={existEnvironmentVariable('ACCESS_CODE') ? key.accessCode : ''}
         />
       )}
       <div className="overflow-y-scroll h-full" ref={conversationRef}>

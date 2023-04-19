@@ -69,6 +69,20 @@ const ChatSection: React.FC<ChatSectionProps> = ({}) => {
             />
           </>
         )}
+        {existEnvironmentVariable('ACCESS_CODE') ? (
+          <SettingInput
+            text={i18n.t('setting.chat.access-code') as string}
+            helpText={i18n.t('setting.chat.access-code-tooltip') as string}
+            id={'openai-host'}
+            type={'text'}
+            value={key.accessCode}
+            onChange={e => setKey({ ...key, accessCode: e })}
+            placeholder={i18n.t('setting.chat.code') as string}
+            className={''}
+          />
+        ) : (
+          <></>
+        )}
       </SettingGroup>
 
       <SettingDivider />

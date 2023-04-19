@@ -5,7 +5,6 @@ import * as Notify from '../components/Notification';
 import { browserName, isMobile } from 'react-device-detect';
 import { useGlobalStore, useSessionStore } from '../store/module';
 import { v4 as uuidv4 } from 'uuid';
-import { current } from '@reduxjs/toolkit';
 import { useTranslation } from 'react-i18next';
 
 function Home() {
@@ -32,6 +31,7 @@ function Home() {
     awsErrorNotify: Notify.awsErrorNotify,
     emptyAzureKeyNotify: Notify.emptyAzureKeyNotify,
     cannotBeEmptyNotify: Notify.cannotBeEmptyNotify,
+    invalidAccessCodeNotify: Notify.invalidAccessCodeNotify,
   };
 
   if (isMobile || browserName !== 'Chrome') {

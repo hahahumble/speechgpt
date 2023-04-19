@@ -24,6 +24,12 @@ export const resetNotify = () => {
   });
 };
 
+export const invalidAccessCodeNotify = () => {
+  toast.error(i18next.t('notification.invalid-access-code') as string, {
+    style: notificationStyle,
+  });
+};
+
 // OpenAI
 export const invalidOpenAiKeyNotify = () => {
   toast.error(i18next.t('notification.invalid-openai-key') as string, {
