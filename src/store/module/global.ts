@@ -22,6 +22,7 @@ const defaultGlobalState = {
   locale: navigator.language.split(/[-_]/)[0] || '',
   appearance: 'system',
   key: {
+    accessCode: '',
     openaiApiKey: '',
     openaiModel: '',
     openaiHost: '',
