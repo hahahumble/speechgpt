@@ -54,6 +54,9 @@
   "setting": {
     "chat": {
       "title": "Chat",
+      "access-code": "Access Code",
+      "access-code-tooltip": "Enter the access code to use the application",
+      "code": "Code",
       "api-key": "Código de API",
       "default-host-address": "chat.openai.com",
       "openai": "OpenAI",
@@ -153,6 +156,7 @@
     "azure-synthesis-error": "Se ha producido un error con la síntesis de voz de Azure",
     "azure-recognition-error": "Se ha producido un error en el reconocimiento de voz de Azure",
     "polly-synthesis-error": "Se ha producido un error con la síntesis de voz de Amazon Polly",
-    "cannot-be-empty": "This field cannot be empty"
+    "cannot-be-empty": "This field cannot be empty",
+    "invalid-access-code": "Invalid access code"
   }
 }
