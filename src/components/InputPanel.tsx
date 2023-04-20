@@ -123,7 +123,7 @@ function InputPanel({
       <TextareaAutosize
         id={'input'}
         ref={inputRef}
-        placeholder="Type your message"
+        placeholder={(i18n.t('common.type-your-message') as string) + '...'}
         className="bg-gray-200 rounded-lg px-4 py-2 w-full border-none focus:ring-0 focus:outline-none resize-none"
         value={userInput}
         onChange={event => setUserInput(event.target.value)}
