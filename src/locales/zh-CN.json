@@ -25,7 +25,8 @@
     "resume-speaking": "继续播放",
     "copy": "复制",
     "delete": "删除",
-    "replay": "重放"
+    "replay": "重放",
+    "type-your-message": "输入消息"
   },
   "appearance": {
     "light": "浅色主题",
