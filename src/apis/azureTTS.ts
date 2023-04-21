@@ -1,14 +1,14 @@
 import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
 import { azureSynthesisErrorNotify } from '../components/Notification';
 
-const textToSpeech = async (
+const speechSynthesizeWithAzure = async (
   subscriptionKey: string,
   region: string,
   text: string,
   voiceName: string,
   language: string
 ) => {
-  console.time('azure synthesis')
+  console.time('Azure speech synthesis');
   const speechConfig = sdk.SpeechConfig.fromSubscription(subscriptionKey, region);
   speechConfig.speechRecognitionLanguage = language;
   speechConfig.speechSynthesisVoiceName = voiceName;
@@ -18,7 +18,7 @@ const textToSpeech = async (
   speechSynthesizer.speakTextAsync(
     text,
     result => {
-      console.timeEnd('azure synthesis')
+      console.timeEnd('Azure speech synthesis');
       speechSynthesizer.close();
     },
     error => {
@@ -29,4 +29,4 @@ const textToSpeech = async (
   );
   return player;
 };
-export default textToSpeech;
+export default speechSynthesizeWithAzure;

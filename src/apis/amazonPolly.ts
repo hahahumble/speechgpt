@@ -10,7 +10,7 @@ const speechParams = {
   Engine: 'neural',
 };
 
-export default async function generateSpeechUrl(
+export default async function speechSynthesizeWithPolly(
   text: string,
   voiceId: string = 'Matthew',
   engine: string = 'neural',
