@@ -1,6 +1,8 @@
-import generateSpeechUrl from '../apis/amazonPolly';
-import textToSpeech from '../apis/azureTTS';
-import { SpeakerAudioDestination} from 'microsoft-cognitiveservices-speech-sdk'
+import speechSynthesizeWithPolly from '../apis/amazonPolly';
+import speechSynthesizeWithAzure from '../apis/azureTTS';
+import { SpeakerAudioDestination } from 'microsoft-cognitiveservices-speech-sdk';
+import { getAzureToken } from '../apis/azureToken';
+
 interface SpeechSynthesisOptions {
   text: string;
   service: 'System' | 'Amazon Polly' | 'Azure TTS';
@@ -36,7 +38,7 @@ async function getPollyVoices({
   accessKeyId,
   secretAccessKey,
 }: getPollyVoicesOptions) {
-  return await generateSpeechUrl(text, voiceName, engine, region, accessKeyId, secretAccessKey);
+  return await speechSynthesizeWithPolly(text, voiceName, engine, region, accessKeyId, secretAccessKey);
 }
 
 function pollyEngineName(engine: string | undefined) {
@@ -129,12 +131,24 @@ export function speechSynthesis({
           });
         break;
       case 'Azure TTS':
-        textToSpeech(secretAccessKey || '', region || 'eastus', text, voiceName, language)
+        if (secretAccessKey == '') {
+          reject('Azure access key is empty');
+          notify.emptyAzureKeyNotify();
+          return;
+        }
+        // Check if secret access key and region is valid
+        getAzureToken(secretAccessKey || '', region || 'eastus')
+          .then(token => {})
+          .catch(error => {
+            notify.invalidAzureKeyNotify();
+            reject(error);
+          });
+        speechSynthesizeWithAzure(secretAccessKey || '', region || 'eastus', text, voiceName, language)
           .then(player => {
             azureAudio = player;
             player.onAudioEnd = () => {
               resolve();
-            }
+            };
           })
           .catch(error => {
             console.error(error);
