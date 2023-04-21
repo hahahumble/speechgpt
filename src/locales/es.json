@@ -136,6 +136,7 @@
     "empty-azure-key": "No ha proporcionado una clave de acceso a Azure",
     "azure-synthesis-error": "Se ha producido un error con la síntesis de voz de Azure",
     "azure-recognition-error": "Se ha producido un error en el reconocimiento de voz de Azure",
-    "polly-synthesis-error": "Se ha producido un error con la síntesis de voz de Amazon Polly"
+    "polly-synthesis-error": "Se ha producido un error con la síntesis de voz de Amazon Polly",
+    "invalid-azure-key": "Invalid Azure key or region"
   }
 }

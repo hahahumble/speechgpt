@@ -136,6 +136,7 @@
     "empty-azure-key": "Azure 访问密钥不能为空",
     "azure-synthesis-error": "Azure 语音合成错误",
     "azure-recognition-error": "Azure 语音识别错误",
-    "polly-synthesis-error": "Amazon Polly 语音合成错误"
+    "polly-synthesis-error": "Amazon Polly 语音合成错误",
+    "invalid-azure-key": "无效的 Azure Key 或 Region"
   }
 }
