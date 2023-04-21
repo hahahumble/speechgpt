@@ -30,6 +30,7 @@ function Home() {
     azureRecognitionErrorNotify: Notify.azureRecognitionErrorNotify,
     awsErrorNotify: Notify.awsErrorNotify,
     emptyAzureKeyNotify: Notify.emptyAzureKeyNotify,
+    invalidAzureKeyNotify: Notify.invalidAzureKeyNotify,
     cannotBeEmptyNotify: Notify.cannotBeEmptyNotify,
     invalidAccessCodeNotify: Notify.invalidAccessCodeNotify,
   };

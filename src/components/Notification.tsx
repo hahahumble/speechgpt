@@ -111,6 +111,12 @@ export const azureSynthesisErrorNotify = () => {
   });
 };
 
+export const invalidAzureKeyNotify = () => {
+  toast.error(i18next.t('notification.invalid-azure-key') as string, {
+    style: notificationStyle,
+  });
+};
+
 // AWS
 export const awsErrorNotify = () => {
   toast.error(i18next.t('notification.polly-synthesis-error') as string, {

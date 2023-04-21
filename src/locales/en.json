@@ -157,6 +157,7 @@
     "azure-synthesis-error": "There was an error with Azure speech synthesis",
     "azure-recognition-error": "There was an error with Azure speech recognition",
     "polly-synthesis-error": "There was an error with Amazon Polly speech synthesis",
+    "invalid-azure-key": "Invalid Azure key or region",
     "cannot-be-empty": "This field cannot be empty",
     "invalid-access-code": "Invalid access code"
   }

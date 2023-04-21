@@ -1,5 +1,7 @@
-import generateSpeechUrl from '../apis/amazonPolly';
-import textToSpeech from '../apis/azureTTS';
+import speechSynthesizeWithPolly from '../apis/amazonPolly';
+import speechSynthesizeWithAzure from '../apis/azureTTS';
+import { SpeakerAudioDestination } from 'microsoft-cognitiveservices-speech-sdk';
+import { getAzureToken } from '../apis/azureToken';
 
 interface SpeechSynthesisOptions {
   text: string;
@@ -26,7 +28,7 @@ interface getPollyVoicesOptions {
 
 const synthesis = window.speechSynthesis;
 let pollyAudio: HTMLAudioElement | null = null;
-let azureAudio: HTMLAudioElement | null = null;
+let azureAudio: SpeakerAudioDestination | null = null;
 
 async function getPollyVoices({
   text,
@@ -36,7 +38,7 @@ async function getPollyVoices({
   accessKeyId,
   secretAccessKey,
 }: getPollyVoicesOptions) {
-  return await generateSpeechUrl(text, voiceName, engine, region, accessKeyId, secretAccessKey);
+  return await speechSynthesizeWithPolly(text, voiceName, engine, region, accessKeyId, secretAccessKey);
 }
 
 function pollyEngineName(engine: string | undefined) {
@@ -129,17 +131,23 @@ export function speechSynthesis({
           });
         break;
       case 'Azure TTS':
-        textToSpeech(secretAccessKey || '', region || 'eastus', text, voiceName, language)
-          .then(audioBlob => {
-            azureAudio = new Audio(URL.createObjectURL(audioBlob));
-            azureAudio.play().then(() => {
-              // resolve();
-            });
-            azureAudio.onended = () => {
+        if (secretAccessKey == '') {
+          reject('Azure access key is empty');
+          notify.emptyAzureKeyNotify();
+          return;
+        }
+        // Check if secret access key and region is valid
+        getAzureToken(secretAccessKey || '', region || 'eastus')
+          .then(token => {})
+          .catch(error => {
+            notify.invalidAzureKeyNotify();
+            reject(error);
+          });
+        speechSynthesizeWithAzure(secretAccessKey || '', region || 'eastus', text, voiceName, language)
+          .then(player => {
+            azureAudio = player;
+            player.onAudioEnd = () => {
               resolve();
-            };
-            azureAudio.onerror = error => {
-              reject(error);
             };
           })
           .catch(error => {
@@ -164,7 +172,7 @@ export function stopSpeechSynthesis() {
   }
   if (azureAudio) {
     azureAudio.pause();
-    azureAudio.currentTime = 0;
+    azureAudio.close();
   }
 }
 
@@ -192,6 +200,6 @@ export function resumeSpeechSynthesis() {
     pollyAudio.play();
   }
   if (azureAudio) {
-    azureAudio.play();
+    azureAudio.resume();
   }
 }
