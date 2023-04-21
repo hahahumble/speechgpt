@@ -10,9 +10,11 @@ import SpeakerIcon from './Icons/SpeakerIcon';
 import MuteSpeakerIcon from './Icons/MuteSpeakerIcon';
 import PlayIcon from './Icons/PlayIcon';
 import { useTranslation } from 'react-i18next';
+import ConversationIcon from './Icons/ConversationIcon';
 
 interface ButtonGroupProps {
   setOpenSetting: (open: boolean) => void;
+  setOpenConversations: (open: boolean) => void;
   disableMicrophone: boolean;
   onClickDisableMicrophone: () => void;
   disableSpeaker: boolean;
@@ -27,6 +29,7 @@ interface ButtonGroupProps {
 
 function ButtonGroup({
   setOpenSetting,
+  setOpenConversations,
   disableMicrophone,
   onClickDisableMicrophone,
   disableSpeaker,
@@ -95,6 +98,12 @@ function ButtonGroup({
         />
         <MicrophoneButton />
         <SpeakerButton />
+        <TippyButton
+          tooltip={i18n.t('common.conversations-list') as string}
+          onClick={() => setOpenConversations(true)}
+          icon={<ConversationIcon className="w-6 h-6 text-gray-500" />}
+          style="hover:bg-gray-200 active:bg-gray-300"
+        />
       </div>
       <div className="flex flex-row space-x-1">
         {status === 'speaking' && !finished && (

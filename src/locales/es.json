@@ -8,6 +8,8 @@
     "enable-microphone": "Activar micrófono",
     "disable-speaker": "Desactivar altavoz",
     "enable-speaker": "Activar altavoz",
+    "conversations": "Conversations",
+    "conversations-list": "Conversations List",
     "language": "Idioma",
     "reset-conversation": "Reiniciar conversación",
     "clear-input": "Limpiar entrada",
@@ -23,7 +25,8 @@
     "resume-speaking": "Reanudar hablado",
     "copy": "Copy",
     "delete": "Delete",
-    "replay": "Replay"
+    "replay": "Replay",
+    "type-your-message": "Type your message"
   },
   "appearance": {
     "light": "Modo claro",
@@ -35,9 +38,26 @@
     "es": "Español",
     "zh": "简体中文"
   },
+  "conversations": {
+    "new": "New",
+    "new-conversation": "New",
+    "no-match": "No matching conversations found",
+    "search": "Search",
+    "message": "Message",
+    "messages": "Messages",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "like": "Like",
+    "unlike": "Unlike",
+    "edit": "Edit",
+    "save": "Save"
+  },
   "setting": {
     "chat": {
       "title": "Chat",
+      "access-code": "Access Code",
+      "access-code-tooltip": "Enter the access code to use the application",
+      "code": "Code",
       "api-key": "Código de API",
       "default-host-address": "chat.openai.com",
       "openai": "OpenAI",
@@ -137,6 +157,8 @@
     "azure-synthesis-error": "Se ha producido un error con la síntesis de voz de Azure",
     "azure-recognition-error": "Se ha producido un error en el reconocimiento de voz de Azure",
     "polly-synthesis-error": "Se ha producido un error con la síntesis de voz de Amazon Polly",
-    "invalid-azure-key": "Invalid Azure key or region"
+    "invalid-azure-key": "Invalid Azure key or region",
+    "cannot-be-empty": "This field cannot be empty",
+    "invalid-access-code": "Invalid access code"
   }
 }

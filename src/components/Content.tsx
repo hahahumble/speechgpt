@@ -16,11 +16,12 @@ import {
   resumeSpeechSynthesis,
 } from '../utils/speechSynthesis';
 
-import { db } from '../db';
+import { chatDB } from '../db';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useGlobalStore } from '../store/module';
+import { useGlobalStore, useSessionStore } from '../store/module';
 import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/utils';
 import { isMobile } from 'react-device-detect';
+import ConversationDialog from './Conversations/ConversationDialog';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
 
@@ -38,17 +39,29 @@ const useIsMount = () => {
 
 const Content: React.FC<ContentProps> = ({ notify }) => {
   const { key, chat, speech, voice } = useGlobalStore();
+  const { currentSessionId, sessions, addSession, setCurrentSessionId, setMessageCount } =
+    useSessionStore();
 
   const [sendMessages, setSendMessages] = useState<boolean>(false);
-  const list = useLiveQuery(() => db.chat.toArray(), []);
+
+  const chatList = useLiveQuery(() => chatDB.chat.toArray(), []);
+
   const conversations = useMemo(() => {
-    return list?.map(l => ({ role: l.role, content: l.content, id: l.id })) || [];
-  }, [list]);
+    return (
+      chatList?.map(l => ({
+        role: l.role,
+        content: l.content,
+        id: l.id,
+        sessionId: l.sessionId,
+      })) || []
+    );
+  }, [chatList]);
 
   const [input, setInput] = useState<string>('');
   const [response, setResponse] = useState<string>(''); // openai response
 
   const [openSetting, setOpenSetting] = useState<boolean>(false);
+  const [openConversations, setOpenConversations] = useState<boolean>(false);
 
   const [status, setStatus] = useState<baseStatus>('idle');
   const prevStatusRef = useRef(status);
@@ -74,9 +87,34 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     }
   }, [conversations]);
 
+  useEffect(() => {
+    if (currentSessionId) {
+      const count = conversations.filter(c => c.sessionId === currentSessionId).length;
+      setMessageCount({
+        id: currentSessionId,
+        messageCount: count,
+      });
+    }
+  }, [conversations.length]);
+
+  const calculateMessageCount = () => {
+    const count = conversations.filter(c => c.sessionId === currentSessionId).length;
+    setMessageCount({
+      id: currentSessionId,
+      messageCount: count,
+    });
+  };
+
   const generateSpeech = async (text: string) => {
     if (disableSpeaker) {
       return;
+    }
+    if (existEnvironmentVariable('ACCESS_CODE')) {
+      const accessCode = getEnvironmentVariable('ACCESS_CODE');
+      if (accessCode !== key.accessCode) {
+        notify.invalidAccessCodeNotify();
+        return;
+      }
     }
     stopSpeechSynthesis();
     setStatus('speaking');
@@ -159,7 +197,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
       setSendMessages(false);
-      db.chat.add({ role: 'assistant', content: response });
+      chatDB.chat.add({ role: 'assistant', content: response, sessionId: currentSessionId });
       generateSpeech(response).then();
     }
   }, [response]);
@@ -188,6 +226,16 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       const openaiApiModel = existEnvironmentVariable('OPENAI_MODEL')
         ? getEnvironmentVariable('OPENAI_MODEL')
         : key.openaiModel;
+
+      if (existEnvironmentVariable('ACCESS_CODE')) {
+        const accessCode = getEnvironmentVariable('ACCESS_CODE');
+        if (accessCode !== key.accessCode) {
+          notify.invalidAccessCodeNotify();
+          setStatus('idle');
+          return;
+        }
+      }
+
       sendRequest(
         conversationsToSent as any,
         openaiApiKey,
@@ -225,9 +273,13 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (input.length === 0 || status === 'waiting' || status === 'speaking') {
       return;
     }
-    const input_json = { role: 'user', content: input };
+    const input_json = {
+      role: 'user',
+      content: input,
+      sessionId: currentSessionId,
+    };
     setSendMessages(true);
-    db.chat.add(input_json);
+    chatDB.chat.add(input_json);
     setInput('');
     if (!isMobile) {
       focusInput();
@@ -242,9 +294,13 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       if (input.length === 0) {
         return;
       } else {
-        const input_json = { role: 'user', content: input };
+        const input_json = {
+          role: 'user',
+          content: input,
+          sessionId: currentSessionId,
+        };
         setSendMessages(true);
-        db.chat.add(input_json);
+        chatDB.chat.add(input_json);
 
         setInput('');
         if (!isMobile) {
@@ -267,7 +323,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   };
 
   const clearConversation = () => {
-    db.chat.clear();
+    chatDB.chat.clear();
     setInput(chat.defaultPrompt);
     setStatus('idle');
     stopSpeechSynthesis();
@@ -286,7 +342,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   }
 
   function deleteContent(key: number) {
-    db.chat.delete(key);
+    chatDB.chat.delete(key);
     notify.deletedNotify();
   }
 
@@ -394,6 +450,11 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   return (
     <div className="w-160 flex flex-col h-full justify-between pb-3 dark:bg-gray-900">
       <SettingDialog open={openSetting} onClose={() => setOpenSetting(false)} />
+      <ConversationDialog
+        open={openConversations}
+        onClose={() => setOpenConversations(false)}
+        notify={notify}
+      />
       {voice.service == 'System' && (
         <BrowserSpeechToText
           isListening={isListening}
@@ -421,6 +482,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           setTranscript={setTranscript}
           setWaiting={setWaiting}
           notify={notify}
+          accessCode={existEnvironmentVariable('ACCESS_CODE') ? key.accessCode : ''}
         />
       )}
       <div className="overflow-y-scroll h-full" ref={conversationRef}>
@@ -435,6 +497,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       <div className="">
         <ButtonGroup
           setOpenSetting={setOpenSetting}
+          setOpenConversations={setOpenConversations}
           disableMicrophone={disableMicrophone}
           disableSpeaker={disableSpeaker}
           onClickDisableMicrophone={onClickDisableMicrophone}

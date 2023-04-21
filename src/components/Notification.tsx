@@ -24,6 +24,12 @@ export const resetNotify = () => {
   });
 };
 
+export const invalidAccessCodeNotify = () => {
+  toast.error(i18next.t('notification.invalid-access-code') as string, {
+    style: notificationStyle,
+  });
+};
+
 // OpenAI
 export const invalidOpenAiKeyNotify = () => {
   toast.error(i18next.t('notification.invalid-openai-key') as string, {
@@ -63,6 +69,12 @@ export const networkErrorNotify = () => {
 
 export const deletedNotify = () => {
   toast.success(i18next.t('notification.deleted') as string, {
+    style: notificationStyle,
+  });
+};
+
+export const cannotBeEmptyNotify = () => {
+  toast.error(i18next.t('notification.cannot-be-empty') as string, {
     style: notificationStyle,
   });
 };
