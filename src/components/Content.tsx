@@ -482,7 +482,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           setTranscript={setTranscript}
           setWaiting={setWaiting}
           notify={notify}
-          accessCode={existEnvironmentVariable('ACCESS_CODE') ? key.accessCode : ''}
+          accessCode={existEnvironmentVariable('ACCESS_CODE') ? key.accessCode : 'REPLACE_WITH_YOUR_OWN'}
         />
       )}
       <div className="overflow-y-scroll h-full" ref={conversationRef}>
