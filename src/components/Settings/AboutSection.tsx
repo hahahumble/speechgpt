@@ -41,7 +41,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
           <a href="https://speechgpt.app" className="inline underline hover:text-indigo-600">
             Official Website
           </a>
-          <OpenLinkIcon className="inline ml-1 w-5 h-5 mb-0.5 opacity-0 group-hover:opacity-100" />
           <br />
           <div className="mt-1">
             <GitHubIcon className="inline mr-1.5 w-5 h-5" />
@@ -67,7 +66,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
       <SettingDivider />
       <SettingTitle text={i18n.t('setting.about.version') as string} />
       <SettingGroup>
-        <div className={'flex space-y-2 text-left ml-0.5 text-gray-600'}>Version: v0.4.1</div>
+        <div className={'flex space-y-2 text-left ml-0.5 text-gray-600'}>Version: 0.4.2</div>
       </SettingGroup>
     </div>
   );
