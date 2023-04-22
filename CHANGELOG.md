@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.2] - 2023-04-22
+### Changed
+- Update settings about page link icons
+- Improve the stability of the Azure speech synthesis service
+- i18n of the input panel
+
 ## [0.4.1] - 2023-04-19
 
 ### Added
