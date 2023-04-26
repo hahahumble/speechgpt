@@ -11,11 +11,11 @@
   <img src="./assets/demo-en.png" alt="SpeechGPT Website Demo" width="900" />
 </p>
 
-## Introduction
+## 🌟 Introduction
 SpeechGPT is a web application that enables you to converse with ChatGPT.</br>
 You can utilize this app to improve your language speaking skills or simply have fun chatting with ChatGPT.
 
-## Features
+## 🚀 Features
 - 📖 **Open source and free**: Anyone can use, modify it without cost.
 - 🔒 **Privacy First**: All data is stored locally.
 - 📱 **Mobile friendly**: Designed to be accessible and usable on mobile devices.
@@ -23,7 +23,7 @@ You can utilize this app to improve your language speaking skills or simply have
 - 🎙 **Speech Recognition**: Includes both built-in speech recognition and integration with Azure Speech Services.
 - 🔊 **Speech Synthesis**: Includes built-in speech synthesis, as well as integration with Amazon Polly and Azure Speech Services.
 
-## Screenshots
+## 📸 Screenshots
 <table>
   <tr>
     <td><img src="./assets/screenshots/screenshot-1-en.png" width="360px" alt="Screenshot 1"></td>
@@ -32,7 +32,7 @@ You can utilize this app to improve your language speaking skills or simply have
   </tr>
 </table>
 
-## Tutorial
+## 📖 Tutorial
 1. Set the OpenAI API Key <br/>
     - Go to Settings and navigate to the Chat section.
     - Set the OpenAI API Key.
@@ -47,28 +47,11 @@ You can utilize this app to improve your language speaking skills or simply have
     - Set the AWS Region, AWS Access Key ID, and Secret Access Key (the Access Key should have the AmazonPollyFullAccess policy).
     - If you don't have an AWS Access Key, follow this tutorial on [how to create an IAM user in AWS](https://www.techtarget.com/searchcloudcomputing/tutorial/Step-by-step-guide-on-how-to-create-an-IAM-user-in-AWS).
 
-## Development
-1. Install dependencies.
-```bash
-yarn
-```
+## 💻 Development Guide and Changelog
+- For more information on setting up your development environment, please see our [Development Guide](./docs/developer-guide.md).
+- To view the project's history of notable changes, please check the [Changelog](./CHANGELOG.md).
 
-2. Start development server.
-```bash
-yarn dev
-```
-
-3. Build for production.
-```bash
-yarn build
-```
-
-Code formatting(Using Prettier).
-```bash
-yarn format
-```
-
-## Deployment
+## 🚢 Deployment
 
 ### Deploying with Vercel
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhahahumble%2Fspeechgpt&env=VITE_OPENAI_API_KEY,VITE_OPENAI_HOST,VITE_AWS_REGION,VITE_AWS_ACCESS_KEY_ID,VITE_AWS_ACCESS_KEY,VITE_AZURE_REGION,VITE_AZURE_KEY&envDescription=If%20you%20do%20not%20want%20to%20provide%20a%20value%2C%20use%20REPLACE_WITH_YOUR_OWN.&project-name=speechgpt&repository-name=speechgpt)
@@ -99,5 +82,5 @@ docker run -d -p 8080:8080 --name=speechgpt speechgpt
 
 3. Visit `http://localhost:8080/` to access the application.
 
-## License
+## 📄 License
 This project is licensed under the terms of the [MIT license](/LICENSE).
