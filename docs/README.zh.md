@@ -47,8 +47,8 @@ SpeechGPT 是一个让你与 ChatGPT 聊天的网站。<br/>
     - 如果您没有 AWS Access Key，请按照[如何在 AWS 中创建 IAM 用户的教程](https://www.techtarget.com/searchcloudcomputing/tutorial/Step-by-step-guide-on-how-to-create-an-IAM-user-in-AWS)进行操作。
 
 ## 💻 开发指南和更新日志
-如需了解有关设置开发环境的更多信息，请查看我们的[开发指南](./docs/developer-guide.zh.md)。
-若要查看项目的重要更改历史，请查阅[更新日志](./CHANGELOG.md)。
+- 如需了解有关设置开发环境的更多信息，请查看我们的[开发指南](./developer-guide.zh.md)。
+- 若要查看项目的重要更改历史，请查阅[更新日志](../CHANGELOG.md)。
 
 ## 🚢 部署
 ### 使用 Vercel 部署
