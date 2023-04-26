@@ -49,7 +49,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
               href="https://github.com/hahahumble/speechgpt"
               className="inline underline hover:text-indigo-600"
             >
-              Github
+              GitHub
             </a>
           </div>
           <div className="mt-1">
