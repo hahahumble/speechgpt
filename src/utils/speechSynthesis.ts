@@ -38,7 +38,14 @@ async function getPollyVoices({
   accessKeyId,
   secretAccessKey,
 }: getPollyVoicesOptions) {
-  return await speechSynthesizeWithPolly(text, voiceName, engine, region, accessKeyId, secretAccessKey);
+  return await speechSynthesizeWithPolly(
+    text,
+    voiceName,
+    engine,
+    region,
+    accessKeyId,
+    secretAccessKey
+  );
 }
 
 function pollyEngineName(engine: string | undefined) {
@@ -143,7 +150,13 @@ export function speechSynthesis({
             notify.invalidAzureKeyNotify();
             reject(error);
           });
-        speechSynthesizeWithAzure(secretAccessKey || '', region || 'eastus', text, voiceName, language)
+        speechSynthesizeWithAzure(
+          secretAccessKey || '',
+          region || 'eastus',
+          text,
+          voiceName,
+          language
+        )
           .then(player => {
             azureAudio = player;
             player.onAudioEnd = () => {
