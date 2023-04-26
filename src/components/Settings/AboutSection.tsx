@@ -12,6 +12,7 @@ import WebsiteIcon from '../Icons/WebsiteIcon';
 import GitHubIcon from '../Icons/GitHubIcon';
 import FeedbackIcon from '../Icons/FeedbackIcon';
 import OpenLinkIcon from '../Icons/OpenLinkIcon';
+import { getVersion } from '../../utils/version';
 
 interface AboutSectionProps {}
 
@@ -66,7 +67,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({}) => {
       <SettingDivider />
       <SettingTitle text={i18n.t('setting.about.version') as string} />
       <SettingGroup>
-        <div className={'flex space-y-2 text-left ml-0.5 text-gray-600'}>Version: 0.4.2</div>
+        <div className={'flex space-y-2 text-left ml-0.5 text-gray-600'}>
+          Version: {getVersion()}
+        </div>
       </SettingGroup>
     </div>
   );
