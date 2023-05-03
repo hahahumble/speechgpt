@@ -4,14 +4,19 @@ export function absolutifyLink(rel: string): string {
   return anchor.href;
 }
 
+export function getEnvironmentKey(name: string): string {
+  return 'VITE_' + name;
+}
+
 export function getEnvironmentVariable(name: string, backup: string): string {
-  const environment_variable_name = 'VITE_' + name;
+  const environment_variable_name = getEnvironmentKey(name);
   return existEnvironmentVariable(name) ? import.meta.env[environment_variable_name] : backup;
 }
 
 export function existEnvironmentVariable(name: string): boolean {
-  const environment_variable_name = 'VITE_' + name;
-  return import.meta.env[environment_variable_name] !== 'REPLACE_WITH_YOUR_OWN' && import.meta.env[environment_variable_name] !== undefined;
+  const environment_variable_name = getEnvironmentKey(name);
+  return import.meta.env[environment_variable_name] !== 'REPLACE_WITH_YOUR_OWN' &&
+    import.meta.env[environment_variable_name] !== undefined;
 }
 
 export function getFormatDateTime(isoDateTime: string): any {
