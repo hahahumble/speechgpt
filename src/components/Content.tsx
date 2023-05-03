@@ -188,12 +188,24 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       });
   };
 
+  // user spoke, speech->text
   useEffect(() => {
     if (transcript.length !== 0 && transcript !== 'undefined') {
-      setInput(prevInput => prevInput + ' ' + transcript);
+      let trimmed = transcript.trim();
+      if (trimmed === 'clear') {
+        setInput('');
+        setTranscript('');
+      } else if (trimmed === 'stop') {
+        stopRecording();
+      } else if (trimmed === 'send') {
+        handleSend();
+      } else {
+        setInput(prevInput => prevInput + ' ' + transcript);
+      }
     }
   }, [transcript]);
 
+  // gpt responded, text->speech
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
       setSendMessages(false);
@@ -301,7 +313,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         };
         setSendMessages(true);
         chatDB.chat.add(input_json);
-
         setInput('');
         if (!isMobile) {
           focusInput();
