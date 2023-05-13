@@ -11,6 +11,7 @@ export const initialState: SessionState = {
     {
       id: uuidv4(),
       topic: i18n.t('conversations.new-conversation'),
+      icon: 'blue-circle',
       tags: [],
       liked: false,
       date: getFormatDateTime(new Date().toISOString()),
@@ -64,6 +65,7 @@ export const sessionSlice = createSlice({
       state.sessions.unshift({
         id,
         topic,
+        icon: 'blue-circle',
         tags: [],
         liked: false,
         date: getFormatDateTime(new Date().toISOString()),
@@ -128,6 +130,13 @@ export const sessionSlice = createSlice({
         state.sessions[index].liked = liked;
       }
     },
+    setIcon: (state, action) => {
+      const { id, icon } = action.payload;
+      const index = state.sessions.findIndex(session => session.id === id);
+      if (index !== -1) {
+        state.sessions[index].icon = icon;
+      }
+    },
   },
 });
 
@@ -140,6 +149,7 @@ export const {
   clearSessions,
   setMessageCount,
   setLiked,
+  setIcon,
 } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
