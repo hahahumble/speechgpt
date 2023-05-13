@@ -26,7 +26,10 @@
     "copy": "Copy",
     "delete": "Delete",
     "replay": "Replay",
-    "type-your-message": "Type your message"
+    "type-your-message": "Type your message",
+    "confirm": "Confirm",
+    "feedback": "Feedback",
+    "about": "About"
   },
   "appearance": {
     "light": "Modo claro",
@@ -39,7 +42,7 @@
     "zh": "简体中文"
   },
   "conversations": {
-    "new": "New",
+    "new": "New Conversation",
     "new-conversation": "New",
     "no-match": "No matching conversations found",
     "search": "Search",
@@ -50,7 +53,10 @@
     "like": "Like",
     "unlike": "Unlike",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "clear-all-conversations": "Clear All Conversations",
+    "actions": "Actions",
+    "change-icon": "Change Icon"
   },
   "setting": {
     "chat": {
@@ -128,6 +134,7 @@
     },
     "about": {
       "title": "Acerca de",
+      "intro": "Intro",
       "link": "Enlace",
       "version": "Versión",
       "about-text": "SpeechGPT es una aplicación web que te permite conversar con ChatGPT.<br/>Puedes utilizar esta aplicación para mejorar tus habilidades lingüísticas o simplemente divertirte conversando con ChatGPT."
@@ -159,6 +166,7 @@
     "polly-synthesis-error": "Se ha producido un error con la síntesis de voz de Amazon Polly",
     "invalid-azure-key": "Invalid Azure key or region",
     "cannot-be-empty": "This field cannot be empty",
-    "invalid-access-code": "Invalid access code"
+    "invalid-access-code": "Invalid access code",
+    "all-conversations-clear": "All conversations have been cleared"
   }
 }
