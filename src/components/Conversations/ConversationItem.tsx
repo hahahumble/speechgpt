@@ -1,17 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import TippyButton from '../base/TippyButton';
-import TrashIcon from '../Icons/TrashIcon';
+import React, { useState, Fragment, useEffect } from 'react';
 import { useSessionStore } from '../../store/module';
-import EditIcon from '../Icons/EditIcon';
-import CheckIcon from '../Icons/CheckIcon';
-import AdjustmentsHorizontalIcon from '../Icons/AdjustmentsHorizontalIcon';
-import { StarIcon } from '@heroicons/react/20/solid';
-import StarOutlineIcon from '../Icons/StarOutlineIcon';
+import { Disclosure, Menu, Popover, Transition } from '@headlessui/react';
 import { chatDB } from '../../db';
 import { useTranslation } from 'react-i18next';
+import useOnclickOutside from 'react-cool-onclickoutside';
+
+import {
+  IconDotsVertical,
+  IconEdit,
+  IconTrash,
+  IconAdjustmentsHorizontal,
+  IconCheck,
+  IconStar,
+  IconStarFilled,
+  IconChevronDown,
+  IconStarOff,
+} from '@tabler/icons-react';
+import Tippy from '@tippyjs/react';
+import {
+  BlueCircle,
+  CyanCircle,
+  GreenCircle,
+  OrangeCircle,
+  PurpleCircle,
+  RedCircle,
+  VioletCircle,
+} from './ConversationIcons';
 
 interface ConversationItemProps {
   id: string;
+  icon: string;
   title: string;
   liked: boolean;
   messageCount: number;
@@ -20,8 +38,23 @@ interface ConversationItemProps {
   notify: any;
 }
 
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
+const icons = [
+  { name: 'Red', icon: 'red-circle' },
+  { name: 'Orange', icon: 'orange-circle' },
+  { name: 'Green', icon: 'green-circle' },
+  { name: 'Cyan', icon: 'cyan-circle' },
+  { name: 'Blue', icon: 'blue-circle' },
+  { name: 'Purple', icon: 'purple-circle' },
+  // { name: 'Violet', icon: "violet-circle" },
+];
+
 const ConversationItem: React.FC<ConversationItemProps> = ({
   id,
+  icon,
   title,
   liked,
   messageCount,
@@ -38,13 +71,22 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     sessions,
     setCurrentSessionId,
     setLiked,
+    setIcon,
   } = useSessionStore();
+
   const [isEditing, setIsEditing] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
+  const [conversationIcon, setConversationIcon] = useState(icon);
+
+  const ref = useOnclickOutside(() => {
+    setMenuActive(false);
+  });
 
   const handleDeleteClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
+    event.preventDefault();
 
     if (!isConfirmingDelete) {
       setIsConfirmingDelete(true);
@@ -80,7 +122,15 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     }
   };
 
-  const handleTitleBlur = () => {
+  const handleTitleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
+    if (event) {
+      const newTarget: any = event.relatedTarget;
+
+      if (newTarget && newTarget.id === 'icon-button') {
+        return;
+      }
+    }
+
     if (currentTitle.trim() === '') {
       notify.cannotBeEmptyNotify();
       setCurrentTitle(title); // Reset to original title
@@ -104,77 +154,179 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     setLiked({ id: id, liked: !liked });
   };
 
+  const actionList = [
+    {
+      icon: liked ? IconStarOff : IconStar,
+      name: liked ? i18n.t('conversations.unlike') : i18n.t('conversations.like'),
+      onClick: handleLikeClick,
+    },
+    { icon: IconEdit, name: i18n.t('conversations.edit'), onClick: handleTitleEdit },
+    {
+      icon: isConfirmingDelete ? IconCheck : IconTrash,
+      name: isConfirmingDelete ? i18n.t('conversations.confirm') : i18n.t('conversations.delete'),
+      onClick: handleDeleteClick,
+    },
+    // { icon: IconAdjustmentsHorizontal, name: 'Configure' },
+  ];
+
+  function ConversationIcon(icon: string) {
+    switch (icon) {
+      case 'blue-circle':
+        return <BlueCircle />;
+      case 'red-circle':
+        return <RedCircle />;
+      case 'green-circle':
+        return <GreenCircle />;
+      case 'orange-circle':
+        return <OrangeCircle />;
+      case 'purple-circle':
+        return <PurpleCircle />;
+      case 'cyan-circle':
+        return <CyanCircle />;
+      default:
+        return <BlueCircle />;
+    }
+  }
+
   return (
     <div
-      className={`group relative border h-16 rounded-lg flex flex-col justify-center px-4 hover:bg-gray-100 hover:cursor-pointer ${
-        currentSessionId === id ? 'border-purple-500 border-2' : ''
+      ref={ref}
+      className={`group relative h-10 rounded-lg flex flex-row justify-between items-center px-3 hover:cursor-pointer ${
+        currentSessionId === id ? 'bg-slate-100' : 'hover:bg-slate-50'
       }`}
       onClick={onClick}
     >
       {isEditing ? (
-        <input
-          className="self-start text-gray-700 bg-transparent border-none focus:ring-0 w-52 sm:w-72 pl-1"
-          value={currentTitle}
-          onChange={handleTitleChange}
-          onKeyDown={handleKeyDown}
-          onBlur={handleTitleBlur}
-          onClick={event => {
-            event.stopPropagation();
-          }}
-          autoFocus
-        />
+        <div className="text-left flex items-center space-x-2">
+          <Popover as="div" className="flex">
+            <Popover.Button id="icon-button" onMouseDown={event => event.stopPropagation()}>
+              <Tippy
+                content={i18n.t('conversations.change-icon')}
+                placement="bottom"
+                delay={[300, 0]}
+                duration={0}
+                hideOnClick={true}
+                trigger={'mouseenter'}
+                theme={'light'}
+                className={'focus:ring-0 outline-0'}
+              >
+                <div className="py-1 focus:ring-0 outline-0">{ConversationIcon(icon)}</div>
+              </Tippy>
+            </Popover.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Popover.Panel className="z-10 absolute top-7 left-3 mt-2 origin-top-left bg-white divide-y divide-slate-100 rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="w-auto flex-auto overflow-hidden rounded-2xl bg-white text-sm leading-6 ring-1 ring-slate-900/5">
+                  <div className="px-4 py-2 flex flex-row space-x-1">
+                    {icons.map(item => (
+                      <div
+                        className="px-1 py-1 hover:ring rounded-full ring-slate-200"
+                        key={item.icon}
+                        onClick={() => {
+                          setIcon({ id: id, icon: item.icon });
+                        }}
+                      >
+                        {ConversationIcon(item.icon)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+          <input
+            className="self-center text-gray-700 bg-transparent border-none focus:ring-0 outline-0"
+            value={currentTitle}
+            onChange={handleTitleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleTitleBlur}
+            onClick={event => {
+              event.stopPropagation();
+            }}
+            autoFocus
+          />
+        </div>
       ) : (
-        <div className="self-start text-left flex items-center">
-          {liked && <StarIcon className="w-4 h-4 text-yellow-500 mr-1.5 flex-nowrap" />}
-          <div className="text-gray-700 truncate w-56 sm:w-72">{currentTitle}</div>
+        <div className="text-left flex items-center space-x-2">
+          {liked && <IconStarFilled className="w-4 h-4 text-yellow-500 flex-nowrap" />}
+          {!liked && ConversationIcon(icon)}
+          <div className="text-gray-700 truncate w-44">{currentTitle}</div>
         </div>
       )}
-      <div className="flex flex-row justify-between text-gray-500 text-sm">
-        <div>
-          {messageCount}{' '}
-          {messageCount > 1 ? i18n.t('conversations.messages') : i18n.t('conversations.message')}
+      <div className="flex flex-row items-center">
+        <div
+          className={`right-1 ${
+            menuActive ? 'opacity-100' : 'group-hover:opacity-100 sm:opacity-0'
+          } transition-colors duration-100 flex flex-row sm:space-x-0.5`}
+        >
+          <Menu as="div" className="relative ml-3">
+            <div>
+              <Menu.Button
+                className="flex max-w-xs items-center rounded-full text-sm focus:outline-none"
+                onClick={() => setMenuActive(!menuActive)}
+              >
+                <Tippy
+                  content={i18n.t('conversations.actions')}
+                  placement="bottom"
+                  delay={[300, 0]}
+                  duration={0}
+                  hideOnClick={true}
+                  trigger={'mouseenter'}
+                  theme={'light'}
+                >
+                  <div className="mr-1 p-1 font-bold flex flex-row justify-center active:bg-slate-200 hover:bg-slate-100 rounded-lg">
+                    <IconDotsVertical className="w-4 h-4 text-gray-500" />
+                  </div>
+                </Tippy>
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-2 z-10 mt-1 w-32 origin-top-right rounded-2xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="p-2">
+                  {actionList.map(item => (
+                    <Menu.Item key={item.name}>
+                      {({ active }) => (
+                        <div
+                          className={classNames(
+                            active ? 'bg-slate-100' : '',
+                            'relative px-2 py-1.5 text-sm text-gray-600 flex rounded-lg gap-x-2'
+                          )}
+                          onClick={item.onClick}
+                        >
+                          <div className="flex flex-none items-center justify-center rounded-lg">
+                            <item.icon
+                              className="h-5 w-5 text-gray-600 group-hover:text-gray-600"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <div>{item.name}</div>
+                        </div>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
-        <div>{date}</div>
-      </div>
-      <div className="absolute right-1 top-1 sm:right-2 sm:top-2 group-hover:opacity-100 sm:opacity-0 transition-colors duration-100 flex flex-row sm:space-x-0.5">
-        <TippyButton
-          onClick={handleLikeClick}
-          tooltip={
-            liked
-              ? (i18n.t('conversations.unlike') as string)
-              : (i18n.t('conversations.like') as string)
-          }
-          icon={
-            <StarOutlineIcon className={`w-4 h-4 ${liked ? 'text-yellow-500' : 'text-gray-500'}`} />
-          }
-          style="bg-white active:bg-gray-300 rounded-sm"
-        />
-        <TippyButton
-          onClick={handleTitleEdit}
-          tooltip={
-            isEditing
-              ? (i18n.t('conversations.save') as string)
-              : (i18n.t('conversations.edit') as string)
-          }
-          icon={<EditIcon className="w-4 h-4 text-gray-500" />}
-          style="bg-white active:bg-gray-300 rounded-sm"
-        />
-        <TippyButton
-          onClick={handleDeleteClick}
-          tooltip={
-            isConfirmingDelete
-              ? (i18n.t('conversations.confirm') as string)
-              : (i18n.t('conversations.delete') as string)
-          }
-          icon={
-            isConfirmingDelete ? (
-              <CheckIcon className="w-4 h-4 text-gray-500" />
-            ) : (
-              <TrashIcon className="w-4 h-4 text-gray-500" />
-            )
-          }
-          style="bg-white active:bg-gray-300 rounded-sm"
-        />
+        <div className="text-gray-500 text-sm items-center bg-slate-100 w-6 h-6 flex justify-center rounded-lg">
+          {messageCount}
+        </div>
       </div>
     </div>
   );
