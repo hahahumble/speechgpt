@@ -6,7 +6,8 @@ import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
 import { useTranslation } from 'react-i18next';
 import { useSessionStore } from '../store/module';
-import {IconCheck, IconCopy, IconTrash, IconVolume} from "@tabler/icons-react";
+import { IconCheck, IconCopy, IconTrash, IconVolume } from '@tabler/icons-react';
+import { isMobile } from 'react-device-detect';
 
 interface ConversationPanelProps {
   conversations: Chat[];
@@ -28,6 +29,7 @@ function ConversationPanel({
   const handleMouseUp = () => {
     setIsHidden(window.getSelection()?.toString().length !== 0);
   };
+
   const handleMouseDown = () => {
     setIsHidden(true);
   };
@@ -46,7 +48,7 @@ function ConversationPanel({
       deleteContent(id);
       setIsConfirmingDelete(false);
     }
-  };
+  }
 
   function ChatIcon({ role }: { role: 'user' | 'assistant' | 'system' }) {
     if (role === 'user') {
@@ -100,14 +102,35 @@ function ConversationPanel({
                 icon={<IconVolume className="w-4 h-4 text-slate-500" />}
                 style="bg-slate-100 active:bg-slate-300 rounded-sm"
               />
-              <TippyButton
-                onClick={() => {
-                  handleDeleteClick(conversation.id);
-                }}
-                tooltip={isConfirmingDelete ? i18n.t('common.confirm') as string : i18n.t('common.delete') as string}
-                icon={isConfirmingDelete ? <IconCheck className="w-4 h-4 text-slate-500" /> : <IconTrash className="w-4 h-4 text-slate-500" />}
-                style="bg-slate-100 active:bg-slate-300 rounded-sm"
-              />
+              {isMobile ? (
+                <TippyButton
+                  onClick={() => {
+                    deleteContent(conversation.id);
+                  }}
+                  tooltip={i18n.t('common.delete') as string}
+                  icon={<IconTrash className="w-4 h-4 text-slate-500" />}
+                  style="bg-slate-100 active:bg-slate-300 rounded-sm"
+                />
+              ) : (
+                <TippyButton
+                  onClick={() => {
+                    handleDeleteClick(conversation.id);
+                  }}
+                  tooltip={
+                    isConfirmingDelete
+                      ? (i18n.t('common.confirm') as string)
+                      : (i18n.t('common.delete') as string)
+                  }
+                  icon={
+                    isConfirmingDelete ? (
+                      <IconCheck className="w-4 h-4 text-slate-500" />
+                    ) : (
+                      <IconTrash className="w-4 h-4 text-slate-500" />
+                    )
+                  }
+                  style="bg-slate-100 active:bg-slate-300 rounded-sm"
+                />
+              )}
               <TippyButton
                 onClick={() => {
                   copyContentToClipboard(conversation.content);
