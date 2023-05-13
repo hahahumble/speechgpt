@@ -77,24 +77,20 @@ function Home() {
   }, [sessions.length]);
 
   return (
-    <div className="bg-slate-100 min-h-screen flex relative">
+    <div className="bg-slate-100 flex h-full relative">
       <Toaster />
       <SettingDialog open={openSetting} onClose={() => setOpenSetting(false)} />
       <AboutDialog open={openAbout} onClose={() => setOpenAbout(false)} notify={notifyDict} />
       <div
-        className={`w-80 py-8 px-4 lg:ml-3 bg-white rounded-2xl absolute lg:relative transition-transform duration-500 ease-in-out ${
+        className={`z-10 w-80 py-8 px-4 lg:ml-3 bg-white rounded-2xl absolute lg:relative transition-transform duration-500 ease-in-out ${
           sidebarOpen ? 'transform translate-x-0 ml-3' : 'transform -translate-x-full'
         } lg:transform lg:translate-x-0`}
-        style={
-          sidebarOpen
-            ? { zIndex: 1, height: '98vh', marginTop: '1vh', marginBottom: '1vh' }
-            : { zIndex: 1, height: '98vh', marginTop: '1vh', marginBottom: '1vh' }
-        }
+        style={{ zIndex: 1, height: 'calc(100% - 24px)', marginTop: '12px', marginBottom: '12px' }}
       >
         <Sidebar notify={notifyDict} />
       </div>
       <div
-        className={`h-screen flex-grow flex justify-center items-end px-3 ${
+        className={`flex-grow flex justify-center items-end px-3 ${
           sidebarOpen ? 'opacity-50' : 'opacity-100'
         }`}
       >
