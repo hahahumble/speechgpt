@@ -11,11 +11,13 @@ export interface SessionStore {
   clearSessions: () => void;
   setMessageCount: (session: any) => void;
   setLiked: (session: any) => void;
+  setIcon: (session: any) => void;
 }
 
 export interface Session {
   id: string;
   topic: string;
+  icon: string;
   tags: string[];
   liked: boolean;
   date: string;
