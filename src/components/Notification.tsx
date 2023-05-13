@@ -123,3 +123,9 @@ export const awsErrorNotify = () => {
     style: notificationStyle,
   });
 };
+
+export const allConversationClearNotify = () => {
+  toast.success(i18next.t('notification.all-conversations-clear') as string, {
+    style: notificationStyle,
+  });
+};
