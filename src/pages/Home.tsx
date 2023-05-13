@@ -91,7 +91,7 @@ function Home() {
       </div>
       <div
         className={`flex-grow flex justify-center items-end px-3 ${
-          sidebarOpen ? 'opacity-50' : 'opacity-100'
+          sidebarOpen ? 'opacity-50 lg:opacity-100' : 'opacity-100'
         }`}
       >
         <Content notify={notifyDict} />
@@ -108,7 +108,7 @@ function Home() {
         <EllipsisMenu setOpenSetting={setOpenSetting} setOpenAbout={setOpenAbout} />
       </div>
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black opacity-10" onClick={toggleSidebar}></div>
+        <div className="fixed inset-0 bg-black opacity-10 lg:opacity-0" onClick={toggleSidebar}></div>
       )}
     </div>
   );
