@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Content from '../components/Content';
 import { Toaster } from 'react-hot-toast';
 import * as Notify from '../components/Notification';
@@ -7,11 +7,22 @@ import { useGlobalStore, useSessionStore } from '../store/module';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 
+import SettingDialog from '../components/Settings/SettingDialog';
+import EllipsisMenu from '../components/EllipsisMenu';
+
+import { IconMenu2 } from '@tabler/icons-react';
+import AboutDialog from '../components/AboutDialog';
+import Sidebar from '../components/Conversations/Sidebar';
+
 function Home() {
   const { i18n } = useTranslation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { speech, setSpeech, voice, setVoice } = useGlobalStore();
   const { sessions, addSession, setCurrentSessionId, currentSessionId } = useSessionStore();
+
+  const [openSetting, setOpenSetting] = useState<boolean>(false);
+  const [openAbout, setOpenAbout] = useState<boolean>(false);
 
   const notifyDict = {
     clearedNotify: Notify.clearedNotify,
@@ -33,6 +44,11 @@ function Home() {
     invalidAzureKeyNotify: Notify.invalidAzureKeyNotify,
     cannotBeEmptyNotify: Notify.cannotBeEmptyNotify,
     invalidAccessCodeNotify: Notify.invalidAccessCodeNotify,
+    allConversationClearNotify: Notify.allConversationClearNotify,
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   if (isMobile || browserName !== 'Chrome') {
@@ -61,11 +77,43 @@ function Home() {
   }, [sessions.length]);
 
   return (
-    <div className="bg-gray-100 min-h-screen ">
+    <div className="bg-slate-100 min-h-screen flex relative">
       <Toaster />
-      <div className="h-screen fixed bottom-0 left-0 w-full flex justify-center items-end min-h-screen px-3">
+      <SettingDialog open={openSetting} onClose={() => setOpenSetting(false)} />
+      <AboutDialog open={openAbout} onClose={() => setOpenAbout(false)} notify={notifyDict} />
+      <div
+        className={`w-80 py-8 px-4 lg:ml-3 bg-white rounded-2xl absolute lg:relative transition-transform duration-500 ease-in-out ${
+          sidebarOpen ? 'transform translate-x-0 ml-3' : 'transform -translate-x-full'
+        } lg:transform lg:translate-x-0`}
+        style={
+          sidebarOpen
+            ? { zIndex: 1, height: '98vh', marginTop: '1vh', marginBottom: '1vh' }
+            : { zIndex: 1, height: '98vh', marginTop: '1vh', marginBottom: '1vh' }
+        }
+      >
+        <Sidebar notify={notifyDict} />
+      </div>
+      <div
+        className={`h-screen flex-grow flex justify-center items-end px-3 ${
+          sidebarOpen ? 'opacity-50' : 'opacity-100'
+        }`}
+      >
         <Content notify={notifyDict} />
       </div>
+      <div className="absolute top-4 left-4 lg:hidden">
+        <button
+          className="text-gray-900 bg-slate-200 p-1.5 rounded-lg hover:bg-slate-300 focus:outline-none"
+          onClick={toggleSidebar}
+        >
+          <IconMenu2 className="w-6 h-6 text-gray-500 stroke-2" />
+        </button>
+      </div>
+      <div className="absolute top-4 right-4 rounded-lg">
+        <EllipsisMenu setOpenSetting={setOpenSetting} setOpenAbout={setOpenAbout} />
+      </div>
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black opacity-10" onClick={toggleSidebar}></div>
+      )}
     </div>
   );
 }
