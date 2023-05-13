@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import sendRequest from '../apis/openai';
-import SettingDialog from './Settings/SettingDialog';
 import Header from './Header';
 import ConversationPanel from './ConversationPanel';
 import ButtonGroup from './ButtonGroup';
@@ -10,10 +9,10 @@ import AzureSpeechToText from './AzureSpeechToText';
 import BrowserSpeechToText from './BrowserSpeechToText';
 
 import {
-  speechSynthesis,
-  stopSpeechSynthesis,
   pauseSpeechSynthesis,
   resumeSpeechSynthesis,
+  speechSynthesis,
+  stopSpeechSynthesis,
 } from '../utils/speechSynthesis';
 
 import { chatDB } from '../db';
@@ -21,7 +20,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useGlobalStore, useSessionStore } from '../store/module';
 import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/utils';
 import { isMobile } from 'react-device-detect';
-import ConversationDialog from './Conversations/ConversationDialog';
+import SpeechGPTIcon from './Icons/SpeechGPTIcon';
+import LanguageSelector from './LocaleSelector';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
 
@@ -61,7 +61,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   const [response, setResponse] = useState<string>(''); // openai response
 
   const [openSetting, setOpenSetting] = useState<boolean>(false);
-  const [openConversations, setOpenConversations] = useState<boolean>(false);
 
   const [status, setStatus] = useState<baseStatus>('idle');
   const prevStatusRef = useRef(status);
@@ -322,8 +321,8 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     }
   };
 
-  const clearConversation = () => {
-    chatDB.chat.clear();
+  const clearConversation = async () => {
+    await chatDB.deleteChatsBySessionId(currentSessionId);
     setInput(chat.defaultPrompt);
     setStatus('idle');
     stopSpeechSynthesis();
@@ -448,13 +447,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   }, [isListening]);
 
   return (
-    <div className="w-160 flex flex-col h-full justify-between pb-3 dark:bg-gray-900">
-      <SettingDialog open={openSetting} onClose={() => setOpenSetting(false)} />
-      <ConversationDialog
-        open={openConversations}
-        onClose={() => setOpenConversations(false)}
-        notify={notify}
-      />
+    <div className="max-w-180 w-full flex flex-col h-full justify-between pb-3 dark:bg-gray-900">
       {voice.service == 'System' && (
         <BrowserSpeechToText
           isListening={isListening}
@@ -488,7 +481,20 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         />
       )}
       <div className="overflow-y-scroll h-full" ref={conversationRef}>
-        <Header />
+        <div className="flex flex-col sm:pt-16 sticky pt-16">
+          <SpeechGPTIcon className="w-16 h-16 ml-2 sm:w-24 sm:h-24" />
+          <div className="flex flex-row py-2 justify-between items-center w-full">
+            <div className="text-2xl font-bold text-left text-gray-800">
+              <span className="font-bold ml-2 decoration-purple-500 animate-text text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                SpeechGPT
+              </span>
+            </div>
+            <div>
+              <LanguageSelector />
+              {/*<AppearanceSelector/>*/}
+            </div>
+          </div>
+        </div>
         <ConversationPanel
           conversations={conversations}
           copyContentToClipboard={copyContentToClipboard}
@@ -498,8 +504,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       </div>
       <div className="">
         <ButtonGroup
-          setOpenSetting={setOpenSetting}
-          setOpenConversations={setOpenConversations}
           disableMicrophone={disableMicrophone}
           disableSpeaker={disableSpeaker}
           onClickDisableMicrophone={onClickDisableMicrophone}
