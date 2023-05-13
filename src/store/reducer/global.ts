@@ -19,7 +19,7 @@ export const globalSlice = createSlice({
     chat: {
       systemRole: 'From now on, the number of words in your reply cannot exceed 50 words.',
       defaultPrompt: '',
-      useAssistant: false,
+      useAssistant: true,
       temperature: 0.8,
       maxMessages: 20,
     },
