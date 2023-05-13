@@ -22,7 +22,7 @@ function SettingSubtitle({ text, helpText }: SettingSubtitleProps) {
             theme={'light'}
           >
             <div>
-              <HelpIcon className="w-4 h-4 mt-0.5 text-gray-400" />
+              <HelpIcon className="w-4 h-4 mt-0.5 text-slate-400" />
             </div>
           </Tippy>
         </div>

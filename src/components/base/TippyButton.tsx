@@ -16,6 +16,7 @@ function TippyButton(props: TippyButtonProps) {
         <Tippy
           content={props.tooltip}
           placement="bottom"
+          delay={[300, 0]}
           duration={0}
           hideOnClick={true}
           trigger={'mouseenter'}
