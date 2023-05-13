@@ -5,6 +5,7 @@ export const globalSlice = createSlice({
   initialState: {
     locale: navigator.language.split(/[-_]/)[0] || '',
     appearance: 'system',
+    developer: false,
     key: {
       accessCode: '',
       openaiApiKey: '',
