@@ -52,7 +52,7 @@ function LanguageSelector() {
         ref={selectRef}
         onChange={e => handleLanguageChange(e)}
         value={locale}
-        className="mr-0.5 w-auto bg-gray-100 text-gray-700 border border-gray-300 rounded-md py-2 px-3 focus:outline-none hover:bg-gray-200 transition duration-100 ease-in-out"
+        className="mr-0.5 w-auto bg-slate-100 text-gray-700 border border-slate-300 rounded-md py-2 px-3 focus:outline-none hover:bg-slate-200 transition duration-100 ease-in-out"
       >
         {languages.map(language => (
           <option key={language.code} value={language.code}>
