@@ -1,11 +1,12 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import React from 'react';
-import SendIcon from './Icons/SendIcon';
-import WaitingIcon from './Icons/WaitingIcon';
 import StartCircleIcon from './Icons/StartCircleIcon';
 import StopCircleIcon from './Icons/StopCircleIcon';
-import { useTranslation } from 'react-i18next';
 import SpinnerIcon from './Icons/SpinnerIcon';
+
+import { useTranslation } from 'react-i18next';
+
+import { IconSend } from '@tabler/icons-react';
 
 interface InputPanelProps {
   status: string;
@@ -100,7 +101,7 @@ function InputPanel({
           className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-700 active:from-indigo-700 active:to-purple-800 transition-colors duration-300"
           onClick={handleSend}
         >
-          <SendIcon className="h-5 w-5" />
+          <IconSend className="h-5 w-5" />
           <div>{i18n.t('common.send')}</div>
         </button>
       );
@@ -124,7 +125,7 @@ function InputPanel({
         id={'input'}
         ref={inputRef}
         placeholder={(i18n.t('common.type-your-message') as string) + '...'}
-        className="bg-gray-200 rounded-lg px-4 py-2 w-full border-none focus:ring-0 focus:outline-none resize-none"
+        className="bg-white rounded-lg px-4 py-2 w-full border-none focus:ring-0 focus:outline-none resize-none"
         value={userInput}
         onChange={event => setUserInput(event.target.value)}
         onKeyDown={handleInputKeyDown}
