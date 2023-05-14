@@ -99,6 +99,10 @@ export const useSessionStore = (): SessionStore => {
     dispatch({ type: 'session/setLiked', payload: session });
   };
 
+  const setIcon = (session: any) => {
+    dispatch({ type: 'session/setIcon', payload: session });
+  };
+
   return {
     ...state,
     setCurrentSessionId,
@@ -109,5 +113,6 @@ export const useSessionStore = (): SessionStore => {
     clearSessions,
     setMessageCount,
     setLiked,
+    setIcon,
   };
 };

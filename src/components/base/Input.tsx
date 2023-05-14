@@ -13,7 +13,7 @@ function Input({ id, type, className, value, placeholder, onChange, step }: Inpu
     <input
       id={id}
       type={type}
-      className={`focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-700 py-1 px-3 border-2 shadow-sm block border-gray-200 rounded-md ${className}`}
+      className={`focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-base text-gray-700 py-1 px-3 border-2 shadow-sm block border-slate-200 rounded-md ${className}`}
       value={value}
       placeholder={placeholder}
       onChange={onChange}

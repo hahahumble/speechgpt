@@ -2,9 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide vertical scrollbar */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Vertical scrollbar */
 ::-webkit-scrollbar {
-  display: none;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 0.25em;
 }
 
 /* Change the color of Tippy */

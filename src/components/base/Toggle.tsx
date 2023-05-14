@@ -13,7 +13,7 @@ function Toggle({ checked, onChange, className, description }: ToggleProps) {
       checked={checked}
       onChange={onChange}
       className={`${
-        checked ? 'bg-indigo-500' : 'bg-gray-200'
+        checked ? 'bg-indigo-500' : 'bg-slate-200'
       } relative inline-flex h-6 w-11 items-center rounded-full ${className}`}
     >
       <span className="sr-only">{description}</span>

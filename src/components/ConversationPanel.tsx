@@ -1,14 +1,13 @@
 import Tips from './Tips';
 import TippyButton from './base/TippyButton';
-import SpeakerIcon from './Icons/SpeakerIcon';
-import TrashIcon from './Icons/TrashIcon';
-import CopyIcon from './Icons/CopyIcon';
 import { Element } from 'react-scroll';
 import React, { useState } from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
 import { useTranslation } from 'react-i18next';
 import { useSessionStore } from '../store/module';
+import { IconCheck, IconCopy, IconTrash, IconVolume } from '@tabler/icons-react';
+import { isMobile } from 'react-device-detect';
 
 interface ConversationPanelProps {
   conversations: Chat[];
@@ -25,14 +24,31 @@ function ConversationPanel({
 }: ConversationPanelProps) {
   const { i18n } = useTranslation();
   const [isHidden, setIsHidden] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+
   const handleMouseUp = () => {
     setIsHidden(window.getSelection()?.toString().length !== 0);
   };
+
   const handleMouseDown = () => {
     setIsHidden(true);
   };
 
   const { currentSessionId } = useSessionStore();
+
+  function handleDeleteClick(id: number | undefined) {
+    if (!isConfirmingDelete) {
+      setIsConfirmingDelete(true);
+
+      setTimeout(() => {
+        // Automatically reset isConfirmingDelete state after 10 seconds
+        setIsConfirmingDelete(false);
+      }, 6000);
+    } else {
+      deleteContent(id);
+      setIsConfirmingDelete(false);
+    }
+  }
 
   function ChatIcon({ role }: { role: 'user' | 'assistant' | 'system' }) {
     if (role === 'user') {
@@ -54,14 +70,14 @@ function ConversationPanel({
   }
 
   return (
-    <Element name="messages" className="flex-grow border border-gray-300 rounded-lg p-4 mb-4">
+    <Element name="messages" className="flex-grow border border-slate-300 rounded-lg p-4 mb-4">
       {isConversationEmpty() && <Tips />}
       {conversations
         .filter(conversation => conversation.sessionId === currentSessionId)
         .map((conversation, index) => (
           <div
             key={conversation.id}
-            className="group relative rounded-lg hover:bg-gray-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
+            className="group relative rounded-lg hover:bg-slate-200 p-2 flex flex-row space-x-3 transition-colors duration-100"
           >
             <ChatIcon role={conversation.role} />
             <div
@@ -83,24 +99,45 @@ function ConversationPanel({
                   generateSpeech(conversation.content);
                 }}
                 tooltip={i18n.t('common.replay') as string}
-                icon={<SpeakerIcon className="w-4 h-4 text-gray-500" />}
-                style="bg-gray-100 active:bg-gray-300 rounded-sm"
+                icon={<IconVolume className="w-4 h-4 text-slate-500" />}
+                style="bg-slate-100 active:bg-slate-300 rounded-sm"
               />
-              <TippyButton
-                onClick={() => {
-                  deleteContent(conversation.id);
-                }}
-                tooltip={i18n.t('common.delete') as string}
-                icon={<TrashIcon className="w-4 h-4 text-gray-500" />}
-                style="bg-gray-100 active:bg-gray-300 rounded-sm"
-              />
+              {isMobile ? (
+                <TippyButton
+                  onClick={() => {
+                    deleteContent(conversation.id);
+                  }}
+                  tooltip={i18n.t('common.delete') as string}
+                  icon={<IconTrash className="w-4 h-4 text-slate-500" />}
+                  style="bg-slate-100 active:bg-slate-300 rounded-sm"
+                />
+              ) : (
+                <TippyButton
+                  onClick={() => {
+                    handleDeleteClick(conversation.id);
+                  }}
+                  tooltip={
+                    isConfirmingDelete
+                      ? (i18n.t('common.confirm') as string)
+                      : (i18n.t('common.delete') as string)
+                  }
+                  icon={
+                    isConfirmingDelete ? (
+                      <IconCheck className="w-4 h-4 text-slate-500" />
+                    ) : (
+                      <IconTrash className="w-4 h-4 text-slate-500" />
+                    )
+                  }
+                  style="bg-slate-100 active:bg-slate-300 rounded-sm"
+                />
+              )}
               <TippyButton
                 onClick={() => {
                   copyContentToClipboard(conversation.content);
                 }}
                 tooltip={i18n.t('common.copy') as string}
-                icon={<CopyIcon className="w-4 h-4 text-gray-500" />}
-                style="bg-gray-100 active:bg-gray-300 rounded-sm"
+                icon={<IconCopy className="w-4 h-4 text-slate-500" />}
+                style="bg-slate-100 active:bg-slate-300 rounded-sm"
               />
             </div>
           </div>

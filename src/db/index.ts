@@ -23,6 +23,10 @@ class ChatDB extends Dexie {
   async deleteChatsBySessionId(sessionId: string): Promise<void> {
     await this.chat.where('sessionId').equals(sessionId).delete();
   }
+
+  async clearChats(): Promise<void> {
+    await this.chat.clear();
+  }
 }
 
 export const chatDB = new ChatDB();

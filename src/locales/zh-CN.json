@@ -26,7 +26,10 @@
     "copy": "复制",
     "delete": "删除",
     "replay": "重放",
-    "type-your-message": "输入消息"
+    "type-your-message": "输入消息",
+    "confirm": "确认",
+    "feedback": "反馈",
+    "about": "关于"
   },
   "appearance": {
     "light": "浅色主题",
@@ -50,7 +53,10 @@
     "like": "星标",
     "unlike": "取消星标",
     "edit": "编辑",
-    "save": "保存"
+    "save": "保存",
+    "clear-all-conversations": "清空所有对话",
+    "actions": "操作",
+    "change-icon": "更改图标"
   },
   "setting": {
     "chat": {
@@ -128,6 +134,7 @@
     },
     "about": {
       "title": "关于",
+      "intro": "简介",
       "link": "链接",
       "version": "版本",
       "about-text": "SpeechGPT 是一个让你与 ChatGPT 聊天的网站。<br/>你可以使用 SpeechGPT 来练习你的口语，或者只是和 ChatGPT 闲聊。"
@@ -159,6 +166,7 @@
     "polly-synthesis-error": "Amazon Polly 语音合成错误",
     "invalid-azure-key": "无效的 Azure Key 或 Region",
     "cannot-be-empty": "不能为空",
-    "invalid-access-code": "无效的访问密码"
+    "invalid-access-code": "无效的访问密码",
+    "all-conversations-clear": "已清除所有对话"
   }
 }

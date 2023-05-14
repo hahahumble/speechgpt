@@ -29,14 +29,14 @@ function SettingDialog({ open, onClose }: SettingDialogProps) {
     i18n.t('setting.chat.title') as string,
     i18n.t('setting.synthesis.title') as string,
     i18n.t('setting.recognition.title') as string,
-    i18n.t('setting.about.title') as string,
+    // i18n.t('setting.about.title') as string,
   ];
 
   const catalogIcons = [
     <ChatIcon className="w-5 h-5" />,
     <SpeakerIcon className="w-5 h-5" />,
     <MicrophoneIcon className="w-5 h-5" />,
-    <AboutIcon className="w-5 h-5" />,
+    // <AboutIcon className="w-5 h-5" />,
   ];
 
   return (
@@ -46,7 +46,7 @@ function SettingDialog({ open, onClose }: SettingDialogProps) {
           tooltip=""
           onClick={onClose}
           icon={<XIcon className="w-6 h-6 text-gray-500" />}
-          style="hover:bg-gray-200 active:bg-gray-300"
+          style="hover:bg-slate-200 active:bg-slate-300"
         />
       </div>
       <div className="sm:h-96 h-150 flex sm:flex-row space-y-3 sm:space-y-0 flex-col sm:justify-center pt-5 sm:pt-0">
@@ -57,7 +57,7 @@ function SettingDialog({ open, onClose }: SettingDialogProps) {
             setSelected={setSelected}
           />
         </div>
-        <div className="bg-gray-100 w-52 py-6 hidden sm:block">
+        <div className="bg-slate-100 w-52 py-6 hidden sm:block">
           <SettingSelector
             selected={selected}
             onSelect={setSelected}

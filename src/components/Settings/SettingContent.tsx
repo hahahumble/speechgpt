@@ -1,7 +1,6 @@
 import ChatSection from './ChatSection';
 import SynthesisSection from './SynthesisSection';
 import RecognitionSection from './RecognitionSection';
-import AboutSection from './AboutSection';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,8 +18,8 @@ function SettingContent({ selected }: SettingContentProps) {
       return <SynthesisSection />;
     case i18n.t('setting.recognition.title') as string:
       return <RecognitionSection />;
-    case i18n.t('setting.about.title') as string:
-      return <AboutSection />;
+    // case i18n.t('setting.about.title') as string:
+    //   return <AboutSection />;
     default:
       return <ChatSection />;
   }

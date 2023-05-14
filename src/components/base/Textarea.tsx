@@ -30,7 +30,7 @@ export default function Textarea({
 
   return (
     <TextareaAutosize
-      className={`focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 border-2 shadow-sm block text-base text-gray-700 py-1 px-3 border-gray-200 rounded-md ${className}`}
+      className={`focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 border-2 shadow-sm block text-base text-gray-700 py-1 px-3 border-slate-200 rounded-md ${className}`}
       placeholder={placeholder}
       maxRows={maxRows}
       value={inputValue}
