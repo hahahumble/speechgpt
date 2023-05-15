@@ -108,7 +108,10 @@ function Home() {
         <EllipsisMenu setOpenSetting={setOpenSetting} setOpenAbout={setOpenAbout} />
       </div>
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black opacity-10 lg:opacity-0" onClick={toggleSidebar}></div>
+        <div
+          className="fixed inset-0 bg-black opacity-10 lg:opacity-0"
+          onClick={toggleSidebar}
+        ></div>
       )}
     </div>
   );
