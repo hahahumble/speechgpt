@@ -53,6 +53,8 @@ function Sidebar({ notify }: SidebarProps) {
     }
   }
 
+  const deleteTimeoutRef = useRef<number | null>(null);
+
   const handleDeleteClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
@@ -60,7 +62,11 @@ function Sidebar({ notify }: SidebarProps) {
     if (!isConfirmingDelete) {
       setIsConfirmingDelete(true);
 
-      setTimeout(() => {
+      if (deleteTimeoutRef.current !== null) {
+        clearTimeout(deleteTimeoutRef.current);
+      }
+
+      deleteTimeoutRef.current = window.setTimeout(() => {
         setIsConfirmingDelete(false);
       }, 6000);
     } else {
@@ -68,6 +74,10 @@ function Sidebar({ notify }: SidebarProps) {
       await chatDB.clearChats();
       notify.allConversationClearNotify();
       setIsConfirmingDelete(false);
+
+      if (deleteTimeoutRef.current !== null) {
+        clearTimeout(deleteTimeoutRef.current);
+      }
     }
   };
 
