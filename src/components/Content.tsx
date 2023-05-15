@@ -38,7 +38,16 @@ const useIsMount = () => {
 };
 
 const Content: React.FC<ContentProps> = ({ notify }) => {
-  const { key, chat, speech, voice } = useGlobalStore();
+  const {
+    key,
+    chat,
+    speech,
+    voice,
+    disableSpeaker,
+    setDisableSpeaker,
+    disableMicrophone,
+    setDisableMicrophone,
+  } = useGlobalStore();
   const { currentSessionId, sessions, addSession, setCurrentSessionId, setMessageCount } =
     useSessionStore();
 
@@ -66,9 +75,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
   const prevStatusRef = useRef(status);
 
   const [finished, setFinished] = useState<boolean>(true); // audio finished playing
-
-  const [disableSpeaker, setDisableSpeaker] = useState<boolean>(false);
-  const [disableMicrophone, setDisableMicrophone] = useState<boolean>(false);
 
   // speech to text transcript
   const [transcript, setTranscript] = useState('');

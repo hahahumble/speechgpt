@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { marked } from '../helpers/markdown';
 import { Chat } from '../db/chat';
 import { useTranslation } from 'react-i18next';
-import { useSessionStore } from '../store/module';
+import { useGlobalStore, useSessionStore } from '../store/module';
 import { IconCheck, IconCopy, IconTrash, IconVolume } from '@tabler/icons-react';
 import { isMobile } from 'react-device-detect';
 
@@ -23,6 +23,8 @@ function ConversationPanel({
   generateSpeech,
 }: ConversationPanelProps) {
   const { i18n } = useTranslation();
+  const { disableSpeaker } = useGlobalStore();
+
   const [isHidden, setIsHidden] = useState(false);
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
@@ -94,14 +96,16 @@ function ConversationPanel({
                 isHidden ? 'hidden' : 'flex'
               }`}
             >
-              <TippyButton
-                onClick={() => {
-                  generateSpeech(conversation.content);
-                }}
-                tooltip={i18n.t('common.replay') as string}
-                icon={<IconVolume className="w-4 h-4 text-slate-500" />}
-                style="bg-slate-100 active:bg-slate-300 rounded-sm"
-              />
+              {!disableSpeaker && (
+                <TippyButton
+                  onClick={() => {
+                    generateSpeech(conversation.content);
+                  }}
+                  tooltip={i18n.t('common.replay') as string}
+                  icon={<IconVolume className="w-4 h-4 text-slate-500" />}
+                  style="bg-slate-100 active:bg-slate-300 rounded-sm"
+                />
+              )}
               {isMobile ? (
                 <TippyButton
                   onClick={() => {

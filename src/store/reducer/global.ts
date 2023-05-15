@@ -6,6 +6,8 @@ export const globalSlice = createSlice({
     locale: navigator.language.split(/[-_]/)[0] || '',
     appearance: 'system',
     developer: false,
+    disableSpeaker: false,
+    disableMicrophone: false,
     key: {
       accessCode: '',
       openaiApiKey: '',
@@ -51,6 +53,15 @@ export const globalSlice = createSlice({
     setAppearance: (state, action) => {
       state.appearance = action.payload;
     },
+    setDeveloper: (state, action) => {
+      state.developer = action.payload;
+    },
+    setDisableSpeaker: (state, action) => {
+      state.disableSpeaker = action.payload;
+    },
+    setDisableMicrophone: (state, action) => {
+      state.disableMicrophone = action.payload;
+    },
     setKey: (state, action) => {
       state.key = action.payload;
     },
@@ -66,7 +77,16 @@ export const globalSlice = createSlice({
   },
 });
 
-export const { setLocale, setAppearance, setKey, setChat, setSpeech, setVoice } =
-  globalSlice.actions;
+export const {
+  setLocale,
+  setAppearance,
+  setDeveloper,
+  setDisableSpeaker,
+  setDisableMicrophone,
+  setKey,
+  setChat,
+  setSpeech,
+  setVoice,
+} = globalSlice.actions;
 
 export default globalSlice.reducer;

@@ -1,5 +1,5 @@
 import TippyButton from './base/TippyButton';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -12,7 +12,10 @@ import {
   IconPlayerPause,
   IconPlayerPlay,
   IconBackspace,
+  IconCheck,
 } from '@tabler/icons-react';
+import { useGlobalStore } from '../store/module';
+import { isMobile } from 'react-device-detect';
 
 interface ButtonGroupProps {
   disableMicrophone: boolean;
@@ -40,6 +43,30 @@ function ButtonGroup({
   finished,
 }: ButtonGroupProps) {
   const { i18n } = useTranslation();
+  const [isConfirmingReset, setIsConfirmingReset] = useState(false);
+
+  const resetTimeoutRef = useRef<number | null>(null);
+
+  function handleResetClick() {
+    if (!isConfirmingReset) {
+      setIsConfirmingReset(true);
+
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current);
+      }
+
+      resetTimeoutRef.current = setTimeout(() => {
+        setIsConfirmingReset(false);
+      }, 6000);
+    } else {
+      clearConversation();
+      setIsConfirmingReset(false);
+
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current);
+      }
+    }
+  }
 
   function MicrophoneButton() {
     if (!disableMicrophone) {
@@ -92,28 +119,41 @@ function ButtonGroup({
         <SpeakerButton />
       </div>
       <div className="flex flex-row space-x-1">
-        {status === 'speaking' && !finished && (
+        {!disableSpeaker && (
+          <>
+            {status === 'speaking' && !finished && (
+              <TippyButton
+                tooltip={i18n.t('common.pause-speaking') as string}
+                onClick={stopSpeaking}
+                icon={<IconPlayerPause className="w-6 h-6 text-slate-500" />}
+                style="hover:bg-slate-200 active:bg-slate-300"
+              />
+            )}
+            {status !== 'speaking' && !finished && (
+              <TippyButton
+                tooltip={i18n.t('common.resume-speaking') as string}
+                onClick={stopSpeaking}
+                icon={<IconPlayerPlay className="w-6 h-6 text-slate-500" />}
+                style="hover:bg-slate-200 active:bg-slate-300"
+              />
+            )}
+          </>
+        )}
+        {isConfirmingReset ? (
           <TippyButton
-            tooltip={i18n.t('common.pause-speaking') as string}
-            onClick={stopSpeaking}
-            icon={<IconPlayerPause className="w-6 h-6 text-slate-500" />}
+            tooltip={i18n.t('common.confirm') as string}
+            onClick={handleResetClick}
+            icon={<IconCheck className="w-6 h-6 text-slate-500" />}
+            style="hover:bg-slate-200 active:bg-slate-300"
+          />
+        ) : (
+          <TippyButton
+            tooltip={i18n.t('common.reset-conversation') as string}
+            onClick={handleResetClick}
+            icon={<IconRotateClockwise className="w-6 h-6 text-slate-500" />}
             style="hover:bg-slate-200 active:bg-slate-300"
           />
         )}
-        {status !== 'speaking' && !finished && (
-          <TippyButton
-            tooltip={i18n.t('common.resume-speaking') as string}
-            onClick={stopSpeaking}
-            icon={<IconPlayerPlay className="w-6 h-6 text-slate-500" />}
-            style="hover:bg-slate-200 active:bg-slate-300"
-          />
-        )}
-        <TippyButton
-          tooltip={i18n.t('common.reset-conversation') as string}
-          onClick={clearConversation}
-          icon={<IconRotateClockwise className="w-6 h-6 text-slate-500" />}
-          style="hover:bg-slate-200 active:bg-slate-300"
-        />
         <TippyButton
           onClick={() => {
             clearUserInput();
