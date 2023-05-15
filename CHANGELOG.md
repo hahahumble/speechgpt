@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.1] - 2023-05-15
+### 🛠️ Changed
+- Retain disable speaker and disable microphone states after refresh
+- Disable send button when the input is empty
+- Hide record button when the microphone is disabled
+- Hide replay button when the speaker is disabled
+- Reset conversation confirmation
+
+### 🐞 Fixed
+- Reset confirmation disappear problem
+
 ## [0.5.0] - 2023-05-12
 ### 🛠️ Changed
 - Brand-new UI design
