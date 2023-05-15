@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {useGlobalStore, useSessionStore} from '../../store/module';
+import { useGlobalStore, useSessionStore } from '../../store/module';
 import { Disclosure, Menu, Popover, Transition } from '@headlessui/react';
 import { chatDB } from '../../db';
 import { useTranslation } from 'react-i18next';
@@ -243,7 +243,9 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
             </Transition>
           </Popover>
           <input
-            className={`w-44 self-center text-gray-700 bg-transparent border-none focus:ring-0 outline-0 ${developer && 'bg-blue-200'}`}
+            className={`w-44 self-center text-gray-700 bg-transparent border-none focus:ring-0 outline-0 ${
+              developer && 'bg-blue-200'
+            }`}
             value={currentTitle}
             onChange={handleTitleChange}
             onKeyDown={handleKeyDown}
@@ -258,7 +260,9 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         <div className="text-left flex items-center space-x-2">
           {liked && <IconStarFilled className="w-4 h-4 text-yellow-500 flex-nowrap" />}
           {!liked && ConversationIcon(icon)}
-          <div className={`text-gray-700 truncate w-44 ${developer && 'bg-blue-200'}`}>{currentTitle}</div>
+          <div className={`text-gray-700 truncate w-44 ${developer && 'bg-blue-200'}`}>
+            {currentTitle}
+          </div>
         </div>
       )}
       <div className="flex flex-row items-center">
