@@ -94,11 +94,28 @@ function InputPanel({
   }
 
   function SendButton() {
-    if (status === 'idle' || status === 'recording' || status === 'connecting') {
+    if (
+      (status === 'idle' || status === 'recording' || status === 'connecting') &&
+      userInput.length > 0
+    ) {
       return (
         <button
           type="button"
           className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-700 active:from-indigo-700 active:to-purple-800 transition-colors duration-300"
+          onClick={handleSend}
+        >
+          <IconSend className="h-5 w-5" />
+          <div>{i18n.t('common.send')}</div>
+        </button>
+      );
+    } else if (
+      (status === 'idle' || status === 'recording' || status === 'connecting') &&
+      userInput.length == 0
+    ) {
+      return (
+        <button
+          type="button"
+          className="flex flex-row items-center space-x-2 rounded-lg px-4 py-2 font-medium text-white bg-gradient-to-tr from-indigo-500 to-purple-500 transition-colors duration-300 cursor-not-allowed"
           onClick={handleSend}
         >
           <IconSend className="h-5 w-5" />
@@ -133,7 +150,7 @@ function InputPanel({
       />
       <div className="flex flex-row space-x-2 justify-end">
         {/*<div className="self-end text-gray-700">{i18n.t('common.status')}: {status}</div>*/}
-        <RecordButton />
+        {!disableMicrophone && <RecordButton />}
         <SendButton />
       </div>
     </div>
