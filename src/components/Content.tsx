@@ -143,25 +143,15 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       case 'Amazon Polly':
         language = speech.pollyLanguage;
         voiceName = speech.pollyVoice;
-        region = existEnvironmentVariable('AWS_REGION')
-          ? getEnvironmentVariable('AWS_REGION')
-          : key.awsRegion;
-        accessKeyId = existEnvironmentVariable('AWS_ACCESS_KEY_ID')
-          ? getEnvironmentVariable('AWS_ACCESS_KEY_ID')
-          : key.awsKeyId;
-        secretAccessKey = existEnvironmentVariable('AWS_ACCESS_KEY')
-          ? getEnvironmentVariable('AWS_ACCESS_KEY')
-          : key.awsKey;
+        region = getEnvironmentVariable('AWS_REGION', key.awsRegion);
+        accessKeyId = getEnvironmentVariable('AWS_ACCESS_KEY_ID', key.awsKeyId);
+        secretAccessKey = getEnvironmentVariable('AWS_ACCESS_KEY', key.awsKey);
         break;
       case 'Azure TTS':
         language = speech.azureLanguage;
         voiceName = speech.azureVoice;
-        region = existEnvironmentVariable('AZURE_REGION')
-          ? getEnvironmentVariable('AZURE_REGION')
-          : key.azureRegion;
-        secretAccessKey = existEnvironmentVariable('AZURE_KEY')
-          ? getEnvironmentVariable('AZURE_KEY')
-          : key.azureKey;
+        region = getEnvironmentVariable('AZURE_REGION', key.azureRegion);
+        secretAccessKey = getEnvironmentVariable('AZURE_KEY', key.azureKey);
         break;
     }
 
@@ -193,12 +183,24 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       });
   };
 
+  // user spoke, speech->text
   useEffect(() => {
     if (transcript.length !== 0 && transcript !== 'undefined') {
-      setInput(prevInput => prevInput + ' ' + transcript);
+      let trimmed = transcript.trim();
+      if (trimmed === 'clear') {
+        setInput('');
+        setTranscript('');
+      } else if (trimmed === 'stop') {
+        stopRecording();
+      } else if (trimmed === 'send') {
+        handleSend();
+      } else {
+        setInput(prevInput => prevInput + ' ' + transcript);
+      }
     }
   }, [transcript]);
 
+  // gpt responded, text->speech
   useEffect(() => {
     if (response.length !== 0 && response !== 'undefined') {
       setSendMessages(false);
@@ -222,15 +224,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       conversationsToSent = conversationsToSent.slice(chat.maxMessages * -1);
       conversationsToSent.unshift({ role: 'system', content: chat.systemRole });
       console.log(conversationsToSent);
-      const openaiApiKey = existEnvironmentVariable('OPENAI_API_KEY')
-        ? getEnvironmentVariable('OPENAI_API_KEY')
-        : key.openaiApiKey;
-      const openaiApiHost = existEnvironmentVariable('OPENAI_HOST')
-        ? getEnvironmentVariable('OPENAI_HOST')
-        : key.openaiHost;
-      const openaiApiModel = existEnvironmentVariable('OPENAI_MODEL')
-        ? getEnvironmentVariable('OPENAI_MODEL')
-        : key.openaiModel;
+      const openaiApiKey = getEnvironmentVariable('OPENAI_API_KEY', key.openaiApiKey);
+      const openaiApiHost = getEnvironmentVariable('OPENAI_HOST', key.openaiHost);
+      const openaiApiModel = getEnvironmentVariable('OPENAI_MODEL', key.openaiModel);
 
       if (existEnvironmentVariable('ACCESS_CODE')) {
         const accessCode = getEnvironmentVariable('ACCESS_CODE');
@@ -306,7 +302,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         };
         setSendMessages(true);
         chatDB.chat.add(input_json);
-
         setInput('');
         if (!isMobile) {
           focusInput();
@@ -466,14 +461,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       {voice.service == 'Azure Speech to Text' && (
         <AzureSpeechToText
           subscriptionKey={
-            existEnvironmentVariable('AZURE_KEY')
-              ? getEnvironmentVariable('AZURE_KEY')
-              : key.azureKey
+            getEnvironmentVariable('AZURE_KEY', key.azureKey)
           }
           region={
-            existEnvironmentVariable('AZURE_REGION')
-              ? getEnvironmentVariable('AZURE_REGION')
-              : key.azureRegion
+            getEnvironmentVariable('AZURE_REGION', key.azureRegion)
           }
           language={voice.azureLanguage}
           isListening={isListening}
