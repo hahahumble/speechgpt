@@ -44,7 +44,8 @@
     "react-scroll": "^1.8.9",
     "react-textarea-autosize": "^8.4.1",
     "react-transition-group": "^4.4.5",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/react": "^18.0.31",

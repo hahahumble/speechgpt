@@ -113,6 +113,8 @@ function Home() {
           onClick={toggleSidebar}
         ></div>
       )}
+      <div>answer:</div>
+      <img src="https://dcsc.lenovo.com/assets/images/logo.jpg" style={{height:'100px',position:'fixed',right:'0',bottom:'100px'}}/>
     </div>
   );
 }

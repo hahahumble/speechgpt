@@ -7,7 +7,7 @@ import ButtonGroup from './ButtonGroup';
 import InputPanel from './InputPanel';
 import AzureSpeechToText from './AzureSpeechToText';
 import BrowserSpeechToText from './BrowserSpeechToText';
-import { reqCompletions } from '../apis/modelRequest';
+
 import {
   pauseSpeechSynthesis,
   resumeSpeechSynthesis,
@@ -22,6 +22,7 @@ import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/uti
 import { isMobile } from 'react-device-detect';
 import SpeechGPTIcon from './Icons/SpeechGPTIcon';
 import LanguageSelector from './LocaleSelector';
+
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
 
@@ -243,9 +244,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
       sendRequest(
         conversationsToSent as any,
-        // openaiApiKey,
-        // openaiApiHost,
-        // openaiApiModel,
+        openaiApiKey,
+        openaiApiHost,
+        openaiApiModel,
         (data: any) => {
           setStatus('idle');
           if (data) {
@@ -261,7 +262,6 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
                 notify.openAiErrorNotify();
               }
             }
-            console.log('sendrequest')
             setResponse(data.choices[0].message.content);
             console.log('Response: ' + data.choices[0].message.content);
             setStatus('idle');
@@ -279,13 +279,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     if (input.length === 0 || status === 'waiting' || status === 'speaking') {
       return;
     }
-    console.log('handlesend 点击！')
-    reqCompletions({ "model": 'merged', "messages": [{ "role": "user", "content": input }] }).then((res) => {
-      // console.log(res.data.choices[0].message.content)
-      setResponse(res.data.choices[0].message.content);
-      console.log('Response: ' + res.data.choices[0].message.content);
-      setStatus('idle');
-    })
+    console.log('点击发送了！')
     const input_json = {
       role: 'user',
       content: input,
@@ -293,6 +287,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
     };
     setSendMessages(true);
     chatDB.chat.add(input_json);
+
     setInput('');
     if (!isMobile) {
       focusInput();
@@ -509,18 +504,23 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
             </div>
           </div>
         </div>
+        <div className='flex'>
         <ConversationPanel
           conversations={conversations}
           copyContentToClipboard={copyContentToClipboard}
           deleteContent={deleteContent}
           generateSpeech={generateSpeech}
         />
-        {/* <ConversationPanel
+        <ConversationPanel
           conversations={conversations}
           copyContentToClipboard={copyContentToClipboard}
           deleteContent={deleteContent}
           generateSpeech={generateSpeech}
-        /> */}
+        />
+        <br/>
+        <div>answer:jn </div>
+        </div>
+
       </div>
       <div className="">
         <ButtonGroup

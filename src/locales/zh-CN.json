@@ -28,8 +28,7 @@
     "replay": "重放",
     "type-your-message": "输入消息",
     "confirm": "确认",
-    "feedback": "反馈",
-    "about": "关于"
+    "feedback": "反馈"
   },
   "appearance": {
     "light": "浅色主题",
@@ -80,7 +79,7 @@
       "others": "其他",
       "use-assistant": "使用助手的回复",
       "use-assistant-tooltip": "这将提高回复的准确性，但会使用更多的 Token",
-      "temperature": "思维发散程度",
+      "": "思维发散程度",
       "temperature-tooltip": "思维发散程度越高，回复越多样化，但可能不太相关",
       "maximum-messages": "连续对话次数",
       "maximum-messages-tooltip": "这将提高回复的准确性，但会使用更多的 Token",
