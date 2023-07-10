@@ -21,6 +21,7 @@ import { useGlobalStore, useSessionStore } from '../store/module';
 import { existEnvironmentVariable, getEnvironmentVariable } from '../helpers/utils';
 import { isMobile } from 'react-device-detect';
 import SpeechGPTIcon from './Icons/SpeechGPTIcon';
+import LenovoIcon from './Icons/LenovoIcon'
 import LanguageSelector from './LocaleSelector';
 
 type baseStatus = 'idle' | 'waiting' | 'speaking' | 'recording' | 'connecting';
@@ -280,18 +281,19 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       return;
     }
     console.log('handlesend 点击！')
-    reqCompletions({ "model": 'merged', "messages": [{ "role": "user", "content": input }] }).then((res) => {
-      // console.log(res.data.choices[0].message.content)
-      setResponse(res.data.choices[0].message.content);
-      console.log('Response: ' + res.data.choices[0].message.content);
-      setStatus('idle');
-    })
+    // reqCompletions({ "model": 'merged', "messages": [{ "role": "user", "content": input }] }).then((res) => {
+    //   // console.log(res.data.choices[0].message.content)
+    //   setResponse(res.data.choices[0].message.content);
+    //   console.log('Response: ' + res.data.choices[0].message.content);
+    //   setStatus('idle');
+    // })
     const input_json = {
       role: 'user',
       content: input,
       sessionId: currentSessionId,
     };
     setSendMessages(true);
+    setStatus('idle')
     chatDB.chat.add(input_json);
     setInput('');
     if (!isMobile) {
@@ -496,7 +498,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       )}
       <div className="overflow-y-scroll h-full" ref={conversationRef}>
         <div className="flex flex-col sm:pt-16 sticky pt-16">
-          <SpeechGPTIcon className="w-16 h-16 ml-2 sm:w-24 sm:h-24" />
+          <div>tubiao</div>
+          {/* <SpeechGPTIcon className="w-16 h-16 ml-2 sm:w-24 sm:h-24" /> */}
+          <LenovoIcon></LenovoIcon>
           <div className="flex flex-row py-2 justify-between items-center w-full">
             <div className="text-2xl font-bold text-left text-gray-800">
               <span className="font-bold ml-2 decoration-purple-500 animate-text text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
