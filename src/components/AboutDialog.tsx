@@ -18,6 +18,7 @@ function AboutDialog({ open, onClose, notify }: AboutDialogProps) {
 
   return (
     <BaseDialog open={open} onClose={onClose} className="w-120">
+      <div>aqefqef h</div>
       <div className="absolute sm:top-5 sm:right-6 top-6 right-4">
         <TippyButton
           tooltip=""
