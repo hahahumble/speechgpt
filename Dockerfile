@@ -1,4 +1,5 @@
-FROM node:alpine as builder
+# Use the ARM64 Node.js image as the builder stage
+FROM node:18-bullseye-slim AS builder
 
 ARG VITE_OPENAI_API_KEY=REPLACE_WITH_YOUR_OWN
 ARG VITE_OPENAI_HOST=REPLACE_WITH_YOUR_OWN
@@ -22,8 +23,11 @@ RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM nginx:alpine
+# Use a smaller ARM64-compatible base image for the final stage
+FROM arm64v8/nginx:alpine
+
 COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/dist .
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
