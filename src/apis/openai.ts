@@ -3,6 +3,7 @@ export default async function sendRequest(
   openaiApiKey: string,
   openaiHost: string,
   openaiModel: string,
+  temperature: number,
   callback: (data: any) => void
 ) {
   const requestOptions = {
@@ -14,6 +15,7 @@ export default async function sendRequest(
     body: JSON.stringify({
       model: openaiModel || 'gpt-3.5-turbo',
       messages: messages,
+      temperature: temperature,
     }),
   };
 

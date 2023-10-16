@@ -231,6 +231,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       const openaiApiModel = existEnvironmentVariable('OPENAI_MODEL')
         ? getEnvironmentVariable('OPENAI_MODEL')
         : key.openaiModel;
+      const temperature = chat.temperature;
 
       if (existEnvironmentVariable('ACCESS_CODE')) {
         const accessCode = getEnvironmentVariable('ACCESS_CODE');
@@ -246,6 +247,7 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         openaiApiKey,
         openaiApiHost,
         openaiApiModel,
+        temperature,
         (data: any) => {
           setStatus('idle');
           if (data) {
