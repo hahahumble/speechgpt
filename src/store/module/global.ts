@@ -26,9 +26,12 @@ const defaultGlobalState = {
   disableMicrophone: false,
   key: {
     accessCode: '',
+    chatProvider: 'OpenAI',
     openaiApiKey: '',
     openaiModel: '',
     openaiHost: '',
+    minimaxApiKey: '',
+    minimaxModel: 'MiniMax-M2.7',
     awsRegion: '',
     awsKeyId: '',
     awsKey: '',
@@ -53,6 +56,8 @@ const defaultGlobalState = {
     pollyEngine: 'Standard',
     azureLanguage: 'en-US',
     azureVoice: '',
+    minimaxModel: 'speech-2.8-hd',
+    minimaxVoice: 'English_Graceful_Lady',
   },
   voice: {
     service: 'System',

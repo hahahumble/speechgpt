@@ -18,6 +18,7 @@ import {
   azureRegions,
   azureSpeechSynthesisLanguagesLocale,
 } from '../../constants/data';
+import { minimaxTTSVoices, minimaxTTSModels } from '../../apis/minimaxTTS';
 import { useGlobalStore } from '../../store/module';
 import { useTranslation } from 'react-i18next';
 import { browserName, isMobile } from 'react-device-detect';
@@ -30,8 +31,8 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
   const { i18n } = useTranslation();
 
   const speechSynthesisServices = isMobile
-    ? ['Azure TTS', 'Amazon Polly']
-    : ['System', 'Azure TTS', 'Amazon Polly'];
+    ? ['Azure TTS', 'Amazon Polly', 'MiniMax TTS']
+    : ['System', 'Azure TTS', 'Amazon Polly', 'MiniMax TTS'];
 
   function getSystemLanguageCode(language: string) {
     return Object.keys(speechSynthesisSystemLanguages).find(
@@ -173,6 +174,24 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
             )}
           </>
         )}
+        {speech.service === 'MiniMax TTS' && (
+          <>
+            {existEnvironmentVariable('MINIMAX_API_KEY') ? (
+              <SettingCheckText
+                text={i18n.t('setting.synthesis.minimax-already-set-environment-variable') as string}
+              />
+            ) : (
+              <SettingInput
+                text={i18n.t('setting.synthesis.minimax-api-key') as string}
+                id={'minimax-api-key'}
+                type={'text'}
+                value={key.minimaxApiKey}
+                placeholder={i18n.t('setting.synthesis.minimax-api-key-placeholder') as string}
+                onChange={e => setKey({ ...key, minimaxApiKey: e })}
+              />
+            )}
+          </>
+        )}
       </SettingGroup>
 
       {speech.service === 'System' && (
@@ -287,6 +306,37 @@ const SynthesisSection: React.FC<SynthesisSectionProps> = ({}) => {
           <SettingTitle text={i18n.t('setting.synthesis.voice') as string} />
           <SettingGroup>
             <AzureTtsVoice />
+          </SettingGroup>
+        </>
+      )}
+
+      {speech.service === 'MiniMax TTS' && (
+        <>
+          <SettingDivider />
+          <SettingTitle text={i18n.t('setting.synthesis.properties') as string} />
+          <SettingGroup>
+            <SettingSelect
+              text={i18n.t('setting.synthesis.minimax-tts-model') as string}
+              options={minimaxTTSModels}
+              value={speech.minimaxModel}
+              className={'min-w-min pr-8'}
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+              onChange={e => setSpeech({ ...speech, minimaxModel: e })}
+            />
+          </SettingGroup>
+
+          <SettingDivider />
+          <SettingTitle text={i18n.t('setting.synthesis.voice') as string} />
+          <SettingGroup>
+            <SettingSelect
+              text={i18n.t('setting.synthesis.voice-id') as string}
+              helpText={i18n.t('setting.synthesis.minimax-voice-tooltip') as string}
+              options={minimaxTTSVoices}
+              value={speech.minimaxVoice}
+              className="min-w-min pr-8"
+              selectClassName={'flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0'}
+              onChange={e => setSpeech({ ...speech, minimaxVoice: e })}
+            />
           </SettingGroup>
         </>
       )}

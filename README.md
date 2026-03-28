@@ -20,8 +20,9 @@ You can utilize this app to improve your language speaking skills or simply have
 - 🔒 **Privacy First**: All data is stored locally.
 - 📱 **Mobile friendly**: Designed to be accessible and usable on mobile devices.
 - 📚 **Support for multiple languages**: Supports over 100 languages.
+- 🤖 **Multiple LLM Providers**: Supports OpenAI and [MiniMax](https://www.minimaxi.com) as chat providers.
 - 🎙 **Speech Recognition**: Includes both built-in speech recognition and integration with Azure Speech Services.
-- 🔊 **Speech Synthesis**: Includes built-in speech synthesis, as well as integration with Amazon Polly and Azure Speech Services.
+- 🔊 **Speech Synthesis**: Includes built-in speech synthesis, as well as integration with Amazon Polly, Azure Speech Services, and MiniMax TTS.
 
 ## 📸 Screenshots
 <table>
@@ -37,15 +38,26 @@ You can utilize this app to improve your language speaking skills or simply have
     - Go to Settings and navigate to the Chat section.
     - Set the OpenAI API Key.
     - If you don't have an OpenAI API Key, follow this tutorial on [how to get an OpenAI API Key](https://www.windowscentral.com/software-apps/how-to-get-an-openai-api-key).
-2. Set up Azure Speech Services (optional)
+2. Use MiniMax as an alternative chat provider (optional)
+    - Go to Settings and navigate to the Chat section.
+    - Change the Chat Provider to MiniMax.
+    - Set the MiniMax API Key.
+    - Select a model (MiniMax-M2.7 or MiniMax-M2.7-highspeed).
+    - You can get a MiniMax API Key from [MiniMax Platform](https://www.minimaxi.com).
+3. Set up Azure Speech Services (optional)
     - Go to Settings and navigate to the Synthesis section.
     - Change the Speech Synthesis Service to Azure TTS.
     - Set the Azure Region and Azure Access Key.
-3. Set up Amazon Polly (optional)
+4. Set up Amazon Polly (optional)
     - Go to Settings and navigate to the Synthesis section.
     - Change the Speech Synthesis Service to Amazon Polly.
     - Set the AWS Region, AWS Access Key ID, and Secret Access Key (the Access Key should have the AmazonPollyFullAccess policy).
     - If you don't have an AWS Access Key, follow this tutorial on [how to create an IAM user in AWS](https://www.techtarget.com/searchcloudcomputing/tutorial/Step-by-step-guide-on-how-to-create-an-IAM-user-in-AWS).
+5. Set up MiniMax TTS (optional)
+    - Go to Settings and navigate to the Synthesis section.
+    - Change the Speech Synthesis Service to MiniMax TTS.
+    - Set the MiniMax API Key (shared with chat if already configured).
+    - Select a TTS model (speech-2.8-hd or speech-2.8-turbo) and a voice.
 
 ## 💻 Development Guide and Changelog
 - For more information on setting up your development environment, please see our [Development Guide](./docs/developer-guide.md).

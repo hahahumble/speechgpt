@@ -71,6 +71,13 @@
       "openai-host": "OpenAI API 地址",
       "openai-host-tooltip": "用于连接 OpenAI API 的地址",
       "openai-model": "OpenAI 模型",
+      "provider": "对话服务商",
+      "chat-provider": "对话服务商",
+      "chat-provider-tooltip": "选择用于对话补全的 LLM 服务商",
+      "minimax": "MiniMax",
+      "minimax-api-key": "MiniMax API 密钥",
+      "minimax-model": "MiniMax 模型",
+      "minimax-already-set-environment-variable": "已在环境变量中设置 MiniMax API 密钥",
       "default-value": "默认值",
       "system-role": "系统角色",
       "system-role-tooltip": "系统在对话中的角色",
@@ -112,7 +119,12 @@
       "polly-neural-not-supported": "Polly 神经版不支持此语言",
       "mobile-not-supported": "目前，移动端不支持浏览器语音合成",
       "azure-already-set-environment-variable": "已在环境变量中设置 Azure 密钥",
-      "polly-already-set-environment-variable": "已在环境变量中设置 AWS 密钥"
+      "polly-already-set-environment-variable": "已在环境变量中设置 AWS 密钥",
+      "minimax-already-set-environment-variable": "已在环境变量中设置 MiniMax API 密钥",
+      "minimax-api-key": "MiniMax API 密钥",
+      "minimax-api-key-placeholder": "MiniMax API 密钥",
+      "minimax-tts-model": "TTS 模型",
+      "minimax-voice-tooltip": "用于语音合成的 MiniMax 语音"
     },
     "recognition": {
       "title": "语音识别",
@@ -141,8 +153,8 @@
     }
   },
   "tips": {
-    "tips1": "使用前，请先提供 <u>OpenAI API Key</u>。",
-    "tips2": "若要使用 <u>Azure 语音服务</u>或是 <u>Amazon Polly</u>，需要提供相关访问密钥。",
+    "tips1": "使用前，请先提供 <u>OpenAI API Key</u> 或 <u>MiniMax API Key</u>。",
+    "tips2": "若要使用 <u>Azure 语音服务</u>、<u>Amazon Polly</u> 或 <u>MiniMax TTS</u>，需要提供相关访问密钥。",
     "tips3a": "换行。",
     "tips3b": "发送消息。"
   },
@@ -167,6 +179,7 @@
     "invalid-azure-key": "无效的 Azure Key 或 Region",
     "cannot-be-empty": "不能为空",
     "invalid-access-code": "无效的访问密码",
-    "all-conversations-clear": "已清除所有对话"
+    "all-conversations-clear": "已清除所有对话",
+    "minimax-tts-error": "MiniMax 语音合成出错"
   }
 }
