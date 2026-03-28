@@ -129,3 +129,10 @@ export const allConversationClearNotify = () => {
     style: notificationStyle,
   });
 };
+
+// MiniMax
+export const minimaxTTSErrorNotify = () => {
+  toast.error(i18next.t('notification.minimax-tts-error') as string, {
+    style: notificationStyle,
+  });
+};

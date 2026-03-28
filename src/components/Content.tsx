@@ -163,6 +163,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
           ? getEnvironmentVariable('AZURE_KEY')
           : key.azureKey;
         break;
+      case 'MiniMax TTS':
+        voiceName = speech.minimaxVoice || 'English_Graceful_Lady';
+        break;
     }
 
     speechSynthesis({
@@ -176,6 +179,10 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
       region: region,
       accessKeyId: accessKeyId,
       secretAccessKey: secretAccessKey,
+      minimaxApiKey: existEnvironmentVariable('MINIMAX_API_KEY')
+        ? getEnvironmentVariable('MINIMAX_API_KEY')
+        : key.minimaxApiKey,
+      minimaxModel: speech.minimaxModel,
       notify: notify,
     })
       .then(() => {
@@ -232,6 +239,17 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
         ? getEnvironmentVariable('OPENAI_MODEL')
         : key.openaiModel;
 
+      const chatProvider = key.chatProvider || 'OpenAI';
+      const apiKey =
+        chatProvider === 'MiniMax'
+          ? existEnvironmentVariable('MINIMAX_API_KEY')
+            ? getEnvironmentVariable('MINIMAX_API_KEY')
+            : key.minimaxApiKey
+          : openaiApiKey;
+      const apiHost = chatProvider === 'MiniMax' ? 'api.minimax.io' : openaiApiHost;
+      const apiModel =
+        chatProvider === 'MiniMax' ? key.minimaxModel || 'MiniMax-M2.7' : openaiApiModel;
+
       if (existEnvironmentVariable('ACCESS_CODE')) {
         const accessCode = getEnvironmentVariable('ACCESS_CODE');
         if (accessCode !== key.accessCode) {
@@ -243,9 +261,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
 
       sendRequest(
         conversationsToSent as any,
-        openaiApiKey,
-        openaiApiHost,
-        openaiApiModel,
+        apiKey,
+        apiHost,
+        apiModel,
         (data: any) => {
           setStatus('idle');
           if (data) {
@@ -265,7 +283,9 @@ const Content: React.FC<ContentProps> = ({ notify }) => {
             console.log('Response: ' + data.choices[0].message.content);
             setStatus('idle');
           }
-        }
+        },
+        chatProvider,
+        chat.temperature
       ).catch(err => {
         console.log(err);
         notify.networkErrorNotify();

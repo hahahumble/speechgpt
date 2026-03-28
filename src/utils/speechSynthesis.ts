@@ -1,11 +1,12 @@
 import speechSynthesizeWithPolly from '../apis/amazonPolly';
 import speechSynthesizeWithAzure from '../apis/azureTTS';
+import speechSynthesizeWithMiniMax from '../apis/minimaxTTS';
 import { SpeakerAudioDestination } from 'microsoft-cognitiveservices-speech-sdk';
 import { getAzureToken } from '../apis/azureToken';
 
 interface SpeechSynthesisOptions {
   text: string;
-  service: 'System' | 'Amazon Polly' | 'Azure TTS';
+  service: 'System' | 'Amazon Polly' | 'Azure TTS' | 'MiniMax TTS';
   language: string;
   rate?: number;
   pitch?: number;
@@ -14,6 +15,8 @@ interface SpeechSynthesisOptions {
   region?: string;
   accessKeyId?: string;
   secretAccessKey?: string;
+  minimaxApiKey?: string;
+  minimaxModel?: string;
   notify: any;
 }
 
@@ -29,6 +32,7 @@ interface getPollyVoicesOptions {
 const synthesis = window.speechSynthesis;
 let pollyAudio: HTMLAudioElement | null = null;
 let azureAudio: SpeakerAudioDestination | null = null;
+let minimaxAudio: HTMLAudioElement | null = null;
 
 async function getPollyVoices({
   text,
@@ -67,6 +71,8 @@ export function speechSynthesis({
   region,
   accessKeyId,
   secretAccessKey,
+  minimaxApiKey,
+  minimaxModel,
   notify,
 }: SpeechSynthesisOptions): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -169,6 +175,34 @@ export function speechSynthesis({
             reject(error);
           });
         break;
+      case 'MiniMax TTS':
+        if (!minimaxApiKey) {
+          reject('MiniMax API key is empty');
+          notify.minimaxTTSErrorNotify?.();
+          return;
+        }
+        speechSynthesizeWithMiniMax(
+          minimaxApiKey,
+          text,
+          voiceName,
+          minimaxModel || 'speech-2.8-hd'
+        )
+          .then(url => {
+            minimaxAudio = new Audio(url);
+            minimaxAudio.play();
+            minimaxAudio.onended = () => {
+              resolve();
+            };
+            minimaxAudio.onerror = error => {
+              reject(error);
+              notify.minimaxTTSErrorNotify?.();
+            };
+          })
+          .catch(error => {
+            reject(error);
+            notify.minimaxTTSErrorNotify?.();
+          });
+        break;
     }
   });
 }
@@ -187,6 +221,10 @@ export function stopSpeechSynthesis() {
     azureAudio.pause();
     azureAudio.close();
   }
+  if (minimaxAudio) {
+    minimaxAudio.pause();
+    minimaxAudio.currentTime = 0;
+  }
 }
 
 export function pauseSpeechSynthesis() {
@@ -201,6 +239,9 @@ export function pauseSpeechSynthesis() {
   if (azureAudio) {
     azureAudio.pause();
   }
+  if (minimaxAudio) {
+    minimaxAudio.pause();
+  }
 }
 
 export function resumeSpeechSynthesis() {
@@ -214,5 +255,8 @@ export function resumeSpeechSynthesis() {
   }
   if (azureAudio) {
     azureAudio.resume();
+  }
+  if (minimaxAudio) {
+    minimaxAudio.play();
   }
 }

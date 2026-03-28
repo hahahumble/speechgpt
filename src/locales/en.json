@@ -71,6 +71,13 @@
       "openai-host": "OpenAI Host",
       "openai-host-tooltip": "Host address for connecting to the OpenAI API",
       "openai-model": "OpenAI Model",
+      "provider": "Chat Provider",
+      "chat-provider": "Chat Provider",
+      "chat-provider-tooltip": "Select the LLM provider for chat completions",
+      "minimax": "MiniMax",
+      "minimax-api-key": "MiniMax API Key",
+      "minimax-model": "MiniMax Model",
+      "minimax-already-set-environment-variable": "MiniMax API key has been set in the environment variable",
       "default-value": "Default Value",
       "system-role": "System Role",
       "system-role-tooltip": "The role of the system in the chat",
@@ -112,7 +119,12 @@
       "polly-neural-not-supported": "The selected language is not supported by Amazon Polly Neural TTS",
       "mobile-not-supported": "Currently, mobile devices are not supported for builtin speech synthesis",
       "azure-already-set-environment-variable": "Azure access key has been set in the environment variable",
-      "polly-already-set-environment-variable": "AWS access key has been set in the environment variable"
+      "polly-already-set-environment-variable": "AWS access key has been set in the environment variable",
+      "minimax-already-set-environment-variable": "MiniMax API key has been set in the environment variable",
+      "minimax-api-key": "MiniMax API Key",
+      "minimax-api-key-placeholder": "MiniMax API Key",
+      "minimax-tts-model": "TTS Model",
+      "minimax-voice-tooltip": "The MiniMax voice used to synthesize speech"
     },
     "recognition": {
       "title": "Recognition",
@@ -141,8 +153,8 @@
     }
   },
   "tips": {
-    "tips1": "Please provide the <u>OpenAI API Key</u> before usage.",
-    "tips2": "In order to utilize <u>Azure Speech Services</u> or <u>Amazon Polly</u>, you will need to provide the corresponding access key.\n\n\n\n",
+    "tips1": "Please provide the <u>OpenAI API Key</u> or <u>MiniMax API Key</u> before usage.",
+    "tips2": "In order to utilize <u>Azure Speech Services</u>, <u>Amazon Polly</u>, or <u>MiniMax TTS</u>, you will need to provide the corresponding access key.\n\n\n\n",
     "tips3a": "to create a newline.",
     "tips3b": "to send a message."
   },
@@ -167,6 +179,7 @@
     "invalid-azure-key": "Invalid Azure key or region",
     "cannot-be-empty": "This field cannot be empty",
     "invalid-access-code": "Invalid access code",
-    "all-conversations-clear": "All conversations have been cleared"
+    "all-conversations-clear": "All conversations have been cleared",
+    "minimax-tts-error": "There was an error with MiniMax TTS"
   }
 }

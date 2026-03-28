@@ -45,6 +45,7 @@ function Home() {
     cannotBeEmptyNotify: Notify.cannotBeEmptyNotify,
     invalidAccessCodeNotify: Notify.invalidAccessCodeNotify,
     allConversationClearNotify: Notify.allConversationClearNotify,
+    minimaxTTSErrorNotify: Notify.minimaxTTSErrorNotify,
   };
 
   const toggleSidebar = () => {
