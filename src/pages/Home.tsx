@@ -22,7 +22,7 @@ function Home() {
   const { sessions, addSession, setCurrentSessionId, currentSessionId } =
     useSessionStore();
 
-  const [openSetting, setOpenSetting] = useState<boolean>(false);
+  const [openSetting, setOpenSetting] = useState<boolean>(true);
   const [openAbout, setOpenAbout] = useState<boolean>(false);
 
   const notifyDict = {
